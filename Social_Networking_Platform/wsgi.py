@@ -1,5 +1,5 @@
 """
-WSGI config for 2 project.
+WSGI config for Social_Networking_Platform project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', '2.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Social_Networking_Platform.settings')
 
 application = get_wsgi_application()
