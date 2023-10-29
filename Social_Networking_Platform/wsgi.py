@@ -1,5 +1,5 @@
 """
-WSGI config for Social_Networking_Platform project.
+WSGI config for 2 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
