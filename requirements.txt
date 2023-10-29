@@ -1,6 +1,7 @@
 django
 djangorestframework
-djangorestframework-jwt
+djangorestframework-simplejwt
+pillow
 
 black
 isort
