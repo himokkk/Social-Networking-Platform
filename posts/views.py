@@ -1,53 +1,59 @@
-from django.shortcuts import render
-from rest_framework import generics, status
-from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveAPIView,
+    DestroyAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
 from posts.models import Post
 from posts.serializers import PostSerializer, CreatePostSerializer
 
 
-class CreatePostView(APIView):
+class CreatePostView(CreateAPIView):
     # permission_classes = [IsAuthenticated]
+    serializer_class = CreatePostSerializer
 
-    def post(self, request, format=None) -> Response:
+    def create(self, request, format=None) -> Response:
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        content = serializer.data.get('content')
-        media = serializer.validated_data['media']
-        author = User.objects.get(username='lukmik')
-        # author = request.user
+        content = serializer.data.get("content")
+        media = serializer.validated_data["media"]  # type: ignore
+        author = request.user
         post = Post(author=author, content=content, media=media)
         post.save()
         return Response(CreatePostSerializer(post).data, status=status.HTTP_201_CREATED)
 
 
-class DeletePostView(APIView):
+class DeletePostView(DestroyAPIView):
     # permission_classes = [IsAuthenticated]
 
     def delete(self, request, post_id, format=None) -> Response:
         post = get_object_or_404(Post, id=post_id)
-        if post.author != User.objects.get(username='lukmik'):  # request.user
-            return Response({"detail": "You are not allowed to delete this post."}, status=status.HTTP_403_FORBIDDEN)
+        if post.author != request.user:
+            return Response(
+                {"detail": "You are not allowed to delete this post."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ExploreFeedView(generics.ListAPIView):
+class ExploreFeedView(ListAPIView):
     # TODO SHOW POPULAR POSTS FIRST
-    queryset = Post.objects.all().order_by('-likes')
+    queryset = Post.objects.all().order_by("-likes")
     serializer_class = PostSerializer
 
 
-class FollowingFeedView(generics.ListAPIView):
+class FollowingFeedView(ListAPIView):
     # TODO feed of posts from users that current user follows
     pass
 
 
-class PostView(APIView):
+class PostView(RetrieveAPIView):
     def get(self, request, post_id) -> Response:
         post = get_object_or_404(Post, id=post_id)
         serializer = PostSerializer(post)
