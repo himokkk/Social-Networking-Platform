@@ -22,13 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0d^xt!0ryogr0)*^+37(sl2egph&$drxs+e!6xz!b2-tt)u4l#'
+SECRET_KEY = "django-insecure-0d^xt!0ryogr0)*^+37(sl2egph&$drxs+e!6xz!b2-tt)u4l#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 # Application definition
 
@@ -42,12 +44,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "posts",
-    'users',
+    "users",
+    "corsheaders",
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
 
@@ -59,9 +62,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = 'Social_Networking_Platform.urls'
+ROOT_URLCONF = "Social_Networking_Platform.urls"
 
 TEMPLATES = [
     {

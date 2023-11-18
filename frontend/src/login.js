@@ -13,7 +13,32 @@ const Login = (props) => {
         navigate("/register")
     }
 
-    const onLoginButtonClick = () => {
+    const getCookie = (name) => {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+
+    const onLoginButtonClick = async () => {
+        const csrftoken = getCookie("csrftoken");
+        let response = await fetch("http://localhost:8000/user/login/", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+            },
+            body: {"login": "x"},
+        }).then(response => {
+            return response;
+        });
 
         // Set initial error values to empty
         setEmailError("")
@@ -40,8 +65,7 @@ const Login = (props) => {
             return
         }
 
-        // Authentication calls will be made here...       
-
+        // Authentication calls will be made here...
     }
 
     return <div className={"mainContainer"}>
