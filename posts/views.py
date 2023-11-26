@@ -3,8 +3,8 @@ from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
     RetrieveAPIView,
-    RetrieveDestroyAPIView,
-    RetrieveUpdateAPIView,
+    DestroyAPIView,
+    UpdateAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,24 +22,19 @@ from posts.serializers import (
 
 
 class CreatePostView(CreateAPIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = PostCreateSerializer
 
-    def post(self, request: Request) -> Response:
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(author=request.user)
-        return Response(
-            {"detail": "Post created succesfully:"}, status=status.HTTP_201_CREATED
-        )
+    def perform_create(self, serializer) -> None:
+        serializer.save(author=self.request.user)
 
 
-class DeletePostView(RetrieveDestroyAPIView):
-    # permission_classes = [IsAuthenticated]
+class DeletePostView(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    def destroy(self, request, *args, **kwargs) -> Response:
+    def destroy(self, request: Request, *args, **kwargs) -> Response:
         instance = self.get_object()
         if instance.author == self.request.user:
             self.perform_destroy(instance)
@@ -70,11 +65,12 @@ class PostDetailView(RetrieveAPIView):
     serializer_class = PostSerializer
 
 
-class PostLikeView(RetrieveUpdateAPIView):
+class PostLikeView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostLikeSerializer
 
-    def update(self, request, *args, **kwargs) -> Response:
+    def update(self, request: Request, *args, **kwargs) -> Response:
         post = self.get_object()
         user = request.user
         user_has_liked_post = post.user_has_liked(user)
@@ -90,11 +86,12 @@ class PostLikeView(RetrieveUpdateAPIView):
         )
 
 
-class PostUnlikeView(RetrieveUpdateAPIView):
+class PostUnlikeView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostLikeSerializer
 
-    def update(self, request, *args, **kwargs) -> Response:
+    def update(self, request: Request, *args, **kwargs) -> Response:
         post = self.get_object()
         user = request.user
         user_has_liked_post = post.user_has_liked(user)
@@ -111,15 +108,13 @@ class PostUnlikeView(RetrieveUpdateAPIView):
 
 
 class CommentCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = CommentCreateSerializer
 
-    def post(self, request, *args, **kwargs) -> Response:
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        post = self.get_object()
-        serializer.save(user=request.user, post=post)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    def perform_create(self, serializer: CommentCreateSerializer) -> None:
+        post_id = self.kwargs.get("pk")
+        serializer.save(user=self.request.user, post_id=post_id)
 
 
 class CommentsView(ListAPIView):
