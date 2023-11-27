@@ -1,16 +1,12 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import (
-    ListAPIView,
-    CreateAPIView,
-    RetrieveAPIView,
-    DestroyAPIView,
-)
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 
 from posts.models import Post
-from posts.serializers import PostSerializer, CreatePostSerializer
+from posts.serializers import CreatePostSerializer, PostSerializer
 
 
 class CreatePostView(CreateAPIView):
