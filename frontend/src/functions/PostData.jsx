@@ -1,6 +1,6 @@
 import { getCookie } from "./GetCookie";
 
-export const Authenticate = async (url, username, password) => {
+export const PostData = async (url, data) => {
     const csrftoken = getCookie("csrftoken");
     try {
         const response = await fetch(url, {
@@ -9,10 +9,7 @@ export const Authenticate = async (url, username, password) => {
                 "X-CSRFToken": csrftoken,
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
+            body: data
         });
   
         console.log(response)
@@ -26,6 +23,6 @@ export const Authenticate = async (url, username, password) => {
         console.log('Auth successful. Token:', token);
     }
     catch (error) {
-        console.error('Auth during login:', error);
+        console.error('Error during auth:', error);
     }
 };

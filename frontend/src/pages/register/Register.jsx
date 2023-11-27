@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Register.css';
 import clearSelection from "../../functions/ClearSelection";
-import { Authenticate } from "../../functions/Auth";
+import { PostData } from "../../functions/PostData";
 
 const Register = () => {
     const [email, setEmail] = useState("")
@@ -62,7 +62,10 @@ const Register = () => {
         }
 
         // register
-        Authenticate("http://localhost:8000/user/register/", email, password)
+        PostData("http://localhost:8000/user/register/", JSON.stringify({
+            username: email,
+            password: password,
+        }),)
     }
 
     return <div className={"Register"}>

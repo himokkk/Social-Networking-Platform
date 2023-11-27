@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
 import clearSelection from "../../functions/ClearSelection";
-import { Authenticate } from "../../functions/Auth";
+import { PostData } from "../../functions/PostData";
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -53,7 +53,12 @@ const Login = () => {
         }
 
         // auth
-        Authenticate("http://localhost:8000/user/login/", email, password)
+        PostData("http://localhost:8000/user/login/", JSON.stringify(
+            {
+                username: email,
+                password: password,
+            }
+        ),)
     }
 
     return <div className={"Login"}>
