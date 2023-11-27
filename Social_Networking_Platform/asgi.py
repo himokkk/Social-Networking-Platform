@@ -1,5 +1,5 @@
 """
-ASGI config for 2 project.
+ASGI config for Social_Networking_Platform project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

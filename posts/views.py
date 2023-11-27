@@ -1,23 +1,24 @@
+from django.db.models.query import QuerySet
 from rest_framework import status
 from rest_framework.generics import (
-    ListAPIView,
     CreateAPIView,
-    RetrieveAPIView,
     DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
     UpdateAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.request import Request
-from django.db.models.query import QuerySet
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 from posts.models import Post, PostComment
 from posts.serializers import (
-    PostSerializer,
-    PostCreateSerializer,
     CommentCreateSerializer,
-    PostLikeSerializer,
     CommentsSerializer,
+    PostCreateSerializer,
+    PostLikeSerializer,
+    PostSerializer,
 )
 
 
@@ -51,6 +52,7 @@ class DeletePostView(DestroyAPIView):
 
 class ExploreFeedView(ListAPIView):
     # TODO SHOW POPULAR POSTS FIRST
+    queryset = Post.objects.all().order_by("-likes")
     queryset = Post.objects.all().order_by("-likes")
     serializer_class = PostSerializer
 
@@ -113,8 +115,8 @@ class CommentCreateView(CreateAPIView):
     serializer_class = CommentCreateSerializer
 
     def perform_create(self, serializer: CommentCreateSerializer) -> None:
-        post_id = self.kwargs.get("pk")
-        serializer.save(user=self.request.user, post_id=post_id)
+        post = self.get_object()
+        serializer.save(user=self.request.user, post=post)
 
 
 class CommentsView(ListAPIView):
@@ -122,5 +124,6 @@ class CommentsView(ListAPIView):
 
     def get_queryset(self) -> QuerySet:
         post_id = self.kwargs.get("pk")
+        get_object_or_404(Post, pk=post_id)
         queryset = PostComment.objects.filter(post_id=post_id)
         return queryset
