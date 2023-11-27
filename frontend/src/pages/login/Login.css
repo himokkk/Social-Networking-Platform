@@ -1,0 +1,21 @@
+.Login {
+    background-image: url("../../img/leaves.gif");
+}
+
+.inputContainerReset {
+    color: white;
+    padding: 2%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: inherit;
+}
