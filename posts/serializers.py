@@ -1,9 +1,6 @@
 from rest_framework import serializers
-from Social_Networking_Platform import settings
 
-from posts.models import Post, PostComment, PostLike
-
-POST_LIKE_INTERACTIONS = settings.POST_LIKE_INTERACTIONS
+from posts.models import Post, PostComment
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
@@ -32,12 +29,6 @@ class PostSerializer(serializers.ModelSerializer):
     def get_comments_count(self, obj) -> int | None:
         if obj.comments:
             return obj.comments.count()
-
-
-class PostLikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ()
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):

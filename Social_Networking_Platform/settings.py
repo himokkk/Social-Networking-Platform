@@ -29,8 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-POST_LIKE_INTERACTIONS = ["like", "unlike"]
-
 
 # Application definition
 
@@ -89,7 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Social_Networking_Platform.wsgi.application"
-WSGI_APPLICATION = "Social_Networking_Platform.wsgi.application"
 
 
 # Database
@@ -108,7 +105,6 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {

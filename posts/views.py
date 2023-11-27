@@ -17,7 +17,6 @@ from posts.serializers import (
     CommentCreateSerializer,
     CommentsSerializer,
     PostCreateSerializer,
-    PostLikeSerializer,
     PostSerializer,
 )
 
@@ -53,7 +52,6 @@ class DeletePostView(DestroyAPIView):
 class ExploreFeedView(ListAPIView):
     # TODO SHOW POPULAR POSTS FIRST
     queryset = Post.objects.all().order_by("-likes")
-    queryset = Post.objects.all().order_by("-likes")
     serializer_class = PostSerializer
 
 
@@ -70,7 +68,6 @@ class PostDetailView(RetrieveAPIView):
 class PostLikeView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
-    serializer_class = PostLikeSerializer
 
     def update(self, request: Request, *args, **kwargs) -> Response:
         post = self.get_object()
@@ -91,7 +88,6 @@ class PostLikeView(UpdateAPIView):
 class PostUnlikeView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
-    serializer_class = PostLikeSerializer
 
     def update(self, request: Request, *args, **kwargs) -> Response:
         post = self.get_object()
