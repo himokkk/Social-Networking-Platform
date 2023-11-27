@@ -1,7 +1,7 @@
 .App {
   text-align: center;
-  text-align: center;
   background-position: center center;
+  min-width: 400px;
 }
 
 .App-logo {
@@ -54,6 +54,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
 }
 
 .cardContainer {
@@ -70,15 +71,15 @@
 
 .titleContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-size: xx-large;
   font-weight: bolder;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
   color: #ffffff;
   padding: 5%;
   white-space: nowrap;
-  width: 100%
+  width: 100%;
 }
 
 .subtitleContainer {

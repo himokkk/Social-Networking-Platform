@@ -1,3 +1,15 @@
 .mainContainer {
     background: none;
+    width: 100%;
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    font-weight: bolder;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    text-wrap: wrap;
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
 import clearSelection from "../../functions/ClearSelection";
+import { Authenticate } from "../../functions/Auth";
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -21,21 +22,6 @@ const Login = () => {
             onLoginButtonClick()
         }
     }
-
-    const getCookie = (name) => {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        let cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-};
 
     const onLoginButtonClick = async () => {
         // reset error checks
@@ -67,22 +53,7 @@ const Login = () => {
         }
 
         // auth
-        const csrftoken = getCookie("csrftoken");
-        try {
-            let response = await fetch("http://localhost:8000/user/login/", {
-            method: "POST",
-            headers: {
-                "X-CSRFToken": csrftoken,
-            },
-            body: {"login": "x"},
-            }).then(response => {
-                return response;
-            });
-            console.log(response);
-        }
-        catch(err) {
-            console.log("Error: " + err.message);
-        }
+        Authenticate("http://localhost:8000/user/login/", email, password)
     }
 
     return <div className={"Login"}>

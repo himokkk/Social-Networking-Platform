@@ -13,7 +13,7 @@ const Home = (props) => {
     return <div className="backgroundContainer">
         <div className="mainContainer">
             <div className={"titleContainer"}>
-                <div>Welcome to ziomki.tk!</div>
+                <h1>Welcome to ziomki.tk!</h1>
             </div>
             <div className={"subtitleContainer"}>
                 Hi Ziomkis! 👋

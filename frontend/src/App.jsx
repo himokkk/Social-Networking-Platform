@@ -3,11 +3,16 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import './App.css';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import "@fontsource/jetbrains-mono";
 import "@fontsource/jetbrains-mono/400.css"; 
 import "@fontsource/jetbrains-mono/400-italic.css"; 
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === 's' && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    e.preventDefault();
+  }
+}, false);
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
