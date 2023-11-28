@@ -17,6 +17,10 @@ const Login = () => {
         navigate("/register")
     }
 
+    const onResetButtonClick = () => {
+        navigate("/reset")
+    }
+
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
             clearSelection()
@@ -165,10 +169,8 @@ const Login = () => {
                         value={"Log in"} />
                 </div>
                 <label className="errorLabel">{loginError}</label>
-                <div className={"inputContainerReset"}>
-                    <a href="/reset" tabIndex="0">
-                        Forgot your password?
-                    </a>
+                <div className={"inputContainerReset"} tabIndex="0" onClick={onResetButtonClick}>
+                    Forgot your password?
                 </div>
             </div>
         </div>

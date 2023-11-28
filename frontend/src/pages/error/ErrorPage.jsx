@@ -10,6 +10,10 @@ const ErrorPage = () => {
         navigate("/")
     }
 
+    const onResetButtonClick = () => {
+        navigate("/reset")
+    }
+
     const onRegisterButtonClick = () => {
         navigate("/register")
     }
@@ -53,10 +57,8 @@ const ErrorPage = () => {
                         onClick={onRegisterButtonClick}
                         value={"Register"} />
                 </div>
-                <div className={"inputContainerReset"}>
-                    <a href="/reset" tabIndex="0">
-                        Forgot your password?
-                    </a>
+                <div className={"inputContainerReset"} tabIndex="0" onClick={onResetButtonClick}>
+                    Forgot your password?
                 </div>
             </div>
         </div>
