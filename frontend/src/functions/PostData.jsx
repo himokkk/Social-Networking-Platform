@@ -2,8 +2,9 @@ import { getCookie } from "./GetCookie";
 
 export const PostData = async (url, data) => {
     const csrftoken = getCookie("csrftoken");
+    var response = null;
     try {
-        const response = await fetch(url, {
+        response = await fetch(url, {
             method: 'POST',
             headers: {
                 "X-CSRFToken": csrftoken,
@@ -11,18 +12,9 @@ export const PostData = async (url, data) => {
             },
             body: data
         });
-  
-        console.log(response)
-
-        if (!response.ok) {
-            console.error('Auth failed:', response.statusText);
-            return;
-        }
-    
-        const { token } = await response.json();
-        console.log('Auth successful. Token:', token);
+        return response;
     }
     catch (error) {
-        console.error('Error during auth:', error);
+        console.log('Error during auth:', error);
     }
 };

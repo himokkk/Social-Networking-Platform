@@ -11,7 +11,8 @@ const Register = () => {
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
-    
+    const [registerError, setRegisterError] = useState("")
+
     const navigate = useNavigate();
         
     const onLoginButtonClick = () => {
@@ -25,10 +26,12 @@ const Register = () => {
         }
     }
 
-    const onRegisterButtonClick = () => {
+    const onRegisterButtonClick = async () => {
         setEmailError("")
         setPasswordError("")
         setConfirmPasswordError("")
+        setRegisterError("")
+
 
         // Check if the user has entered both fields correctly
         if ("" === email) {
@@ -55,6 +58,30 @@ const Register = () => {
             return
         }
 
+        if (!(/\d/.test(password))) {
+            setPasswordError("The password must contain at least one digit")
+            console.log("Register: Password doesn't contain at least one digit")
+            return
+        }
+
+        if (!(/[A-Z]/.test(password))) {
+            setPasswordError("The password must contain at least one capital letter")
+            console.log("Register: Password doesn't contain at least one capital letter")
+            return
+        }
+
+        if (!(/[a-z]/.test(password))) {
+            setPasswordError("The password must contain at least one small letter")
+            console.log("Register: Password doesn't contain at least one small letter")
+            return
+        }
+
+        if (!(/[^A-Za-z0-9]/.test(password))) {
+            setPasswordError("The password must contain at least one special character");
+            console.log("Register: Password doesn't contain at least one special character");
+            return;
+        }
+
         if (confirmPassword !== password) {
             setConfirmPasswordError("Passwords must be identical")
             console.log("Register: Different confirm password entered")
@@ -62,10 +89,47 @@ const Register = () => {
         }
 
         // register
-        PostData("http://localhost:8000/user/register/", JSON.stringify({
-            username: email,
-            password: password,
-        }),)
+        var response = null;
+        try {
+            response = await PostData("http://localhost:8000/user/register/", JSON.stringify({
+                username: email,
+                password: password,
+            }),)
+        }
+        catch (error) {
+            console.log("Error awaiting post: ", error);
+        }
+
+        if (response) {
+            if (response.ok) {
+                console.log("Account successfully created")
+                navigate("/login")
+            }
+            else {
+                var jsonResponse = Promise.resolve(response.json())
+                jsonResponse
+                .then(response => {
+                    let message = JSON.stringify(response.username)
+                    if (message.includes("A user with that username already exists.")) {
+                        setRegisterError("An account with that email already exists")
+                        return
+                    }
+                    else {
+                        setRegisterError("Unknown error")
+                        return
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching or processing data:', error);
+                    return
+                });
+
+            }
+        }
+        else {
+            setRegisterError("Server not responding")
+            return
+        }
     }
 
     return <div className={"Register"}>
@@ -116,6 +180,7 @@ const Register = () => {
                         onClick={onRegisterButtonClick}
                         value={"Register"} />
                 </div>
+                <label className="errorLabel">{registerError}</label>
             </div>
         </div>
     </div>

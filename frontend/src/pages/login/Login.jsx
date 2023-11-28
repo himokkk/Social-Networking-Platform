@@ -9,6 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
+    const [loginError, setLoginError] = useState("")
     
     const navigate = useNavigate();
         
@@ -27,6 +28,7 @@ const Login = () => {
         // reset error checks
         setEmailError("")
         setPasswordError("")
+        setLoginError("")
 
         if ("" === email) {
             setEmailError("Please enter your email")
@@ -52,13 +54,72 @@ const Login = () => {
             return
         }
 
+        if (!(/\d/.test(password))) {
+            setPasswordError("The password must contain at least one digit")
+            console.log("Register: Password doesn't contain at least one digit")
+            return
+        }
+
+        if (!(/[A-Z]/.test(password))) {
+            setPasswordError("The password must contain at least one capital letter")
+            console.log("Register: Password doesn't contain at least one capital letter")
+            return
+        }
+
+        if (!(/[a-z]/.test(password))) {
+            setPasswordError("The password must contain at least one small letter")
+            console.log("Register: Password doesn't contain at least one small letter")
+            return
+        }
+
+        if (!(/[^A-Za-z0-9]/.test(password))) {
+            setPasswordError("The password must contain at least one special character");
+            console.log("Register: Password doesn't contain at least one special character");
+            return;
+        }
+
         // auth
-        PostData("http://localhost:8000/user/login/", JSON.stringify(
-            {
+        var response = null;
+        try {
+            response = await PostData("http://localhost:8000/user/login/", JSON.stringify({
                 username: email,
                 password: password,
+            }),)
+        }
+        catch (error) {
+            console.log("Error awaiting post: ", error);
+        }
+
+        if (response) {
+            if (response.ok) {
+                console.log("Successfully logged in")
+                navigate("/")
             }
-        ),)
+            else {
+                var jsonResponse = Promise.resolve(response.json())
+                jsonResponse
+                .then(response => {
+                    let detail = JSON.stringify(response.detail)
+                    if (detail.includes("No active account found with the given credentials")) {
+                        setLoginError("No active account found with the given credentials")
+                        return
+                    }
+                    else {
+                        setLoginError("Unknown error")
+                        return
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching or processing data:', error);
+                    return
+                });
+
+            }
+        }
+        else {
+            setLoginError("Server not responding")
+            return
+        }
     }
 
     return <div className={"Login"}>
@@ -99,10 +160,11 @@ const Login = () => {
                         onClick={onLoginButtonClick}
                         value={"Log in"} />
                 </div>
+                <label className="errorLabel">{loginError}</label>
                 <div className={"inputContainerReset"}>
-                    Forgot your password?
-                    &nbsp;
-                    <a href="about:blank">Reset it now</a>
+                    <a href="about:blank">
+                        Forgot your password?
+                    </a>
                 </div>
             </div>
         </div>

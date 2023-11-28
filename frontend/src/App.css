@@ -1,3 +1,8 @@
+:root {
+  min-width: 100%;
+  min-height: 100%;
+}
+
 .App {
   text-align: center;
   background-position: center center;
@@ -80,6 +85,7 @@
   padding: 5%;
   white-space: nowrap;
   width: 100%;
+  cursor: default;
 }
 
 .subtitleContainer {
@@ -90,6 +96,7 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
+  cursor: default;
 }
 
 .resultContainer, .historyItem { 
@@ -142,11 +149,17 @@
   padding: 2%;
 }
 
-.inputContainerButtons > .errorLabel {
+.errorLabel {
   color: white;
   font-size: small;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   padding: 2%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: right;
+  padding: 3%;
+  width: 100%;
 }
 
 .inputButton {
@@ -161,7 +174,7 @@
   margin-left: 2%;
 }
 
-.inputButton:hover {
+.inputButton:hover, .inputButton:active {
   background: rgb(87, 37, 180);
 }
 
@@ -177,7 +190,7 @@
   margin-right: 2%;
 }
 
-.inputButtonAlternative:hover {
+.inputButtonAlternative:hover, .inputButtonAlternative:active {
   background: rgb(82, 22, 150);
 }
 

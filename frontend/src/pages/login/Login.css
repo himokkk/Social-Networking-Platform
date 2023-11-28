@@ -4,12 +4,14 @@
 
 .inputContainerReset {
     color: white;
-    padding: 2%;
+    padding: 3%;
+    border-radius: 16px;
 }
 
 a {
     color: inherit;
     text-decoration: none;
+    width: 80%;
 }
 
 a:hover {
