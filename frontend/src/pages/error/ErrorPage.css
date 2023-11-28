@@ -1,0 +1,9 @@
+.ErrorPage {
+    background-image: url("../../img/leaves.gif");
+}
+
+.inputContainerReset {
+    color: white;
+    padding: 3%;
+    border-radius: 16px;
+}

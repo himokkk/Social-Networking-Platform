@@ -139,8 +139,9 @@ const Register = () => {
                     &gt;
                     Register
                 </div>
-                <div className={"inputContainerText"} tabIndex="0">
+                <div className={"inputContainerText"}>
                     <input
+                        tabIndex="0"
                         value={email}
                         placeholder="Enter your email here"
                         onChange={ev => setEmail(ev.target.value)}
@@ -148,8 +149,9 @@ const Register = () => {
                         onKeyDown={(e) => onEnterClick(e) } />
                     <label className="errorLabel">{emailError}</label>
                 </div>
-                <div className={"inputContainerText"} tabIndex="1">
+                <div className={"inputContainerText"}>
                     <input
+                        tabIndex="0"
                         type="password"
                         value={password}
                         placeholder="Enter your password here"
@@ -158,8 +160,9 @@ const Register = () => {
                         onKeyDown={(e) => onEnterClick(e) } />
                     <label className="errorLabel">{passwordError}</label>
                 </div>
-                <div className={"inputContainerText"} tabIndex="2">
+                <div className={"inputContainerText"}>
                     <input
+                        tabIndex="0"
                         type="password"
                         value={confirmPassword}
                         placeholder="Confirm your password here"
@@ -170,11 +173,13 @@ const Register = () => {
                 </div>
                 <div className={"inputContainerButtons"}>
                     <input
+                        tabIndex="0"
                         className={"inputButtonAlternative"}
                         type="button"
                         onClick={onLoginButtonClick}
                         value={"Log in"} />
                     <input
+                        tabIndex="0"
                         className={"inputButton"}
                         type="button"
                         onClick={onRegisterButtonClick}

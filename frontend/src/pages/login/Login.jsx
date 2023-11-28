@@ -129,8 +129,9 @@ const Login = () => {
                     &gt;
                     Login
                 </div>
-                <div className={"inputContainerText"} tabIndex="0">
+                <div className={"inputContainerText"}>
                     <input
+                        tabIndex="0"
                         value={email}
                         placeholder="Enter your email here"
                         onChange={ev => setEmail(ev.target.value)}
@@ -138,8 +139,9 @@ const Login = () => {
                         onKeyDown={(e) => onEnterClick(e) } />
                     <label className="errorLabel">{emailError}</label>
                 </div>
-                <div className={"inputContainerText"} tabIndex="1">
+                <div className={"inputContainerText"}>
                     <input
+                        tabIndex="0"
                         type="password"
                         value={password}
                         placeholder="Enter your password here"
@@ -150,11 +152,13 @@ const Login = () => {
                 </div>
                 <div className={"inputContainerButtons"}>
                     <input
+                        tabIndex="0"
                         className={"inputButtonAlternative"}
                         type="button"
                         onClick={onRegisterButtonClick}
                         value={"Register"} />
                     <input
+                        tabIndex="0"
                         className={"inputButton"}
                         type="button"
                         onClick={onLoginButtonClick}
@@ -162,7 +166,7 @@ const Login = () => {
                 </div>
                 <label className="errorLabel">{loginError}</label>
                 <div className={"inputContainerReset"}>
-                    <a href="about:blank">
+                    <a href="/reset" tabIndex="0">
                         Forgot your password?
                     </a>
                 </div>
