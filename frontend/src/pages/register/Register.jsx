@@ -27,13 +27,13 @@ const Register = () => {
     }
 
     const onRegisterButtonClick = async () => {
+        // reset error checks
         setEmailError("")
         setPasswordError("")
         setConfirmPasswordError("")
         setRegisterError("")
 
 
-        // Check if the user has entered both fields correctly
         if ("" === email) {
             setEmailError("Please enter your email")
             console.log("Register: No email entered")
@@ -88,7 +88,7 @@ const Register = () => {
             return
         }
 
-        // register
+        // registration
         var response = null;
         try {
             response = await PostData("http://localhost:8000/user/register/", JSON.stringify({

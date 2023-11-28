@@ -15,6 +15,6 @@ export const PostData = async (url, data) => {
         return response;
     }
     catch (error) {
-        console.log('Error during auth:', error);
+        console.log("Error during rest post: ", error);
     }
 };

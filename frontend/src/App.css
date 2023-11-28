@@ -1,6 +1,7 @@
 :root {
   min-width: 100%;
   min-height: 100%;
+  color: white;
 }
 
 .App {
@@ -72,6 +73,7 @@
   border-radius: 24px;
   width: 40vw;
   min-width: 400px;
+  box-shadow: 5px 5px 3px gray;
 }
 
 .titleContainer {
@@ -81,7 +83,6 @@
   font-weight: bolder;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
   padding: 5%;
   white-space: nowrap;
   width: 100%;
@@ -95,7 +96,6 @@
   font-weight: bolder;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
   cursor: default;
 }
 
