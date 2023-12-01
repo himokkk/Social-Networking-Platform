@@ -10,6 +10,10 @@ const Home = (props) => {
         navigate("/login")
     }
 
+    const onTestButtonClick = () => {
+        return
+    }
+
     return <div className="backgroundContainer">
         <div className="mainContainer">
             <div className={"titleContainer"}>
@@ -24,6 +28,11 @@ const Home = (props) => {
                     type="button"
                     onClick={onButtonClick}
                     value={loggedIn ? "Log out" : "Begin now!"} />
+                <input
+                    className={"inputButton"}
+                    type="button"
+                    onClick={onTestButtonClick}
+                    value={"testowy"} />
                 {(loggedIn ? <div>
                     Your email address is {email}
                 </div> : <div/>)}
