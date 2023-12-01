@@ -5,9 +5,13 @@ import './Home.css';
 const Home = (props) => {
     const { loggedIn, email } = props
     const navigate = useNavigate();
-    
+
     const onButtonClick = () => {
         navigate("/login")
+    }
+
+    const onTermsButtonClick = () => {
+        navigate("/terms")
     }
 
     const onTestButtonClick = () => {
@@ -36,6 +40,9 @@ const Home = (props) => {
                 {(loggedIn ? <div>
                     Your email address is {email}
                 </div> : <div/>)}
+            </div>
+            <div className={"inputContainerTerms"} tabIndex="0" onClick={onTermsButtonClick}>
+                By continuing you agree to terms and conditions
             </div>
         </div>
 

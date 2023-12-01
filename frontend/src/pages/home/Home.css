@@ -13,3 +13,14 @@ h1 {
     width: 80%;
     text-wrap: wrap;
 }
+
+.inputContainerTerms {
+    color: white;
+    padding: 3%;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.inputContainerTerms:hover {
+    text-decoration: underline;
+}
