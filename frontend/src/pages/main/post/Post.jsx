@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import img from 'zyzz.jpg';
+import { FaThumbsUp, FaComment } from 'react-icons/fa';
 const Post = () => {
 
    const [postState] = useState({
-    zdjecie: 'zyzz.jpg',
-    tekst: 'Tutaj jest treść posta.',
-    komentarze: [
-      { tresc: 'Pierwszy komentarz', autor: 'Autor1' },
-      { tresc: 'Drugi komentarz', autor: 'Autor2' },
+    photo: 'zyzz.jpg',
+    text: 'Tutaj jest treść posta.',
+    comments: [
+      { content: 'Pierwszy komentarz', author: 'author1' },
+      { content: 'Drugi komentarz', author: 'author2' },
     ],
-    polubienia: [
-      { autor: 'User1' },
-      { autor: 'User2' },
+    likes: [
+      { author: 'User1' },
+      { author: 'User2' },
     ],
   });
 
-  const wyswietlZdjecie = postState.zdjecie && <img src={postState.zdjecie} alt="" />;
+  // eslint-disable-next-line
+  const showPhoto = postState.photo && <img src={postState.photo} alt="" />;
 
   return (
     <div>
-       <img src= {img} alt="Opis zdjęcia" />
-       <p>ddd</p>
-      <p>{postState.tekst}</p>
-      {wyswietlZdjecie}
+      <img src = 'zyzz.jpg'/>
+      <p>{postState.text}</p>
+      <p>{postState.likes.length} <FaThumbsUp /> {postState.comments.length} <FaComment /></p>
+      
     </div>
   )
 }
