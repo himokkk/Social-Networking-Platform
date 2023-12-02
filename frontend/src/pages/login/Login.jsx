@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Login.css';
 import clearSelection from "../../functions/ClearSelection";
 import { PostData } from "../../functions/PostData";
+import { FilterResponse } from "../../functions/FilterResponse";
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -100,24 +101,14 @@ const Login = () => {
                 navigate("/")
             }
             else {
-                var jsonResponse = Promise.resolve(response.json())
-                jsonResponse
-                .then(response => {
-                    let detail = JSON.stringify(response.detail)
-                    if (detail.includes("No active account found with the given credentials")) {
-                        setLoginError("No active account found with the given credentials")
-                        return
-                    }
-                    else {
-                        setLoginError("Unknown error")
-                        return
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching or processing data:', error);
+                if (FilterResponse(response, "No active account found with the given credentials")) {
+                    setLoginError("No active account found with the given credentials")
                     return
-                });
-
+                }
+                else {
+                    setLoginError("Unknown error")
+                    return
+                }
             }
         }
         else {

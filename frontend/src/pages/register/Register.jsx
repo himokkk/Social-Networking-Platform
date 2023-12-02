@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Register.css';
 import clearSelection from "../../functions/ClearSelection";
 import { PostData } from "../../functions/PostData";
+import { FilterResponse } from "../../functions/FilterResponse";
 
 const Register = () => {
     const [email, setEmail] = useState("")
@@ -106,24 +107,14 @@ const Register = () => {
                 navigate("/login")
             }
             else {
-                var jsonResponse = Promise.resolve(response.json())
-                jsonResponse
-                .then(response => {
-                    let message = JSON.stringify(response.username)
-                    if (message.includes("A user with that username already exists.")) {
-                        setRegisterError("An account with that email already exists")
-                        return
-                    }
-                    else {
-                        setRegisterError("Unknown error")
-                        return
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching or processing data:', error);
+                if (FilterResponse(response, "A user with that username already exists.")) {
+                    setRegisterError("An account with that email already exists")
                     return
-                });
-
+                }
+                else {
+                    setRegisterError("Unknown error")
+                    return
+                }
             }
         }
         else {
