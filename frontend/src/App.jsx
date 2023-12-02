@@ -4,7 +4,6 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import ResetPassword from './pages/reset/ResetPassword';
 import ErrorPage from './pages/error/ErrorPage';
-import Main from './pages/main/Main';
 import './App.css';
 import React, { useState } from 'react';
 import "@fontsource/jetbrains-mono";
@@ -30,7 +29,6 @@ function App() {
         React.createElement(Route, { path: '/login', element: React.createElement(Login, { setLoggedIn: setLoggedIn, setEmail: setEmail }) }),
         React.createElement(Route, { path: '/register', element: React.createElement(Register, { setLoggedIn: setLoggedIn, setEmail: setEmail }) }),
         React.createElement(Route, { path: '/reset', element: React.createElement(ResetPassword, {}) }),
-        React.createElement(Route, { path: '/main', element: React.createElement(Main, {}) }),
         React.createElement(Route, { path: '*', element: React.createElement(ErrorPage, {}), })
       )
     )
