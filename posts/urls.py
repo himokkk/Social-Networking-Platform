@@ -1,14 +1,14 @@
 from django.urls import path
 
 from posts.views import (
+    CommentCreateView,
+    CommentsView,
     CreatePostView,
     DeletePostView,
     ExploreFeedView,
     PostDetailView,
     PostLikeView,
     PostUnlikeView,
-    CommentCreateView,
-    CommentsView,
 )
 
 urlpatterns = [
