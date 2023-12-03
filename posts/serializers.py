@@ -18,15 +18,15 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = "__all__"
 
-    def get_author_username(self, obj) -> str | None:
+    def get_author_username(self, obj) -> str:
         if obj.author:
             return str(obj.author)
 
-    def get_likes_count(self, obj) -> int | None:
+    def get_likes_count(self, obj) -> int:
         if obj.likes:
             return obj.likes.count()
 
-    def get_comments_count(self, obj) -> int | None:
+    def get_comments_count(self, obj) -> int:
         if obj.comments:
             return obj.comments.count()
 
