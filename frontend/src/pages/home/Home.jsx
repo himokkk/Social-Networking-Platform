@@ -4,6 +4,8 @@ import { getCookie } from "../../functions/GetCookie";
 import { PostData } from "../../functions/PostData";
 import { setCookie } from "../../functions/SetCookie";
 import { FilterResponse } from "../../functions/FilterResponse";
+import { DeleteAllCookies } from "../../functions/DeleteAllCookies";
+import clearSelection from "../../functions/ClearSelection";
 import './Home.css';
 
 const Home = (props) => {
@@ -11,7 +13,20 @@ const Home = (props) => {
     const navigate = useNavigate();
 
     const onButtonClick = () => {
+        if (loggedIn) {
+            props.setLoggedIn(false)
+            DeleteAllCookies()
+            navigate("/")
+            return
+        }
         navigate("/login")
+    }
+
+    const onEnterClick=(event)=> {
+        if (event.key === "Enter") {
+            clearSelection()
+            onButtonClick()
+        }
     }
 
     const onTermsButtonClick = () => {
@@ -78,6 +93,7 @@ const Home = (props) => {
                         className={"inputButton"}
                         type="button"
                         onClick={onButtonClick}
+                        onKeyDown={(e) => onEnterClick(e) }
                         value={loggedIn ? "Log out" : "Begin now!"} />
                     <input
                         className={"debugButton"}
@@ -89,7 +105,7 @@ const Home = (props) => {
                         type="button"
                         onClick={onRefreshButtonClick}
                         value={"Refresh token"} />
-                    {(loggedIn ? <div>
+                    {(loggedIn ? <div className={"emailContainer"}>
                         Your email address is {email}
                     </div> : <div/>)}
                 </div>

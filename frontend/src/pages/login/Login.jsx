@@ -7,7 +7,7 @@ import { CheckInResponse } from "../../functions/CheckInResponse";
 import { setCookie } from "../../functions/SetCookie";
 import { FilterResponse } from "../../functions/FilterResponse";
 
-const Login = () => {
+const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
@@ -105,6 +105,8 @@ const Login = () => {
                 if (csrftoken) {
                     setCookie("csrftoken", csrftoken)
                     setCookie("refresh", refresh)
+                    props.setLoggedIn(true)
+                    props.setEmail(email)
                     console.log("Successfully logged in")
                     navigate("/")
                 }

@@ -24,3 +24,7 @@ h1 {
 .inputContainerTerms:hover {
     text-decoration: underline;
 }
+
+.emailContainer {
+    padding-top: 2%;
+}

@@ -61,6 +61,8 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cardContainer {
@@ -97,6 +99,7 @@
   align-items: center;
   justify-content: center;
   cursor: default;
+  padding: 2%;
 }
 
 .resultContainer, .historyItem { 
@@ -139,12 +142,118 @@
 
 .inputContainerButtons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   padding: 4%;
 }
 
+.inputButton {
+  border: none;
+  background: rgb(82, 22, 150);
+  color: white;
+  padding: 16px 28px;
+  font-size: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 2%;
+}
+
+.inputButton:hover, .inputButton:active {
+  background: rgb(87, 37, 180);
+}
+
+.inputButtonAlternative {
+  border: none;
+  background: rgb(16, 9, 31);
+  color: white;
+  padding: 16px 28px;
+  font-size: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 2%;
+}
+
+.inputButtonAlternative:hover, .inputButtonAlternative:active {
+  background: rgb(82, 22, 150);
+}
+
+.debugButton {
+  border: none;
+  background: rgb(9, 3, 24);
+  color: white;
+  padding: 16px 28px;
+  font-size: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 2%;
+}
+
+.debugButton:hover, .debugButton:active {
+  background: rgb(52, 15, 95);
+}
+
+@media screen and (min-width: 450px) {
+  .inputContainerButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4%;
+  }
+
+  .inputButton {
+    border: none;
+    background: rgb(82, 22, 150);
+    color: white;
+    padding: 16px 28px;
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-left: 2%;
+  }
+  
+  .inputButton:hover, .inputButton:active {
+    background: rgb(87, 37, 180);
+  }
+  
+  .inputButtonAlternative {
+    border: none;
+    background: rgb(16, 9, 31);
+    color: white;
+    padding: 16px 28px;
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-right: 2%;
+  }
+  
+  .inputButtonAlternative:hover, .inputButtonAlternative:active {
+    background: rgb(82, 22, 150);
+  }
+  
+  .debugButton {
+    border: none;
+    background: rgb(9, 3, 24);
+    color: white;
+    padding: 16px 28px;
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-left: 2%;
+    margin-top: 2%;
+  }
+  
+  .debugButton:hover, .debugButton:active {
+    background: rgb(52, 15, 95);
+  }
+}
 
 .inputContainerText > .errorLabel {
   color: white;
@@ -166,55 +275,6 @@
   min-height: 20px;
   width: 100%;
   padding-right: 4%;
-}
-
-.inputButton {
-  border: none;
-  background: rgb(82, 22, 150);
-  color: white;
-  padding: 16px 28px;
-  font-size: 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 100%;
-  margin-left: 2%;
-}
-
-.inputButton:hover, .inputButton:active {
-  background: rgb(87, 37, 180);
-}
-
-.inputButtonAlternative {
-  border: none;
-  background: rgb(16, 9, 31);
-  color: white;
-  padding: 16px 28px;
-  font-size: 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 100%;
-  margin-right: 2%;
-}
-
-.inputButtonAlternative:hover, .inputButtonAlternative:active {
-  background: rgb(82, 22, 150);
-}
-
-.debugButton {
-  border: none;
-  background: rgb(9, 3, 24);
-  color: white;
-  padding: 16px 28px;
-  font-size: 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 100%;
-  margin-left: 2%;
-  margin-top: 2%;
-}
-
-.debugButton:hover, .debugButton:active {
-  background: rgb(52, 15, 95);
 }
 
 .inputBox {
