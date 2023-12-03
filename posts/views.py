@@ -7,10 +7,10 @@ from rest_framework.generics import (
     RetrieveAPIView,
     UpdateAPIView,
 )
+from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 
 from posts.models import Post, PostComment
 from posts.serializers import (
