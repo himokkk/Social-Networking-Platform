@@ -99,9 +99,12 @@ const Login = () => {
 
         if (response) {
             if (response.ok) {
-                const csrftoken = await FilterResponse(response, "access")
+                const responseResults = await FilterResponse(response, ["access", "refresh"]);
+                const csrftoken = responseResults[0];
+                const refresh = responseResults[1];
                 if (csrftoken) {
                     setCookie("csrftoken", csrftoken)
+                    setCookie("refresh", refresh)
                     console.log("Successfully logged in")
                     navigate("/")
                 }

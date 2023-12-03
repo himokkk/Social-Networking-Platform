@@ -1,6 +1,9 @@
 import React from "react"
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../functions/GetCookie";
+import { PostData } from "../../functions/PostData";
+import { setCookie } from "../../functions/SetCookie";
+import { FilterResponse } from "../../functions/FilterResponse";
 import './Home.css';
 
 const Home = (props) => {
@@ -17,7 +20,48 @@ const Home = (props) => {
 
     const onTestButtonClick = async () => {
         const csrftoken = getCookie("csrftoken");
-        console.log(csrftoken);
+        console.log("csrftoken: ", csrftoken);
+        const refresh = getCookie("refresh");
+        console.log("refresh token: ", refresh);
+    }
+
+    const onRefreshButtonClick = async () => {
+        var response = null;
+        const refresh = getCookie("refresh");
+        try {
+            response = await PostData("http://localhost:8000/user/login/refresh/", JSON.stringify({
+                refresh: refresh
+            }))
+        }
+        catch (error) {
+            console.log("Error awaiting post: ", error);
+        }
+
+        if (response) {
+            console.log(response)
+            if (response.ok) {
+                console.log("Successful refresh")
+                const responseResults = await FilterResponse(response, ["access"]);
+                const csrftoken = responseResults[0];
+
+                if (csrftoken) {
+                    setCookie("csrftoken", csrftoken)
+                    console.log("New access set")
+                    return
+                }
+                else {
+                    console.log("New access token missing")
+                    return
+                }
+            }
+            else {
+                console.log("Unsuccessful refresh")
+            }
+        }
+        else {
+            console.log("Server not responding")
+            return
+        }
     }
 
     return <div className={"Home"}>
@@ -40,6 +84,11 @@ const Home = (props) => {
                         type="button"
                         onClick={onTestButtonClick}
                         value={"Log token"} />
+                    <input
+                        className={"debugButton"}
+                        type="button"
+                        onClick={onRefreshButtonClick}
+                        value={"Refresh token"} />
                     {(loggedIn ? <div>
                         Your email address is {email}
                     </div> : <div/>)}
