@@ -43,6 +43,10 @@ const Home = (props) => {
     const onRefreshButtonClick = async () => {
         var response = null;
         const refresh = getCookie("refresh");
+        if (!refresh) {
+            console.log("Refresh token empty")
+            return
+        }
         try {
             response = await PostData("http://localhost:8000/user/login/refresh/", JSON.stringify({
                 refresh: refresh
