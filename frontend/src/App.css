@@ -197,6 +197,23 @@
   background: rgb(82, 22, 150);
 }
 
+.debugButton {
+  border: none;
+  background: rgb(9, 3, 24);
+  color: white;
+  padding: 16px 28px;
+  font-size: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+.debugButton:hover, .debugButton:active {
+  background: rgb(52, 15, 95);
+}
+
 .inputBox {
   height: 48px;
   width: 100%;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Register.css';
 import clearSelection from "../../functions/ClearSelection";
 import { PostData } from "../../functions/PostData";
-import { FilterResponse } from "../../functions/FilterResponse";
+import { CheckInResponse } from "../../functions/CheckInResponse";
 
 const Register = () => {
     const [email, setEmail] = useState("")
@@ -107,7 +107,7 @@ const Register = () => {
                 navigate("/login")
             }
             else {
-                if (FilterResponse(response, "A user with that username already exists.")) {
+                if (CheckInResponse(response, "A user with that username already exists.")) {
                     setRegisterError("An account with that email already exists")
                     return
                 }

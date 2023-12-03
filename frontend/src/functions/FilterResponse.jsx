@@ -1,17 +1,17 @@
-export const FilterResponse = async (response, searchedString) => {
-    var jsonResponse = Promise.resolve(response.json())
-        jsonResponse
-        .then(response => {
-            let detail = JSON.stringify(response.detail)
-            if (detail.includes(searchedString)) {
-                return true
-            }
-            else {
-                return false
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching or processing data:', error);
-            return false
-        });
+export const FilterResponse = async (response, returnedField) => {
+    try {
+        const jsonResponse = await response.json();
+
+        if (Object.prototype.hasOwnProperty.call(jsonResponse, returnedField)) {
+            return jsonResponse[returnedField];
+        }
+        else {
+            console.log(`Field "${returnedField}" not found in the response.`);
+            return null;
+        }
+    }
+    catch (error) {
+        console.log('Error parsing JSON response:', error);
+        return null;
+    }
 };

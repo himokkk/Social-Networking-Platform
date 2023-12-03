@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import './Login.css';
 import clearSelection from "../../functions/ClearSelection";
 import { PostData } from "../../functions/PostData";
+import { CheckInResponse } from "../../functions/CheckInResponse";
+import { setCookie } from "../../functions/SetCookie";
 import { FilterResponse } from "../../functions/FilterResponse";
 
 const Login = () => {
@@ -97,11 +99,20 @@ const Login = () => {
 
         if (response) {
             if (response.ok) {
-                console.log("Successfully logged in")
-                navigate("/")
+                const csrftoken = await FilterResponse(response, "access")
+                if (csrftoken) {
+                    setCookie("csrftoken", csrftoken)
+                    console.log("Successfully logged in")
+                    navigate("/")
+                }
+                else {
+                    console.log("Access token not returned")
+                    setLoginError("Couldn't retrieve access token")
+                    return
+                }
             }
             else {
-                if (FilterResponse(response, "No active account found with the given credentials")) {
+                if (CheckInResponse(response, "No active account found with the given credentials")) {
                     setLoginError("No active account found with the given credentials")
                     return
                 }
