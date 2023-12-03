@@ -14,6 +14,9 @@ class Post(models.Model):
     )
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def user_has_liked(self, user) -> bool:
+        return self.likes.filter(id=user.id).exists()
+
 
 class PostLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
