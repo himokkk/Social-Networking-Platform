@@ -1,41 +1,52 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 
-from posts.models import Post
-from posts.serializers import CreatePostSerializer, PostSerializer
+from posts.models import Post, PostComment
+from posts.serializers import (
+    CommentCreateSerializer,
+    CommentsSerializer,
+    PostCreateSerializer,
+    PostSerializer,
+)
 
 
 class CreatePostView(CreateAPIView):
-    # permission_classes = [IsAuthenticated]
-    serializer_class = CreatePostSerializer
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostCreateSerializer
 
-    def create(self, request, format=None) -> Response:
-        serializer = CreatePostSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        content = serializer.data.get("content")
-        media = serializer.validated_data["media"]  # type: ignore
-        author = request.user
-        post = Post(author=author, content=content, media=media)
-        post.save()
-        return Response(CreatePostSerializer(post).data, status=status.HTTP_201_CREATED)
+    def perform_create(self, serializer) -> None:
+        serializer.save(author=self.request.user)
 
 
 class DeletePostView(DestroyAPIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-    def delete(self, request, post_id, format=None) -> Response:
-        post = get_object_or_404(Post, id=post_id)
-        if post.author != request.user:
+    def destroy(self, request: Request, *args, **kwargs) -> Response:
+        instance = self.get_object()
+        if instance.author == self.request.user:
+            self.perform_destroy(instance)
             return Response(
-                {"detail": "You are not allowed to delete this post."},
+                {"detail": "Post deleted successfully."},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        else:
+            return Response(
+                {"detail": "You don't have permission to delete this post."},
                 status=status.HTTP_403_FORBIDDEN,
             )
-        post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ExploreFeedView(ListAPIView):
@@ -49,8 +60,66 @@ class FollowingFeedView(ListAPIView):
     pass
 
 
-class PostView(RetrieveAPIView):
-    def get(self, request, post_id) -> Response:
-        post = get_object_or_404(Post, id=post_id)
-        serializer = PostSerializer(post)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class PostDetailView(RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostLikeView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+
+    def update(self, request: Request, *args, **kwargs) -> Response:
+        post = self.get_object()
+        user = request.user
+        user_has_liked_post = post.user_has_liked(user)
+        if not user_has_liked_post:
+            post.likes.add(user)
+            post.save()
+            return Response(
+                {"detail": "Post liked successfully."}, status=status.HTTP_200_OK
+            )
+        return Response(
+            {"detail": "Post liked unsuccessfully. Post was already liked"},
+            status=status.HTTP_200_OK,
+        )
+
+
+class PostUnlikeView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+
+    def update(self, request: Request, *args, **kwargs) -> Response:
+        post = self.get_object()
+        user = request.user
+        user_has_liked_post = post.user_has_liked(user)
+        if user_has_liked_post:
+            post.likes.remove(request.user)
+            post.save()
+            return Response(
+                {"detail": "Post unliked successfully."}, status=status.HTTP_200_OK
+            )
+        return Response(
+            {"detail": "Post unliked unsuccessfully. Post was already unliked"},
+            status=status.HTTP_200_OK,
+        )
+
+
+class CommentCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = CommentCreateSerializer
+
+    def perform_create(self, serializer: CommentCreateSerializer) -> None:
+        post = self.get_object()
+        serializer.save(user=self.request.user, post=post)
+
+
+class CommentsView(ListAPIView):
+    serializer_class = CommentsSerializer
+
+    def get_queryset(self) -> QuerySet:
+        post_id = self.kwargs.get("pk")
+        get_object_or_404(Post, pk=post_id)
+        queryset = PostComment.objects.filter(post_id=post_id)
+        return queryset
