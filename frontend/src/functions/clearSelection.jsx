@@ -4,4 +4,3 @@ const clearSelection = function() {
 }
     
 export default clearSelection;
-//test

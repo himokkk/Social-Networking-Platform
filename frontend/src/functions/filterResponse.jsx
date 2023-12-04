@@ -17,4 +17,3 @@ export const filterResponse = async (response, returnedFields) => {
         return null;
     }
 };
-//test 

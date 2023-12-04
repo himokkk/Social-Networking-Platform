@@ -18,4 +18,3 @@ export const postData = async (url, data) => {
         console.log("Error during rest post: ", error);
     }
 };
-//test
