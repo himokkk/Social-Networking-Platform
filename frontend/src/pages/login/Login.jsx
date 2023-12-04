@@ -49,31 +49,31 @@ const Login = (props) => {
 
         if (password.length <= 7) {
             setPasswordError("The password must be 8 characters or longer")
-            console.log("Login: Too short password entered")
+            console.log("Login: To short password entered")
             return
         }
 
         if (!(/\d/.test(password))) {
             setPasswordError("The password must contain at least one digit")
-            console.log("Register: Password doesn't contain at least one digit")
+            console.log("Login: Password doesn't contain at least one digit")
             return
         }
 
         if (!(/[A-Z]/.test(password))) {
             setPasswordError("The password must contain at least one capital letter")
-            console.log("Register: Password doesn't contain at least one capital letter")
+            console.log("Login: Password doesn't contain at least one capital letter")
             return
         }
 
         if (!(/[a-z]/.test(password))) {
             setPasswordError("The password must contain at least one small letter")
-            console.log("Register: Password doesn't contain at least one small letter")
+            console.log("Login: Password doesn't contain at least one small letter")
             return
         }
 
         if (!(/[^A-Za-z0-9]/.test(password))) {
             setPasswordError("The password must contain at least one special character");
-            console.log("Register: Password doesn't contain at least one special character");
+            console.log("Login: Password doesn't contain at least one special character");
             return;
         }
 

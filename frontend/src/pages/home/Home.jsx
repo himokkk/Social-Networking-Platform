@@ -112,7 +112,7 @@ const Home = (props) => {
                         Your email address is {email}
                     </div> : <div/>)}
                 </div>
-                <div className={"inputContainerTerms"} tabIndex="0" onClick={navigate("/terms")}>
+                <div className={"inputContainerTerms"} tabIndex="0" onClick={() => navigate("/terms")}>
                     By continuing you agree to terms and conditions
                 </div>
             </div>

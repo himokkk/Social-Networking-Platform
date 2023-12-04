@@ -51,7 +51,7 @@ const Register = () => {
 
         if (password.length <= 7) {
             setPasswordError("The password must be 8 characters or longer")
-            console.log("Register: Too short password entered")
+            console.log("Register: To short password entered")
             return
         }
 
