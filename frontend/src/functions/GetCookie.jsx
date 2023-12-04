@@ -12,3 +12,4 @@ export const getCookie = (name) => {
     }
     return cookieValue;
 };
+//test

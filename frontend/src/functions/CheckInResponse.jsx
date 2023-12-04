@@ -15,3 +15,4 @@ export const checkInResponse = async (response, searchedString) => {
             return false
         });
 };
+//test
