@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ResetPassword.css';
-import clearSelection from "../../functions/ClearSelection";
+import clearSelection from "../../functions/clearSelection";
 
 const ResetPassword = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("")
     const [emailError, setEmailError] = useState("")
     const [resetError, setResetError] = useState("")
-
-    const navigate = useNavigate();
-
-    const onLoginButtonClick = () => {
-        navigate("/login")
-    }
 
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
@@ -38,8 +34,7 @@ const ResetPassword = () => {
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
                 <div className={"titleContainer"}>
-                    &gt;
-                    Reset
+                    &gt; Reset
                 </div>
                 <div className={"inputContainerText"}>
                     <input
@@ -56,7 +51,7 @@ const ResetPassword = () => {
                         tabIndex="0"
                         className={"inputButtonAlternative"}
                         type="button"
-                        onClick={onLoginButtonClick}
+                        onClick={() => navigate("/login")}
                         value={"Login"} />
                     <input
                         tabIndex="0"

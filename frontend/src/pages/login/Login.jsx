@@ -1,29 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postData } from "../../functions/postData";
+import { checkInResponse } from "../../functions/checkInResponse";
+import { setCookie } from "../../functions/setCookie";
+import { filterResponse } from "../../functions/filterResponse";
+import clearSelection from "../../functions/clearSelection";
 import './Login.css';
-import clearSelection from "../../functions/ClearSelection";
-import { PostData } from "../../functions/PostData";
-import { CheckInResponse } from "../../functions/CheckInResponse";
-import { setCookie } from "../../functions/SetCookie";
-import { FilterResponse } from "../../functions/FilterResponse";
 
 const Login = (props) => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [loginError, setLoginError] = useState("")
     
-    const navigate = useNavigate();
-        
-    const onRegisterButtonClick = () => {
-        navigate("/register")
-    }
-
-    const onResetButtonClick = () => {
-        navigate("/reset")
-    }
-
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
             clearSelection()
@@ -86,9 +78,9 @@ const Login = (props) => {
         }
 
         // auth
-        var response = null;
+        let response = null;
         try {
-            response = await PostData("http://localhost:8000/user/login/", JSON.stringify({
+            response = await postData("http://localhost:8000/user/login/", JSON.stringify({
                 username: email,
                 password: password,
             }),)
@@ -99,7 +91,7 @@ const Login = (props) => {
 
         if (response) {
             if (response.ok) {
-                const responseResults = await FilterResponse(response, ["access", "refresh"]);
+                const responseResults = await filterResponse(response, ["access", "refresh"]);
                 const csrftoken = responseResults[0];
                 const refresh = responseResults[1];
                 if (csrftoken) {
@@ -117,7 +109,7 @@ const Login = (props) => {
                 }
             }
             else {
-                if (CheckInResponse(response, "No active account found with the given credentials")) {
+                if (checkInResponse(response, "No active account found with the given credentials")) {
                     setLoginError("No active account found with the given credentials")
                     return
                 }
@@ -137,8 +129,7 @@ const Login = (props) => {
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
                 <div className={"titleContainer"}>
-                    &gt;
-                    Login
+                    &gt; Login
                 </div>
                 <div className={"inputContainerText"}>
                     <input
@@ -166,7 +157,7 @@ const Login = (props) => {
                         tabIndex="0"
                         className={"inputButtonAlternative"}
                         type="button"
-                        onClick={onRegisterButtonClick}
+                        onClick={() => navigate("/register")}
                         value={"Register"} />
                     <input
                         tabIndex="0"
@@ -176,7 +167,7 @@ const Login = (props) => {
                         value={"Log in"} />
                 </div>
                 <label className="errorLabel">{loginError}</label>
-                <div className={"inputContainerReset"} tabIndex="0" onClick={onResetButtonClick}>
+                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate("/reset")}>
                     Forgot your password?
                 </div>
             </div>

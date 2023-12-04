@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Register.css';
-import clearSelection from "../../functions/ClearSelection";
-import { PostData } from "../../functions/PostData";
-import { CheckInResponse } from "../../functions/CheckInResponse";
+import clearSelection from "../../functions/clearSelection";
+import { postData } from "../../functions/postData";
+import { checkInResponse } from "../../functions/checkInResponse";
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -13,12 +15,6 @@ const Register = () => {
     const [passwordError, setPasswordError] = useState("")
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
     const [registerError, setRegisterError] = useState("")
-
-    const navigate = useNavigate();
-        
-    const onLoginButtonClick = () => {
-        navigate("/login")
-    }
 
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
@@ -90,9 +86,9 @@ const Register = () => {
         }
 
         // registration
-        var response = null;
+        let response = null;
         try {
-            response = await PostData("http://localhost:8000/user/register/", JSON.stringify({
+            response = await postData("http://localhost:8000/user/register/", JSON.stringify({
                 username: email,
                 password: password,
             }),)
@@ -107,7 +103,7 @@ const Register = () => {
                 navigate("/login")
             }
             else {
-                if (CheckInResponse(response, "A user with that username already exists.")) {
+                if (checkInResponse(response, "A user with that username already exists.")) {
                     setRegisterError("An account with that email already exists")
                     return
                 }
@@ -127,8 +123,7 @@ const Register = () => {
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
                 <div className={"titleContainer"}>
-                    &gt;
-                    Register
+                    &gt; Register
                 </div>
                 <div className={"inputContainerText"}>
                     <input
@@ -167,7 +162,7 @@ const Register = () => {
                         tabIndex="0"
                         className={"inputButtonAlternative"}
                         type="button"
-                        onClick={onLoginButtonClick}
+                        onClick={() => navigate("/login")}
                         value={"Log in"} />
                     <input
                         tabIndex="0"

@@ -1,4 +1,4 @@
-export const FilterResponse = async (response, returnedFields) => {
+export const filterResponse = async (response, returnedFields) => {
     try {
         const jsonResponse = await response.json();
 

@@ -1,11 +1,11 @@
 import React from "react"
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../functions/GetCookie";
-import { PostData } from "../../functions/PostData";
-import { setCookie } from "../../functions/SetCookie";
-import { FilterResponse } from "../../functions/FilterResponse";
-import { DeleteAllCookies } from "../../functions/DeleteAllCookies";
-import clearSelection from "../../functions/ClearSelection";
+import { getCookie } from "../../functions/getCookie";
+import { postData } from "../../functions/postData";
+import { setCookie } from "../../functions/setCookie";
+import { filterResponse } from "../../functions/filterResponse";
+import { deleteAllCookies } from "../../functions/deleteAllCookies";
+import clearSelection from "../../functions/clearSelection";
 import './Home.css';
 
 const Home = (props) => {
@@ -14,12 +14,15 @@ const Home = (props) => {
 
     const onButtonClick = () => {
         if (loggedIn) {
-            props.setLoggedIn(false)
-            DeleteAllCookies()
-            navigate("/")
-            return
+            props.setLoggedIn(false);
+            deleteAllCookies();
+            let login = "/login";
+            navigate(login);
         }
-        navigate("/login")
+        else {
+            navigate("/login");
+        }
+        return;
     }
 
     const onEnterClick=(event)=> {
@@ -27,10 +30,6 @@ const Home = (props) => {
             clearSelection()
             onButtonClick()
         }
-    }
-
-    const onTermsButtonClick = () => {
-        navigate("/terms")
     }
 
     const onTestButtonClick = async () => {
@@ -41,14 +40,14 @@ const Home = (props) => {
     }
 
     const onRefreshButtonClick = async () => {
-        var response = null;
+        let response = null;
         const refresh = getCookie("refresh");
         if (!refresh) {
             console.log("Refresh token empty")
             return
         }
         try {
-            response = await PostData("http://localhost:8000/user/login/refresh/", JSON.stringify({
+            response = await postData("http://localhost:8000/user/login/refresh/", JSON.stringify({
                 refresh: refresh
             }))
         }
@@ -60,7 +59,7 @@ const Home = (props) => {
             console.log(response)
             if (response.ok) {
                 console.log("Successful refresh")
-                const responseResults = await FilterResponse(response, ["access"]);
+                const responseResults = await filterResponse(response, ["access"]);
                 const csrftoken = responseResults[0];
 
                 if (csrftoken) {
@@ -113,7 +112,7 @@ const Home = (props) => {
                         Your email address is {email}
                     </div> : <div/>)}
                 </div>
-                <div className={"inputContainerTerms"} tabIndex="0" onClick={onTermsButtonClick}>
+                <div className={"inputContainerTerms"} tabIndex="0" onClick={navigate("/terms")}>
                     By continuing you agree to terms and conditions
                 </div>
             </div>

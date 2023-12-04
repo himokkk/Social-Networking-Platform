@@ -89,6 +89,9 @@
   white-space: nowrap;
   width: 100%;
   cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
 }
 
 .subtitleContainer {
@@ -100,6 +103,9 @@
   justify-content: center;
   cursor: default;
   padding: 2%;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
 }
 
 .resultContainer, .historyItem { 

@@ -1,4 +1,4 @@
-export const CheckInResponse = async (response, searchedString) => {
+export const checkInResponse = async (response, searchedString) => {
     var jsonResponse = Promise.resolve(response.json())
         jsonResponse
         .then(response => {
