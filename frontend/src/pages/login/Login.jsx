@@ -5,6 +5,8 @@ import { checkInResponse } from "../../functions/checkInResponse";
 import { setCookie } from "../../functions/setCookie";
 import { filterResponse } from "../../functions/filterResponse";
 import clearSelection from "../../functions/clearSelection";
+import InputText from "../../components/InputText";
+import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
 
 const Login = (props) => {
@@ -34,47 +36,10 @@ const Login = (props) => {
             console.log("Login: No email entered")
             return
         }
-
-        if (!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)) {
-            setEmailError("Please enter a valid email")
-            console.log("Login: Invalid email entered")
-            return
-        }
-
-        if ("" === password) {
+        else if ("" === password) {
             setPasswordError("Please enter a password")
             console.log("Login: No password entered")
             return
-        }
-
-        if (password.length <= 7) {
-            setPasswordError("The password must be 8 characters or longer")
-            console.log("Login: To short password entered")
-            return
-        }
-
-        if (!(/\d/.test(password))) {
-            setPasswordError("The password must contain at least one digit")
-            console.log("Login: Password doesn't contain at least one digit")
-            return
-        }
-
-        if (!(/[A-Z]/.test(password))) {
-            setPasswordError("The password must contain at least one capital letter")
-            console.log("Login: Password doesn't contain at least one capital letter")
-            return
-        }
-
-        if (!(/[a-z]/.test(password))) {
-            setPasswordError("The password must contain at least one small letter")
-            console.log("Login: Password doesn't contain at least one small letter")
-            return
-        }
-
-        if (!(/[^A-Za-z0-9]/.test(password))) {
-            setPasswordError("The password must contain at least one special character");
-            console.log("Login: Password doesn't contain at least one special character");
-            return;
         }
 
         // auth
@@ -131,41 +96,26 @@ const Login = (props) => {
                 <div className={"titleContainer"}>
                     &gt; Login
                 </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
+                <form>
+                    <InputText
                         value={email}
                         placeholder="Enter your email here"
                         onChange={ev => setEmail(ev.target.value)}
-                        className={"inputBox"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{emailError}</label>
-                </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
+                        onKeyDown={(e) => onEnterClick(e) }
+                        error={emailError} />
+                    <InputText
                         type="password"
                         value={password}
                         placeholder="Enter your password here"
                         onChange={ev => setPassword(ev.target.value)}
-                        className={"inputBox"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{passwordError}</label>
-                </div>
-                <div className={"inputContainerButtons"}>
-                    <input
-                        tabIndex="0"
-                        className={"inputButtonAlternative"}
-                        type="button"
-                        onClick={() => navigate("/register")}
-                        value={"Register"} />
-                    <input
-                        tabIndex="0"
-                        className={"inputButton"}
-                        type="button"
-                        onClick={onLoginButtonClick}
-                        value={"Log in"} />
-                </div>
+                        onKeyDown={(e) => onEnterClick(e) }
+                        error={passwordError} />
+                </form>
+                <InputButtonPair
+                    onClick1={() => navigate("/register")}
+                    onClick2={onLoginButtonClick}
+                    value1={"Register"}
+                    value2={"Log in"} />
                 <label className="errorLabel">{loginError}</label>
                 <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate("/reset")}>
                     Forgot your password?

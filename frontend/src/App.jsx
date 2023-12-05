@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
@@ -7,10 +8,9 @@ import ResetPassword from './pages/reset/ResetPassword';
 import Terms from './pages/terms/Terms';
 import ErrorPage from './pages/error/ErrorPage';
 import './App.css';
-import React, { useState } from 'react';
 import "@fontsource/jetbrains-mono";
 import "@fontsource/jetbrains-mono/400.css"; 
-import "@fontsource/jetbrains-mono/400-italic.css"; 
+import "@fontsource/jetbrains-mono/400-italic.css";
 
 document.addEventListener("keydown", function(e) {
   if (e.key === 's' && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
@@ -37,7 +37,6 @@ function App() {
       )
     )
   );
-  
 }
 
 export default App;

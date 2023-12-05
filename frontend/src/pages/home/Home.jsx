@@ -6,6 +6,7 @@ import { setCookie } from "../../functions/setCookie";
 import { filterResponse } from "../../functions/filterResponse";
 import { deleteAllCookies } from "../../functions/deleteAllCookies";
 import clearSelection from "../../functions/clearSelection";
+import InputButton from "../../components/InputButton";
 import './Home.css';
 
 const Home = (props) => {
@@ -44,6 +45,7 @@ const Home = (props) => {
         const refresh = getCookie("refresh");
         if (!refresh) {
             console.log("Refresh token empty")
+            props.setLoggedIn(false);
             return
         }
         try {
@@ -58,6 +60,7 @@ const Home = (props) => {
         if (response) {
             console.log(response)
             if (response.ok) {
+                props.setLoggedIn(true);
                 console.log("Successful refresh")
                 const responseResults = await filterResponse(response, ["access"]);
                 const csrftoken = responseResults[0];
@@ -68,11 +71,13 @@ const Home = (props) => {
                     return
                 }
                 else {
+                    props.setLoggedIn(false);
                     console.log("New access token missing")
                     return
                 }
             }
             else {
+                props.setLoggedIn(false);
                 console.log("Unsuccessful refresh")
             }
         }
@@ -85,31 +90,32 @@ const Home = (props) => {
     return <div className={"Home"}>
         <div className="backgroundContainer">
             <div className="mainContainer">
-                <div className={"titleContainer"}>
+                <div className={"titleContainer prevent-select"}>
                     <h1>Welcome to ziomki.tk!</h1>
                 </div>
-                <div className={"subtitleContainer"}>
+                <div className={"subtitleContainer prevent-select"}>
                     Hi Ziomkis! 👋
                 </div>
                 <div className={"buttonContainer"}>
-                    <input
+                    <InputButton
                         className={"inputButton"}
-                        type="button"
                         onClick={onButtonClick}
                         onKeyDown={(e) => onEnterClick(e) }
                         value={loggedIn ? "Log out" : "Begin now!"} />
-                    <input
+                    <InputButton
                         className={"debugButton"}
-                        type="button"
                         onClick={onTestButtonClick}
                         value={"Log token"} />
-                    <input
+                    <InputButton
                         className={"debugButton"}
-                        type="button"
+                        onClick={deleteAllCookies}
+                        value={"Clear token"} />
+                    <InputButton
+                        className={"debugButton"}
                         onClick={onRefreshButtonClick}
                         value={"Refresh token"} />
                     {(loggedIn ? <div className={"emailContainer"}>
-                        Your email address is {email}
+                        Logged in as {email}
                     </div> : <div/>)}
                 </div>
                 <div className={"inputContainerTerms"} tabIndex="0" onClick={() => navigate("/terms")}>

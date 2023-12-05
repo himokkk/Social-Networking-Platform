@@ -1,3 +1,4 @@
+/* App.css */
 :root {
   min-width: 100%;
   min-height: 100%;
@@ -44,12 +45,18 @@
   }
 }
 
+.prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .backgroundContainer {
   text-align: center;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url("img/waves.jpg");
+  background-image: url("assets/waves.jpg");
   width: 100%;
   height: 100%;
 }
@@ -70,7 +77,7 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url("img/waves.jpg");
+  background-image: url("assets/waves.jpg");
   padding: 7%;
   border-radius: 24px;
   width: 40vw;
@@ -89,9 +96,6 @@
   white-space: nowrap;
   width: 100%;
   cursor: default;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none; 
 }
 
 .subtitleContainer {
@@ -103,9 +107,6 @@
   justify-content: center;
   cursor: default;
   padding: 2%;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none; 
 }
 
 .resultContainer, .historyItem { 
@@ -316,4 +317,8 @@ input:focus, textarea:focus, button:focus, a:focus {
 
 textarea, input {
   font-family: JetBrains Mono;
+}
+
+video {
+  object-fit: cover;
 }

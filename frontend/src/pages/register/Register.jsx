@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './Register.css';
-import clearSelection from "../../functions/clearSelection";
 import { postData } from "../../functions/postData";
 import { checkInResponse } from "../../functions/checkInResponse";
+import { registerPasswordCheck } from "../../functions/registerPasswordCheck";
+import clearSelection from "../../functions/clearSelection";
+import InputText from "../../components/InputText";
+import InputButtonPair from "../../components/InputButtonPair";
+import './Register.css';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -24,64 +27,12 @@ const Register = () => {
     }
 
     const onRegisterButtonClick = async () => {
-        // reset error checks
-        setEmailError("")
-        setPasswordError("")
-        setConfirmPasswordError("")
+        // reset global error
         setRegisterError("")
+        
+        const checkSuccessful = await registerPasswordCheck(email, password, confirmPassword, setEmailError, setPasswordError, setConfirmPasswordError)
 
-
-        if ("" === email) {
-            setEmailError("Please enter your email")
-            console.log("Register: No email entered")
-            return
-        }
-
-        if (!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)) {
-            setEmailError("Please enter a valid email")
-            console.log("Register: Invalid email entered")
-            return
-        }
-
-        if ("" === password) {
-            setPasswordError("Please enter a password")
-            console.log("Register: No password entered")
-            return
-        }
-
-        if (password.length <= 7) {
-            setPasswordError("The password must be 8 characters or longer")
-            console.log("Register: To short password entered")
-            return
-        }
-
-        if (!(/\d/.test(password))) {
-            setPasswordError("The password must contain at least one digit")
-            console.log("Register: Password doesn't contain at least one digit")
-            return
-        }
-
-        if (!(/[A-Z]/.test(password))) {
-            setPasswordError("The password must contain at least one capital letter")
-            console.log("Register: Password doesn't contain at least one capital letter")
-            return
-        }
-
-        if (!(/[a-z]/.test(password))) {
-            setPasswordError("The password must contain at least one small letter")
-            console.log("Register: Password doesn't contain at least one small letter")
-            return
-        }
-
-        if (!(/[^A-Za-z0-9]/.test(password))) {
-            setPasswordError("The password must contain at least one special character");
-            console.log("Register: Password doesn't contain at least one special character");
-            return;
-        }
-
-        if (confirmPassword !== password) {
-            setConfirmPasswordError("Passwords must be identical")
-            console.log("Register: Different confirm password entered")
+        if (!checkSuccessful) {
             return
         }
 
@@ -125,52 +76,35 @@ const Register = () => {
                 <div className={"titleContainer"}>
                     &gt; Register
                 </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
+                <form>
+                    <InputText
                         value={email}
                         placeholder="Enter your email here"
                         onChange={ev => setEmail(ev.target.value)}
-                        className={"inputBox"} 
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{emailError}</label>
-                </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
+                        onKeyDown={(e) => onEnterClick(e) }
+                        error={emailError} />
+                    <InputText
                         type="password"
                         value={password}
                         placeholder="Enter your password here"
                         onChange={ev => setPassword(ev.target.value)}
-                        className={"inputBox"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{passwordError}</label>
-                </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
+                        onKeyDown={(e) => onEnterClick(e) }
+                        autocomplete="new-password"
+                        error={passwordError} />
+                    <InputText
                         type="password"
                         value={confirmPassword}
                         placeholder="Confirm your password here"
                         onChange={ev => setConfirmPassword(ev.target.value)}
-                        className={"inputBox"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{confirmPasswordError}</label>
-                </div>
-                <div className={"inputContainerButtons"}>
-                    <input
-                        tabIndex="0"
-                        className={"inputButtonAlternative"}
-                        type="button"
-                        onClick={() => navigate("/login")}
-                        value={"Log in"} />
-                    <input
-                        tabIndex="0"
-                        className={"inputButton"}
-                        type="button"
-                        onClick={onRegisterButtonClick}
-                        value={"Register"} />
-                </div>
+                        onKeyDown={(e) => onEnterClick(e) }
+                        autocomplete="new-password"
+                        error={confirmPasswordError} />
+                </form>
+                <InputButtonPair
+                    onClick1={() => navigate("/login")}
+                    onClick2={onRegisterButtonClick}
+                    value1={"Log in"}
+                    value2={"Register"} />
                 <label className="errorLabel">{registerError}</label>
             </div>
         </div>
