@@ -70,8 +70,8 @@ const Home = (props) => {
                         onClick={onRefreshButtonClick}
                         value={"Refresh token"} />
                     {(loggedIn ? <div className={"emailContainer"}>
-                        Logged in as {email}
-                    </div> : <div/>)}
+                            {email !== "" ? `Logged in as ${email}` : "Logged in"}
+                    </div> : <div/> )}
                 </div>
                 <div className={"inputContainerTerms"} tabIndex="0" onClick={() => navigate("/terms")}>
                     By continuing you agree to terms and conditions
