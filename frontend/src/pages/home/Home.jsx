@@ -1,10 +1,8 @@
 import React from "react"
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../functions/getCookie";
-import { postData } from "../../functions/postData";
-import { setCookie } from "../../functions/setCookie";
-import { filterResponse } from "../../functions/filterResponse";
 import { deleteAllCookies } from "../../functions/deleteAllCookies";
+import { refreshAccess } from "../../functions/refreshAccess";
 import clearSelection from "../../functions/clearSelection";
 import InputButton from "../../components/InputButton";
 import './Home.css';
@@ -41,50 +39,7 @@ const Home = (props) => {
     }
 
     const onRefreshButtonClick = async () => {
-        let response = null;
-        const refresh = getCookie("refresh");
-        if (!refresh) {
-            console.log("Refresh token empty")
-            props.setLoggedIn(false);
-            return
-        }
-        try {
-            response = await postData("http://localhost:8000/user/login/refresh/", JSON.stringify({
-                refresh: refresh
-            }))
-        }
-        catch (error) {
-            console.log("Error awaiting post: ", error);
-        }
-
-        if (response) {
-            console.log(response)
-            if (response.ok) {
-                props.setLoggedIn(true);
-                console.log("Successful refresh")
-                const responseResults = await filterResponse(response, ["access"]);
-                const csrftoken = responseResults[0];
-
-                if (csrftoken) {
-                    setCookie("csrftoken", csrftoken)
-                    console.log("New access set")
-                    return
-                }
-                else {
-                    props.setLoggedIn(false);
-                    console.log("New access token missing")
-                    return
-                }
-            }
-            else {
-                props.setLoggedIn(false);
-                console.log("Unsuccessful refresh")
-            }
-        }
-        else {
-            console.log("Server not responding")
-            return
-        }
+        await refreshAccess(props)
     }
 
     return <div className={"Home"}>
