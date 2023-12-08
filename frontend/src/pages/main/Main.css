@@ -2,9 +2,9 @@ body {
     color: rgb(0, 0, 0); 
   }
 
-  .posts {
-    width: 500px;
-    height:600px;
+  .content {
+    width: 800px;
+    height: 85vh;
     overflow-y: auto; 
     border: 1px solid #ccc;
     padding: 10px;
@@ -21,6 +21,16 @@ body {
     background-position: center;
     background-size: cover;
   }
+  .leftBar
+  {
+    float: left;
+    padding: 3%;
+    width: 350px;
+    height: 85vh;
+    background-color: rgb(226, 195, 255);
+    display: flex;
+    flex-direction: column;
+  }
   input{
     height: 48px;
     width: 20%;
@@ -31,5 +41,9 @@ body {
   }
   .icon-container {
     margin-left: 300px; 
+  }
+  .selectionDiv
+  {
+    cursor: pointer;
   }
  
