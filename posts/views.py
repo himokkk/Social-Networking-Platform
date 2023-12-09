@@ -13,6 +13,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from posts.models import Post, PostComment
+from posts.pagination import ExploreFeedPagination, FollowingFeedPagination
 from posts.serializers import (
     CommentCreateSerializer,
     CommentsSerializer,
@@ -51,13 +52,16 @@ class DeletePostView(DestroyAPIView):
 
 class ExploreFeedView(ListAPIView):
     # TODO SHOW POPULAR POSTS FIRST
-    queryset = Post.objects.all().order_by("-likes")
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
+    pagination_class = ExploreFeedPagination
 
 
 class FollowingFeedView(ListAPIView):
     # TODO feed of posts from users that current user follows
-    pass
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    pagination_class = FollowingFeedPagination
 
 
 class PostDetailView(RetrieveAPIView):
