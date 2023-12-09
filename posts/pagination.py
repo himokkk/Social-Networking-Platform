@@ -12,7 +12,6 @@ class ExploreFeedPagination(CursorPagination):
         last_hour = timezone.now() - timezone.timedelta(hours=1)
 
         queryset = queryset.annotate(
-            likes_count=Count('postlike', distinct=True),
             likes_last_hour=Count(
                 'postlike', filter=Q(postlike__timestamp__gte=last_hour), distinct=True
             ),
