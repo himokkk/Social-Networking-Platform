@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
+    "drf_spectacular",
     "posts",
     "users",
 ]
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 MIDDLEWARE = [
@@ -138,3 +140,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
 #     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 # }
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Social Networking Platform API',
+    'SERVE_PERMISSIONS': ['rest_framework.permissions.IsAdminUser'],
+    'SERVE_AUTHENTICATION': ['rest_framework.authentication.BasicAuthentication'],
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+    },
+}
