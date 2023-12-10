@@ -10,6 +10,7 @@ from posts.views import (
     PostDetailView,
     PostLikeView,
     PostUnlikeView,
+    ProfileFeedView,
 )
 
 urlpatterns = [
@@ -17,6 +18,7 @@ urlpatterns = [
     path("<int:pk>/delete", DeletePostView.as_view()),
     path("explore", ExploreFeedView.as_view()),
     path("following", FollowingFeedView.as_view()),
+    path("users/<int:author_pk>", ProfileFeedView.as_view()),
     path("<int:pk>", PostDetailView.as_view()),
     path("<int:pk>/like", PostLikeView.as_view()),
     path("<int:pk>/unlike", PostUnlikeView.as_view()),

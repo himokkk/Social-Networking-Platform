@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -13,7 +14,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from posts.models import Post, PostComment
-from posts.pagination import ExploreFeedPagination, FollowingFeedPagination
+from posts.pagination import ExploreFeedPagination, DefaultFeedPagination
 from posts.serializers import (
     CommentCreateSerializer,
     CommentsSerializer,
@@ -51,7 +52,6 @@ class DeletePostView(DestroyAPIView):
 
 
 class ExploreFeedView(ListAPIView):
-    # TODO SHOW POPULAR POSTS FIRST
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = ExploreFeedPagination
@@ -61,7 +61,17 @@ class FollowingFeedView(ListAPIView):
     # TODO feed of posts from users that current user follows
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    pagination_class = FollowingFeedPagination
+    pagination_class = DefaultFeedPagination
+
+
+class ProfileFeedView(ListAPIView):
+    serializer_class = PostSerializer
+    pagination_class = DefaultFeedPagination
+
+    def get_queryset(self) -> QuerySet:
+        author_id = self.kwargs.get("author_pk")
+        get_object_or_404(User, pk=author_id)
+        return Post.objects.filter(author=author_id)
 
 
 class PostDetailView(RetrieveAPIView):
