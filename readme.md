@@ -10,8 +10,9 @@ npm install
 npm run start
 
 
-## URL
-### user/
- - register/ - Register. Takes username and password.
- - login/ - Login. Takes username and password. Returns token.
- - login/refresh/ - Takes token.
+## API schema
+#### To access schema first you have to create django superuser and login to schema with credentials that you provided
+##### python manage.py createsuperuser - command to create super user
+ - schema/ - download schema.
+ - schema/swagger-ui - schema in swagger-ui style.
+ - schema/redoc - schema in docs style.
