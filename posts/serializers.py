@@ -10,18 +10,24 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    privacy = serializers.SerializerMethodField()
     author_username = serializers.SerializerMethodField()
     likes_count = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = "__all__"
-
-    def get_privacy(self, obj) -> str:
-        if obj.privacy:
-            return obj.get_privacy_display()
+        fields = (
+            "id",
+            "author",
+            "content",
+            "media",
+            "likes",
+            "comments",
+            "timestamp",
+            "author_username",
+            "likes_count",
+            "comments_count",
+        )
 
     def get_author_username(self, obj) -> str:
         if obj.author:
