@@ -131,7 +131,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 260px;
+  padding-top: 2%;
 }
 
 .inputContainerText {

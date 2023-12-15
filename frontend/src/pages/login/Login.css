@@ -13,3 +13,7 @@
 .inputContainerReset:hover {
     text-decoration: underline;
 }
+
+button {
+    background-color: black;
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ResetPassword.css';
 import clearSelection from "../../functions/clearSelection";
+import { LOGIN_URL } from "../../urls";
 
 const ResetPassword = () => {
     const navigate = useNavigate();
@@ -51,7 +52,7 @@ const ResetPassword = () => {
                         tabIndex="0"
                         className={"inputButtonAlternative"}
                         type="button"
-                        onClick={() => navigate("/login")}
+                        onClick={() => navigate(LOGIN_URL)}
                         value={"Login"} />
                     <input
                         tabIndex="0"

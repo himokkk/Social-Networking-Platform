@@ -6,10 +6,13 @@ import { setCookie } from "../../functions/setCookie";
 import { filterResponse } from "../../functions/filterResponse";
 import clearSelection from "../../functions/clearSelection";
 import InputText from "../../components/InputText";
+import InputPassword from "../../components/InputPassword";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
+import { getCookie } from "../../functions/getCookie";
+import { API_LOGIN, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
 
-const Login = (props) => {
+const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("")
@@ -17,12 +20,39 @@ const Login = (props) => {
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [loginError, setLoginError] = useState("")
+    const [passwordType, setPasswordType] = useState("password");
+    //const [darkmode, setDarkmode] = useState("true");
     
-    const onEnterClick=(event)=> {
+    const togglePasswordType = () => {
+        if(passwordType==="password")
+            setPasswordType("text")
+        else
+            setPasswordType("password")
+    }
+
+    // const toggleDarkmode = () => { // todo: check the best way of implementing darkmode
+    //     if(darkmode==="true")
+    //         setDarkmode("false")
+    //     else
+    //         setDarkmode("true")
+    //     console.log(darkmode)
+    // }
+
+    const onEnterClick = (event) => {
         if (event.key === "Enter") {
             clearSelection()
             onLoginButtonClick()
         }
+    }
+
+    const loadUsername = async () => {
+        let username = getCookie("username")
+        if (username) {
+            setEmail(username)
+            return username
+        }
+        else
+            return null
     }
 
     const onLoginButtonClick = async () => {
@@ -45,7 +75,7 @@ const Login = (props) => {
         // auth
         let response = null;
         try {
-            response = await postData("http://localhost:8000/user/login/", JSON.stringify({
+            response = await postData(API_LOGIN, JSON.stringify({
                 username: email,
                 password: password,
             }),)
@@ -62,10 +92,11 @@ const Login = (props) => {
                 if (csrftoken) {
                     setCookie("csrftoken", csrftoken)
                     setCookie("refresh", refresh)
-                    props.setLoggedIn(true)
-                    props.setEmail(email)
+                    // props.setLoggedIn(true)
+                    // props.setEmail(email)
                     console.log("Successfully logged in")
-                    navigate("/")
+                    setCookie("username", email)
+                    navigate(ROOT_URL)
                 }
                 else {
                     console.log("Access token not returned")
@@ -102,22 +133,24 @@ const Login = (props) => {
                         placeholder="Enter your email here"
                         onChange={ev => setEmail(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
+                        onFocus={() => loadUsername()}
                         error={emailError} />
-                    <InputText
-                        type="password"
+                    <InputPassword
                         value={password}
                         placeholder="Enter your password here"
                         onChange={ev => setPassword(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
+                        passwordType={passwordType}
+                        onShowPasswordClick={() => togglePasswordType()}
                         error={passwordError} />
                 </form>
                 <InputButtonPair
-                    onClick1={() => navigate("/register")}
+                    onClick1={() => navigate(REGISTER_URL)}
                     onClick2={onLoginButtonClick}
                     value1={"Register"}
                     value2={"Log in"} />
                 <label className="errorLabel">{loginError}</label>
-                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate("/reset")}>
+                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate(RESET_URL)}>
                     Forgot your password?
                 </div>
             </div>

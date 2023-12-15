@@ -5,13 +5,15 @@ const InputText = ({
     tabIndex = "0",
     value = "",
     className = "inputBox",
-    type = "text",
+    type = "password",
     placeholder = "",
     onChange = "",
     onKeyDown = "",
     error = "",
-    autoComplete = "username",
-    onFocus = () => {}
+    autoComplete = "password",
+    // passwordType = "",
+    onFocus = () => {},
+    // onShowPasswordClick = () => {}
 }) => (
     <div className={parentClass}>
         <input

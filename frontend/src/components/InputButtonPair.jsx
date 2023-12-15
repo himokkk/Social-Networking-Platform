@@ -8,7 +8,8 @@ const InputButtonPair = ({
     value2 = "",
     className1 = "inputButtonAlternative",
     className2 = "inputButton",
-    type = "button",
+    type1 = "button",
+    type2 = "submit",
     onClick1 = "",
     onClick2 = "",
 }) => (
@@ -16,13 +17,13 @@ const InputButtonPair = ({
         <InputButton
             tabIndex={tabIndex}
             className={className1}
-            type={type}
+            type={type1}
             onClick={onClick1}
             value={value1} />
         <InputButton
             tabIndex={tabIndex}
             className={className2}
-            type={type}
+            type={type2}
             onClick={onClick2}
             value={value2} />
     </div>

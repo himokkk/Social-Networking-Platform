@@ -7,6 +7,8 @@ import clearSelection from "../../functions/clearSelection";
 import InputText from "../../components/InputText";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Register.css';
+import { setCookie } from "../../functions/setCookie";
+import { API_REGISTER, LOGIN_URL } from "../../urls";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -39,7 +41,7 @@ const Register = () => {
         // registration
         let response = null;
         try {
-            response = await postData("http://localhost:8000/user/register/", JSON.stringify({
+            response = await postData(API_REGISTER, JSON.stringify({
                 username: email,
                 password: password,
             }),)
@@ -51,7 +53,8 @@ const Register = () => {
         if (response) {
             if (response.ok) {
                 console.log("Account successfully created")
-                navigate("/login")
+                setCookie("username", email)
+                navigate(LOGIN_URL)
             }
             else {
                 if (checkInResponse(response, "A user with that username already exists.")) {
@@ -101,7 +104,7 @@ const Register = () => {
                         error={confirmPasswordError} />
                 </form>
                 <InputButtonPair
-                    onClick1={() => navigate("/login")}
+                    onClick1={() => navigate(LOGIN_URL)}
                     onClick2={onRegisterButtonClick}
                     value1={"Log in"}
                     value2={"Register"} />
