@@ -1,5 +1,6 @@
+/* Login.css */
 .Login {
-    background-image: url("../../img/leaves.gif");
+    background-image: url("../../assets/leaves.gif");
 }
 
 .inputContainerReset {
@@ -11,4 +12,8 @@
 
 .inputContainerReset:hover {
     text-decoration: underline;
+}
+
+button {
+    background-color: black;
 }

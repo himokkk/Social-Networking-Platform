@@ -1,3 +1,4 @@
+/* App.css */
 :root {
   min-width: 100%;
   min-height: 100%;
@@ -44,12 +45,18 @@
   }
 }
 
+.prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .backgroundContainer {
   text-align: center;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url("img/waves.jpg");
+  background-image: url("assets/waves.jpg");
   width: 100%;
   height: 100%;
 }
@@ -61,6 +68,8 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cardContainer {
@@ -68,7 +77,7 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url("img/waves.jpg");
+  background-image: url("assets/waves.jpg");
   padding: 7%;
   border-radius: 24px;
   width: 40vw;
@@ -97,6 +106,7 @@
   align-items: center;
   justify-content: center;
   cursor: default;
+  padding: 2%;
 }
 
 .resultContainer, .historyItem { 
@@ -121,7 +131,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 260px;
+  padding-top: 2%;
 }
 
 .inputContainerText {
@@ -139,30 +149,10 @@
 
 .inputContainerButtons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   padding: 4%;
-}
-
-
-.inputContainerText > .errorLabel {
-  color: white;
-  font-size: small;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  min-height: 20px;
-}
-
-.errorLabel {
-  color: white;
-  font-size: small;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: right;
-  min-height: 20px;
-  width: 100%;
 }
 
 .inputButton {
@@ -174,7 +164,7 @@
   border-radius: 12px;
   cursor: pointer;
   width: 100%;
-  margin-left: 2%;
+  margin-top: 2%;
 }
 
 .inputButton:hover, .inputButton:active {
@@ -190,11 +180,108 @@
   border-radius: 12px;
   cursor: pointer;
   width: 100%;
-  margin-right: 2%;
+  margin-top: 2%;
 }
 
 .inputButtonAlternative:hover, .inputButtonAlternative:active {
   background: rgb(82, 22, 150);
+}
+
+.debugButton {
+  border: none;
+  background: rgb(9, 3, 24);
+  color: white;
+  padding: 16px 28px;
+  font-size: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 2%;
+}
+
+.debugButton:hover, .debugButton:active {
+  background: rgb(52, 15, 95);
+}
+
+@media screen and (min-width: 450px) {
+  .inputContainerButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4%;
+  }
+
+  .inputButton {
+    border: none;
+    background: rgb(82, 22, 150);
+    color: white;
+    padding: 16px 28px;
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-left: 2%;
+  }
+  
+  .inputButton:hover, .inputButton:active {
+    background: rgb(87, 37, 180);
+  }
+  
+  .inputButtonAlternative {
+    border: none;
+    background: rgb(16, 9, 31);
+    color: white;
+    padding: 16px 28px;
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-right: 2%;
+  }
+  
+  .inputButtonAlternative:hover, .inputButtonAlternative:active {
+    background: rgb(82, 22, 150);
+  }
+  
+  .debugButton {
+    border: none;
+    background: rgb(9, 3, 24);
+    color: white;
+    padding: 16px 28px;
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-left: 2%;
+    margin-top: 2%;
+  }
+  
+  .debugButton:hover, .debugButton:active {
+    background: rgb(52, 15, 95);
+  }
+}
+
+.inputContainerText > .errorLabel {
+  color: white;
+  font-size: small;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  min-height: 20px;
+  padding-top: 1%;
+  padding-right: 0;
+}
+
+.errorLabel {
+  color: white;
+  font-size: small;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: right;
+  min-height: 20px;
+  width: 100%;
+  padding-right: 4%;
 }
 
 .inputBox {
@@ -230,4 +317,8 @@ input:focus, textarea:focus, button:focus, a:focus {
 
 textarea, input {
   font-family: JetBrains Mono;
+}
+
+video {
+  object-fit: cover;
 }

@@ -1,31 +1,58 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postData } from "../../functions/postData";
+import { checkInResponse } from "../../functions/checkInResponse";
+import { setCookie } from "../../functions/setCookie";
+import { filterResponse } from "../../functions/filterResponse";
+import clearSelection from "../../functions/clearSelection";
+import InputText from "../../components/InputText";
+import InputPassword from "../../components/InputPassword";
+import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
-import clearSelection from "../../functions/ClearSelection";
-import { PostData } from "../../functions/PostData";
+import { getCookie } from "../../functions/getCookie";
+import { API_LOGIN, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [loginError, setLoginError] = useState("")
+    const [passwordType, setPasswordType] = useState("password");
+    //const [darkmode, setDarkmode] = useState("true");
     
-    const navigate = useNavigate();
-        
-    const onRegisterButtonClick = () => {
-        navigate("/register")
+    const togglePasswordType = () => {
+        if(passwordType==="password")
+            setPasswordType("text")
+        else
+            setPasswordType("password")
     }
 
-    const onResetButtonClick = () => {
-        navigate("/reset")
-    }
+    // const toggleDarkmode = () => { // todo: check the best way of implementing darkmode
+    //     if(darkmode==="true")
+    //         setDarkmode("false")
+    //     else
+    //         setDarkmode("true")
+    //     console.log(darkmode)
+    // }
 
-    const onEnterClick=(event)=> {
+    const onEnterClick = (event) => {
         if (event.key === "Enter") {
             clearSelection()
             onLoginButtonClick()
         }
+    }
+
+    const loadUsername = async () => {
+        let username = getCookie("username")
+        if (username) {
+            setEmail(username)
+            return username
+        }
+        else
+            return null
     }
 
     const onLoginButtonClick = async () => {
@@ -39,53 +66,16 @@ const Login = () => {
             console.log("Login: No email entered")
             return
         }
-
-        if (!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)) {
-            setEmailError("Please enter a valid email")
-            console.log("Login: Invalid email entered")
-            return
-        }
-
-        if ("" === password) {
+        else if ("" === password) {
             setPasswordError("Please enter a password")
             console.log("Login: No password entered")
             return
         }
 
-        if (password.length <= 7) {
-            setPasswordError("The password must be 8 characters or longer")
-            console.log("Login: Too short password entered")
-            return
-        }
-
-        if (!(/\d/.test(password))) {
-            setPasswordError("The password must contain at least one digit")
-            console.log("Register: Password doesn't contain at least one digit")
-            return
-        }
-
-        if (!(/[A-Z]/.test(password))) {
-            setPasswordError("The password must contain at least one capital letter")
-            console.log("Register: Password doesn't contain at least one capital letter")
-            return
-        }
-
-        if (!(/[a-z]/.test(password))) {
-            setPasswordError("The password must contain at least one small letter")
-            console.log("Register: Password doesn't contain at least one small letter")
-            return
-        }
-
-        if (!(/[^A-Za-z0-9]/.test(password))) {
-            setPasswordError("The password must contain at least one special character");
-            console.log("Register: Password doesn't contain at least one special character");
-            return;
-        }
-
         // auth
-        var response = null;
+        let response = null;
         try {
-            response = await PostData("http://localhost:8000/user/login/", JSON.stringify({
+            response = await postData(API_LOGIN, JSON.stringify({
                 username: email,
                 password: password,
             }),)
@@ -96,28 +86,33 @@ const Login = () => {
 
         if (response) {
             if (response.ok) {
-                console.log("Successfully logged in")
-                navigate("/")
+                const responseResults = await filterResponse(response, ["access", "refresh"]);
+                const csrftoken = responseResults[0];
+                const refresh = responseResults[1];
+                if (csrftoken) {
+                    setCookie("csrftoken", csrftoken)
+                    setCookie("refresh", refresh)
+                    // props.setLoggedIn(true)
+                    // props.setEmail(email)
+                    console.log("Successfully logged in")
+                    setCookie("username", email)
+                    navigate(ROOT_URL)
+                }
+                else {
+                    console.log("Access token not returned")
+                    setLoginError("Couldn't retrieve access token")
+                    return
+                }
             }
             else {
-                var jsonResponse = Promise.resolve(response.json())
-                jsonResponse
-                .then(response => {
-                    let detail = JSON.stringify(response.detail)
-                    if (detail.includes("No active account found with the given credentials")) {
-                        setLoginError("No active account found with the given credentials")
-                        return
-                    }
-                    else {
-                        setLoginError("Unknown error")
-                        return
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching or processing data:', error);
+                if (checkInResponse(response, "No active account found with the given credentials")) {
+                    setLoginError("No active account found with the given credentials")
                     return
-                });
-
+                }
+                else {
+                    setLoginError("Unknown error")
+                    return
+                }
             }
         }
         else {
@@ -130,46 +125,32 @@ const Login = () => {
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
                 <div className={"titleContainer"}>
-                    &gt;
-                    Login
+                    &gt; Login
                 </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
+                <form>
+                    <InputText
                         value={email}
                         placeholder="Enter your email here"
                         onChange={ev => setEmail(ev.target.value)}
-                        className={"inputBox"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{emailError}</label>
-                </div>
-                <div className={"inputContainerText"}>
-                    <input
-                        tabIndex="0"
-                        type="password"
+                        onKeyDown={(e) => onEnterClick(e) }
+                        onFocus={() => loadUsername()}
+                        error={emailError} />
+                    <InputPassword
                         value={password}
                         placeholder="Enter your password here"
                         onChange={ev => setPassword(ev.target.value)}
-                        className={"inputBox"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <label className="errorLabel">{passwordError}</label>
-                </div>
-                <div className={"inputContainerButtons"}>
-                    <input
-                        tabIndex="0"
-                        className={"inputButtonAlternative"}
-                        type="button"
-                        onClick={onRegisterButtonClick}
-                        value={"Register"} />
-                    <input
-                        tabIndex="0"
-                        className={"inputButton"}
-                        type="button"
-                        onClick={onLoginButtonClick}
-                        value={"Log in"} />
-                </div>
+                        onKeyDown={(e) => onEnterClick(e) }
+                        passwordType={passwordType}
+                        onShowPasswordClick={() => togglePasswordType()}
+                        error={passwordError} />
+                </form>
+                <InputButtonPair
+                    onClick1={() => navigate(REGISTER_URL)}
+                    onClick2={onLoginButtonClick}
+                    value1={"Register"}
+                    value2={"Log in"} />
                 <label className="errorLabel">{loginError}</label>
-                <div className={"inputContainerReset"} tabIndex="0" onClick={onResetButtonClick}>
+                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate(RESET_URL)}>
                     Forgot your password?
                 </div>
             </div>

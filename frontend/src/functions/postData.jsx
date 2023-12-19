@@ -1,6 +1,6 @@
-import { getCookie } from "./GetCookie";
+import { getCookie } from "./getCookie";
 
-export const PostData = async (url, data) => {
+export const postData = async (url, data) => {
     const csrftoken = getCookie("csrftoken");
     var response = null;
     try {

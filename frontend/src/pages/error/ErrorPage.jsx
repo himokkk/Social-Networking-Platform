@@ -1,31 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import './ErrorPage.css';
-import clearSelection from "../../functions/ClearSelection";
+import { useNavigate } from "react-router-dom";
+import { LOGIN_URL, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
+import clearSelection from "../../functions/clearSelection";
 
 const ErrorPage = () => {
     const navigate = useNavigate();
-        
-    const onMainButtonClick = () => {
-        navigate("/")
-    }
-
-    const onResetButtonClick = () => {
-        navigate("/reset")
-    }
-
-    const onRegisterButtonClick = () => {
-        navigate("/register")
-    }
-
-    const onLoginButtonClick = () => {
-        navigate("/login")
-    }
 
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
-            clearSelection()
-            onMainButtonClick()
+            clearSelection();
+            navigate(ROOT_URL);
         }
     }
 
@@ -33,31 +18,30 @@ const ErrorPage = () => {
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
                 <div className={"titleContainer"}>
-                    &gt;
-                    This page does not exist
+                    &gt; This page does not exist
                 </div>
                 <div className={"inputContainerButtons"}>
                     <input
                         tabIndex="0"
                         className={"inputButton"}
                         type="button"
-                        onClick={onMainButtonClick}
+                        onClick={() => navigate(ROOT_URL)}
                         value={"Main Page"}
                         onKeyDown={(e) => onEnterClick(e) } />
                     <input
                         tabIndex="0"
                         className={"inputButton"}
                         type="button"
-                        onClick={onLoginButtonClick}
+                        onClick={() => navigate(LOGIN_URL)}
                         value={"Login"} />
                     <input
                         tabIndex="0"
                         className={"inputButton"}
                         type="button"
-                        onClick={onRegisterButtonClick}
+                        onClick={() => navigate(REGISTER_URL)}
                         value={"Register"} />
                 </div>
-                <div className={"inputContainerReset"} tabIndex="0" onClick={onResetButtonClick}>
+                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate(RESET_URL)}>
                     Forgot your password?
                 </div>
             </div>
