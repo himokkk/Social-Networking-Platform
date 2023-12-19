@@ -6,7 +6,7 @@ from posts.models import Post, PostComment
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ("content", "media")
+        fields = ("content", "media", "privacy")
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -16,7 +16,18 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = (
+            "id",
+            "author",
+            "content",
+            "media",
+            "likes",
+            "comments",
+            "timestamp",
+            "author_username",
+            "likes_count",
+            "comments_count",
+        )
 
     def get_author_username(self, obj) -> str:
         if obj.author:

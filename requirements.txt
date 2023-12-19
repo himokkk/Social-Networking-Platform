@@ -1,6 +1,7 @@
 django
 djangorestframework
 djangorestframework-simplejwt
+drf-spectacular
 django-cors-headers
 pillow
 
