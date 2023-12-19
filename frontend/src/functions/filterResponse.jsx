@@ -1,7 +1,6 @@
 export const filterResponse = async (response, returnedFields) => {
     try {
         const jsonResponse = await response.json();
-
         const results = returnedFields.map(field => {
             if (Object.prototype.hasOwnProperty.call(jsonResponse, field)) {
                 return jsonResponse[field];
