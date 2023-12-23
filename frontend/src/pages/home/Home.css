@@ -1,31 +1,18 @@
 /* Home.css */
-.mainContainer {
-    background: none;
-    width: 100%;
-}
-
-h1 {
+.Home {
     display: flex;
     flex-direction: column;
-    font-weight: bolder;
-    text-align: center;
     align-items: center;
     justify-content: center;
-    width: 80%;
-    text-wrap: wrap;
+    text-align: center;
+    min-height: 100vh;
 }
 
-.inputContainerTerms {
-    color: white;
-    padding: 3%;
-    border-radius: 16px;
-    cursor: pointer;
-}
-
-.inputContainerTerms:hover {
-    text-decoration: underline;
-}
-
-.emailContainer {
-    padding-top: 2%;
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 50vw;
 }

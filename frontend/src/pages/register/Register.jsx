@@ -76,7 +76,7 @@ const Register = () => {
     return <div className={"Register"}>
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
-                <div className={"titleContainer"}>
+                <div className={"titleContainer prevent-select"}>
                     &gt; Register
                 </div>
                 <form>
@@ -108,7 +108,7 @@ const Register = () => {
                     onClick2={onRegisterButtonClick}
                     value1={"Log in"}
                     value2={"Register"} />
-                <label className="errorLabel">{registerError}</label>
+                <label className="errorLabel center-text">{registerError}</label>
             </div>
         </div>
     </div>

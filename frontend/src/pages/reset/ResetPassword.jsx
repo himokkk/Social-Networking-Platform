@@ -34,7 +34,7 @@ const ResetPassword = () => {
     return <div className={"ResetPassword"}>
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
-                <div className={"titleContainer"}>
+                <div className={"titleContainer prevent-select"}>
                     &gt; Reset
                 </div>
                 <div className={"inputContainerText"}>

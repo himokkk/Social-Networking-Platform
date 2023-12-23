@@ -21,7 +21,6 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState("")
     const [loginError, setLoginError] = useState("")
     const [passwordType, setPasswordType] = useState("password");
-    //const [darkmode, setDarkmode] = useState("true");
     
     const togglePasswordType = () => {
         if(passwordType==="password")
@@ -29,14 +28,6 @@ const Login = () => {
         else
             setPasswordType("password")
     }
-
-    // const toggleDarkmode = () => { // todo: check the best way of implementing darkmode
-    //     if(darkmode==="true")
-    //         setDarkmode("false")
-    //     else
-    //         setDarkmode("true")
-    //     console.log(darkmode)
-    // }
 
     const onEnterClick = (event) => {
         if (event.key === "Enter") {
@@ -124,7 +115,7 @@ const Login = () => {
     return <div className={"Login"}>
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
-                <div className={"titleContainer"}>
+                <div className={"titleContainer prevent-select"}>
                     &gt; Login
                 </div>
                 <form>

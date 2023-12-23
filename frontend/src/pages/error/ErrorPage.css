@@ -1,8 +1,4 @@
 /* ErrorPage.css */
-.ErrorPage {
-    background-image: url("../../assets/leaves.gif");
-}
-
 .inputContainerReset {
     color: white;
     padding: 3%;
@@ -12,4 +8,15 @@
 
 .inputContainerReset:hover {
     text-decoration: underline;
+}
+
+.inputContainerButtons {
+    flex-direction: column !important;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4%;
+
+    @media screen and (min-width: 1300px) {
+        flex-direction: row !important;
+    }
 }
