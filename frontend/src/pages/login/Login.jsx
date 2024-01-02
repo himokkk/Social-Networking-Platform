@@ -10,7 +10,7 @@ import InputText from "../../components/InputText";
 import InputPassword from "../../components/InputPassword";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
-import { API_LOGIN, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
+import { API_LOGIN, REGISTER_URL, RESET_URL, MAIN_URL } from "../../urls";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -83,11 +83,9 @@ const Login = () => {
                 if (csrftoken) {
                     setCookie("csrftoken", csrftoken)
                     setCookie("refresh", refresh)
-                    // props.setLoggedIn(true)
-                    // props.setEmail(email)
                     console.log("Successfully logged in")
                     setCookie("username", email)
-                    navigate(ROOT_URL)
+                    navigate(MAIN_URL)
                 }
                 else {
                     console.log("Access token not returned")
