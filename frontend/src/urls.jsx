@@ -3,6 +3,7 @@ export const API_LOGIN = "http://localhost:8000/user/login/";
 export const API_REGISTER = "http://localhost:8000/user/register/";
 export const API_LOGIN_REFRESH = "http://localhost:8000/user/login/refresh/";
 export const ROOT_URL = "/";
+export const MAIN_URL = "/main";
 export const LOGIN_URL = "/login";
 export const REGISTER_URL = "/register";
 export const RESET_URL = "/reset";

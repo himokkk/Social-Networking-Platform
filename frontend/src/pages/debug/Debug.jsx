@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../functions/getCookie";
 import { deleteAllCookies } from "../../functions/deleteAllCookies";
@@ -12,10 +12,11 @@ import { LOGIN_URL, TERMS_URL } from "../../urls";
 
 const Debug = () => {
     const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState("")
 
     const onButtonClick = () => {
         if (loggedIn) {
-            props.setLoggedIn(false);
+            setLoggedIn(false);
             deleteAllCookies();
         }
         navigate(LOGIN_URL);
@@ -40,7 +41,7 @@ const Debug = () => {
 
     const onRefreshButtonClick = async () => {
         toggleDarkmode()
-        await refreshAccess(props)
+        await refreshAccess()
     }
 
     return <div className={"Debug"} onKeyDown={onEnterClick}>
@@ -54,11 +55,6 @@ const Debug = () => {
                     onClick2={onButtonClick}
                     value1={"Terms"}
                     value2={"Begin now!"} />
-            </div>
-            <div className={"buttonContainer"}>
-                {(loggedIn ? <div className={"emailContainer"}>
-                    {email !== "" ? `Logged in as ${email}` : "Logged in"}
-                </div> : <div/> )}
             </div>
             <div className={"buttonContainer"}>
                 <h3> Debug section </h3>

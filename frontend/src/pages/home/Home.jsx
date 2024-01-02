@@ -1,17 +1,21 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { deleteAllCookies } from "../../functions/deleteAllCookies";
+import { getCookie } from "../../functions/getCookie";
+import { refreshAccess } from "../../functions/refreshAccess";
 import clearSelection from "../../functions/clearSelection";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Home.css';
-import { LOGIN_URL, TERMS_URL } from "../../urls";
+import { LOGIN_URL, MAIN_URL, TERMS_URL } from "../../urls";
 
 const Home = () => {
     const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState("")
+    const [email, setEmail] = useState("")
 
-    const onButtonClick = () => {
+    const onBeginButtonClick = () => {
         if (loggedIn) {
-            props.setLoggedIn(false);
+            setLoggedIn(false);
             deleteAllCookies();
         }
         navigate(LOGIN_URL);
@@ -21,9 +25,24 @@ const Home = () => {
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
             clearSelection()
-            onButtonClick()
+            onBeginButtonClick()
         }
     }
+
+    const checkIfLoggedIn = async () => {
+        let username = getCookie("username")
+        if (username) {
+            setEmail(username)
+        }
+        let loggedIn = await refreshAccess()
+        if (loggedIn) {
+            navigate(MAIN_URL)
+        }
+    }
+
+    useEffect(() => {
+        checkIfLoggedIn()
+      }, []);
 
     return <div className={"Home"} onKeyDown={onEnterClick}>
         <div className="mainContainer">
@@ -36,7 +55,7 @@ const Home = () => {
             <div className={"buttons"}>
                 <InputButtonPair
                     onClick1={() => navigate(TERMS_URL)}
-                    onClick2={onButtonClick}
+                    onClick2={onBeginButtonClick}
                     value1={"Terms"}
                     value2={"Begin now!"} />
             </div>

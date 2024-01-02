@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { postData } from "../../functions/postData";
 import { checkInResponse } from "../../functions/checkInResponse";
 import { setCookie } from "../../functions/setCookie";
+import { getCookie } from "../../functions/getCookie";
 import { filterResponse } from "../../functions/filterResponse";
 import clearSelection from "../../functions/clearSelection";
 import InputText from "../../components/InputText";
 import InputPassword from "../../components/InputPassword";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
-import { getCookie } from "../../functions/getCookie";
 import { API_LOGIN, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
 
 const Login = () => {
