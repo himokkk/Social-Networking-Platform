@@ -1,0 +1,11 @@
+/* Login.css */
+.inputContainerReset {
+    color: white;
+    padding: 3%;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.inputContainerReset:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,22 @@
+/* ErrorPage.css */
+.inputContainerReset {
+    color: white;
+    padding: 3%;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.inputContainerReset:hover {
+    text-decoration: underline;
+}
+
+.inputContainerButtons {
+    flex-direction: column !important;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4%;
+
+    @media screen and (min-width: 1300px) {
+        flex-direction: row !important;
+    }
+}

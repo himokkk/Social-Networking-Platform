@@ -1,0 +1,24 @@
+/* Debug.css */
+.buttons {
+    width: 30vw;
+}
+
+.debugButton {
+    border: none;
+    background: rgb(87, 37, 180,0.5);
+    font-size: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin: 2%;
+    padding: 4%;
+    color: white;
+    position: relative;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    min-width: 300px;
+  
+    &:hover {
+      background: rgb(82, 22, 150, 0.2);
+    }
+  }
