@@ -9,6 +9,7 @@ import InputButtonPair from "../../components/InputButtonPair";
 import './Register.css';
 import { setCookie } from "../../functions/setCookie";
 import { API_REGISTER, LOGIN_URL } from "../../urls";
+import InputPassword from "../../components/InputPassword";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Register = () => {
     const [passwordError, setPasswordError] = useState("")
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
     const [registerError, setRegisterError] = useState("")
+    const [showPassword, setShowPassword] = useState(false);
 
     const onEnterClick=(event)=> {
         if (event.key === "Enter") {
@@ -27,6 +29,12 @@ const Register = () => {
             onRegisterButtonClick()
         }
     }
+
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+        setPassword(password);
+        setConfirmPassword(confirmPassword);
+    };
 
     const onRegisterButtonClick = async () => {
         // reset global error
@@ -86,18 +94,20 @@ const Register = () => {
                         onChange={ev => setEmail(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
                         error={emailError} />
-                    <InputText
-                        type="password"
+                    <InputPassword
                         value={password}
                         placeholder="Enter your password here"
+                        showPassword={showPassword}
+                        onTogglePassword={() => handleTogglePassword()}
                         onChange={ev => setPassword(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
                         autocomplete="new-password"
                         error={passwordError} />
-                    <InputText
-                        type="password"
+                    <InputPassword
                         value={confirmPassword}
                         placeholder="Confirm your password here"
+                        showPassword={showPassword}
+                        onTogglePassword={() => handleTogglePassword()}
                         onChange={ev => setConfirmPassword(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
                         autocomplete="new-password"

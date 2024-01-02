@@ -20,14 +20,6 @@ const Login = () => {
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [loginError, setLoginError] = useState("")
-    const [passwordType, setPasswordType] = useState("password");
-    
-    const togglePasswordType = () => {
-        if(passwordType==="password")
-            setPasswordType("text")
-        else
-            setPasswordType("password")
-    }
 
     const onEnterClick = (event) => {
         if (event.key === "Enter") {
@@ -129,8 +121,6 @@ const Login = () => {
                         placeholder="Enter your password here"
                         onChange={ev => setPassword(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
-                        passwordType={passwordType}
-                        onShowPasswordClick={() => togglePasswordType()}
                         error={passwordError} />
                 </form>
                 <InputButtonPair

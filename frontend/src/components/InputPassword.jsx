@@ -1,34 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const InputText = ({
+const InputPassword = ({
     parentClass = "inputContainerText",
     tabIndex = "0",
     value = "",
     className = "inputBox",
-    type = "password",
     placeholder = "",
-    onChange = "",
-    onKeyDown = "",
+    onChange = () => {},
+    onKeyDown = () => {},
     error = "",
-    autoComplete = "password",
-    // passwordType = "",
-    onFocus = () => {},
-    // onShowPasswordClick = () => {}
-}) => (
-    <div className={parentClass}>
-        <input
-            tabIndex={tabIndex}
-            value={value}
-            className={className}
-            type={type}
-            placeholder={placeholder}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            autoComplete={autoComplete}
-            onFocus={onFocus}
-        />
-        <label className="errorLabel">{error}</label>
-    </div>
-);
+    onFocus = () => {}
+}) => {
+    const [showPassword, setShowPassword] = useState(false);
 
-export default InputText;
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleSelect = (event) => {
+        event.preventDefault();
+      };
+
+    return (
+        <div className={parentClass}>
+            <div className={"inputBoxBack"}>
+                <input
+                    tabIndex={tabIndex}
+                    value={value}
+                    className={className}
+                    type={showPassword ? "text" : "password"}
+                    placeholder={placeholder}
+                    onChange={onChange}
+                    onKeyDown={onKeyDown}
+                    autoComplete="password"
+                    onFocus={onFocus}
+                    onSelectCapture={(ev) => handleSelect(ev)}
+                />
+                <i className="inputIcon prevent-select" onClick={handleTogglePassword}>
+                    {showPassword ? '🙈' : '👁️'}
+                </i>
+            </div>
+            <label className="errorLabel">{error}</label>
+        </div>
+    );
+};
+
+export default InputPassword;
