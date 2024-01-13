@@ -1,0 +1,9 @@
+.post-container {
+    background-color: rgb(233, 216, 249);
+    padding: 10px; 
+    border-radius: 10px; 
+    margin-bottom: 20px; 
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+  }

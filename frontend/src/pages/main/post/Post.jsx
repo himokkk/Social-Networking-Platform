@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaThumbsUp, FaComment } from 'react-icons/fa';
-const Post = () => {
+import './Post.css';
+const Post = ({ data }) => {
 
-   const [postState] = useState({
-    photo: 'zyzz.jpg',
-    text: 'Tutaj jest treść posta.',
-    comments: [
-      { content: 'Pierwszy komentarz', author: 'author1' },
-      { content: 'Drugi komentarz', author: 'author2' },
-    ],
-    likes: [
-      { author: 'User1' },
-      { author: 'User2' },
-    ],
-  });
 
-  // eslint-disable-next-line
-  const showPhoto = postState.photo && <img src={postState.photo} alt="" />;
+ 
 
   return (
-    <div>
-      <img src = 'zyzz.jpg'/>
-      <p>{postState.text}</p>
-      <p>{postState.likes.length} <FaThumbsUp /> {postState.comments.length} <FaComment /></p>
+    <div className="post-container">
+      <p>Author: {data.author_username}</p>
+      <p>{data.content}</p>
+      {data.media && (
+        <img
+          src={data.media}
+          alt="Post Media"
+          style={{ width: '100%', maxWidth: '500px'}}
+        />
+      )}
+      <p>{data.likes.length} <FaThumbsUp /> {data.comments.length} <FaComment /></p>
 
     </div>
   )

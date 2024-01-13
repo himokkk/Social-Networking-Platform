@@ -1,16 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import Post from './post/Post';
 import './Main.css';
 import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { getData } from "../../functions/getData";
 
 function Main() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [postResults, setPostResults] = useState([]);
 
+  
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
+  useEffect(() => {
+    if (selectedCategory === 'posts') {
+      getData("http://localhost:8000/posts/explore")
+        .then((data) => {
+          console.log("Data received:", data);
+          renderPosts(data.results);
+          setPostResults(data.results); 
+        })
+        .catch((error) => {
+          console.error("Error getting data:", error);
+        });
+    }
+  }, [selectedCategory]);
+
+  const renderPosts = (postResults) => {
+    return (
+      <>
+        <p>POSTS</p>
+        {postResults.map(post => (
+          <Post key={post.id} data={post} />
+        ))}
+      </>
+    );
+  };
+
 
   return (
     <>
@@ -49,21 +78,9 @@ function Main() {
       <div className={'content'}>
         {selectedCategory === 'messages' && <p>Wiadomości</p>}
         {selectedCategory === 'notifications' && <p>Powiadomienia</p>}
-        {selectedCategory === 'posts' && (
-          <>
-            <p>POSTS</p>
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-          </>
-        )}
+        {selectedCategory === 'posts' && renderPosts([])
+        ? renderPosts(postResults)
+        : <p>No posts available.</p>} 
         {selectedCategory === 'friends' && <p>Znajomi</p>}
       </div>
     </>

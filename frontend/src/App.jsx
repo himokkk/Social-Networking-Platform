@@ -13,7 +13,7 @@ import './App.css';
 import "@fontsource/jetbrains-mono";
 import "@fontsource/jetbrains-mono/400.css"; 
 import "@fontsource/jetbrains-mono/400-italic.css";
-import { CHAT_URL, LOGIN_URL, REGISTER_URL, RESET_URL, ROOT_URL, TERMS_URL } from './urls';
+import { CHAT_URL, LOGIN_URL, REGISTER_URL, RESET_URL, ROOT_URL, TERMS_URL, MAIN_URL } from './urls';
 
 document.addEventListener("keydown", function(e) {
   if (e.key === 's' && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
@@ -41,7 +41,7 @@ class App extends React.Component {
           React.createElement(Route, { path: CHAT_URL, element: React.createElement(Chat, {}) }),
           React.createElement(Route, { path: RESET_URL, element: React.createElement(ResetPassword, {}) }),
           React.createElement(Route, { path: TERMS_URL, element: React.createElement(Terms, {}) }),
-          React.createElement(Route, { path: '/main', element: React.createElement(Main, {}) }),
+          React.createElement(Route, { path: MAIN_URL, element: React.createElement(Main, {}) }),
         React.createElement(Route, { path: '*', element: React.createElement(ErrorPage, {}), })
       )
       )

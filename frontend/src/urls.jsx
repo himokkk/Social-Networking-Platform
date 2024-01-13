@@ -8,3 +8,4 @@ export const REGISTER_URL = "/register";
 export const RESET_URL = "/reset";
 export const TERMS_URL = "/terms";
 export const CHAT_URL = "/chat";
+export const MAIN_URL = "/main";
