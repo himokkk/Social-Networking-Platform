@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postData } from "../../functions/postData";
+import { apiCall } from "../../functions/apiCall";
 import { checkInResponse } from "../../functions/checkInResponse";
 import { setCookie } from "../../functions/setCookie";
 import { getCookie } from "../../functions/getCookie";
@@ -58,7 +58,7 @@ const Login = () => {
         // auth
         let response = null;
         try {
-            response = await postData(API_LOGIN, JSON.stringify({
+            response = await apiCall(API_LOGIN, "POST", JSON.stringify({
                 username: email,
                 password: password,
             }),)

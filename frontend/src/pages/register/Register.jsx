@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postData } from "../../functions/postData";
+import { apiCall } from "../../functions/apiCall";
 import { checkInResponse } from "../../functions/checkInResponse";
 import { registerPasswordCheck } from "../../functions/registerPasswordCheck";
 import clearSelection from "../../functions/clearSelection";
@@ -49,7 +49,7 @@ const Register = () => {
         // registration
         let response = null;
         try {
-            response = await postData(API_REGISTER, JSON.stringify({
+            response = await apiCall(API_REGISTER, "POST", JSON.stringify({
                 username: email,
                 password: password,
             }),)
