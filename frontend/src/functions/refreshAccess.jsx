@@ -1,6 +1,6 @@
 import { getCookie } from "./getCookie";
 import { setCookie } from "./setCookie";
-import { postData } from "./postData";
+import { apiCall } from "./apiCall";
 import { filterResponse } from "./filterResponse";
 import { checkInResponse } from "./checkInResponse";
 import { deleteAllCookies } from "./deleteAllCookies";
@@ -15,7 +15,7 @@ export const refreshAccess = async () => {
         return
     }
     try {
-        response = await postData(API_LOGIN_REFRESH, JSON.stringify({
+        response = await apiCall(API_LOGIN_REFRESH, "POST", JSON.stringify({
             refresh: refresh
         }))
     }

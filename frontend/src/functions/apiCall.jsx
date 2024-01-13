@@ -1,20 +1,19 @@
 import { getCookie } from "./getCookie";
 
-export const postData = async (url, data) => {
+export const apiCall = async (url, method, data) => {
     const csrftoken = getCookie("csrftoken");
-    var response = null;
     try {
-        response = await fetch(url, {
-            method: 'POST',
+        return await fetch(url, {
+            method: method,
             headers: {
                 "X-CSRFToken": csrftoken,
                 "Content-Type": "application/json",
             },
             body: data
         });
-        return response;
     }
     catch (error) {
-        console.log("Error during rest post: ", error);
+        console.log("Error during ${method} api call: ", error);
     }
+    return null;
 };
