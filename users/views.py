@@ -74,7 +74,7 @@ class AddFriendView(UpdateAPIView):
         instance.add_friend(user)
         instance.save()
         return Response(
-            {"detail": "Post liked successfully."}, status=status.HTTP_200_OK
+            {"detail": "Friend added successfully."}, status=status.HTTP_200_OK
         )
 
 
