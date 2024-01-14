@@ -14,7 +14,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from posts.models import Post, PostComment
-from posts.pagination import ExploreFeedPagination, DefaultFeedPagination
+from posts.pagination import DefaultFeedPagination, ExploreFeedPagination
 from posts.serializers import (
     CommentCreateSerializer,
     CommentsSerializer,
