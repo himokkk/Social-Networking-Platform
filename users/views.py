@@ -10,7 +10,7 @@ from users.models import UserProfile
 from users.serializers import (
     UserProfileSerializer,
     UserProfileUpdateSerializer,
-    UserSerializer,
+    UserSerializer, UserProfileLimitedSerializer,
 )
 
 
@@ -80,6 +80,6 @@ class AddFriendView(UpdateAPIView):
 
 class SearchUserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
+    serializer_class = UserProfileLimitedSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = UserProfileFilter
