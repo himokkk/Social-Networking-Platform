@@ -7,7 +7,7 @@ import { getData } from "../../functions/getData";
 
 function Main() {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('posts');
   const [postResults, setPostResults] = useState([]);
 
   
