@@ -3,6 +3,7 @@ import './ErrorPage.css';
 import { useNavigate } from "react-router-dom";
 import { LOGIN_URL, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
 import clearSelection from "../../functions/clearSelection";
+import InputButton from "../../components/InputButton"
 
 const ErrorPage = () => {
     const navigate = useNavigate();
@@ -17,28 +18,24 @@ const ErrorPage = () => {
     return <div className={"ErrorPage"} onKeyDown={(e) => onEnterClick(e) }>
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
-                <div className={"titleContainer"}>
+                <div className={"titleContainer prevent-select"}>
                     &gt; This page does not exist
                 </div>
                 <div className={"inputContainerButtons"}>
-                    <input
-                        tabIndex="0"
+                    <InputButton
                         className={"inputButton"}
-                        type="button"
                         onClick={() => navigate(ROOT_URL)}
-                        value={"Main Page"}
-                        onKeyDown={(e) => onEnterClick(e) } />
-                    <input
-                        tabIndex="0"
+                        onKeyDown={(e) => onEnterClick(e) }
+                        value={"Main Page"} />
+                    <InputButton
                         className={"inputButton"}
-                        type="button"
                         onClick={() => navigate(LOGIN_URL)}
+                        onKeyDown={(e) => onEnterClick(e) }
                         value={"Login"} />
-                    <input
-                        tabIndex="0"
+                    <InputButton
                         className={"inputButton"}
-                        type="button"
                         onClick={() => navigate(REGISTER_URL)}
+                        onKeyDown={(e) => onEnterClick(e) }
                         value={"Register"} />
                 </div>
                 <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate(RESET_URL)}>

@@ -4,9 +4,9 @@ from django.db import models
 
 class Post(models.Model):
     class Privacy(models.IntegerChoices):
-        PUBLIC = 1, 'Public'
-        FOLLOWERS = 2, 'Followers'
-        PRIVATE = 3, 'Private'
+        PUBLIC = 1, "Public"
+        FOLLOWERS = 2, "Followers"
+        PRIVATE = 3, "Private"
 
     author = models.ForeignKey(User, related_name="post", on_delete=models.CASCADE)
     content = models.TextField(blank=True, null=True)

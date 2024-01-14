@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postData } from "../../functions/postData";
+import { apiCall } from "../../functions/apiCall";
 import { checkInResponse } from "../../functions/checkInResponse";
 import { setCookie } from "../../functions/setCookie";
+import { getCookie } from "../../functions/getCookie";
 import { filterResponse } from "../../functions/filterResponse";
 import clearSelection from "../../functions/clearSelection";
 import InputText from "../../components/InputText";
 import InputPassword from "../../components/InputPassword";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
-import { getCookie } from "../../functions/getCookie";
-import { API_LOGIN, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
+import { API_LOGIN, REGISTER_URL, RESET_URL, MAIN_URL } from "../../urls";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,23 +20,6 @@ const Login = () => {
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [loginError, setLoginError] = useState("")
-    const [passwordType, setPasswordType] = useState("password");
-    //const [darkmode, setDarkmode] = useState("true");
-    
-    const togglePasswordType = () => {
-        if(passwordType==="password")
-            setPasswordType("text")
-        else
-            setPasswordType("password")
-    }
-
-    // const toggleDarkmode = () => { // todo: check the best way of implementing darkmode
-    //     if(darkmode==="true")
-    //         setDarkmode("false")
-    //     else
-    //         setDarkmode("true")
-    //     console.log(darkmode)
-    // }
 
     const onEnterClick = (event) => {
         if (event.key === "Enter") {
@@ -75,7 +58,7 @@ const Login = () => {
         // auth
         let response = null;
         try {
-            response = await postData(API_LOGIN, JSON.stringify({
+            response = await apiCall(API_LOGIN, "POST", JSON.stringify({
                 username: email,
                 password: password,
             }),)
@@ -92,11 +75,9 @@ const Login = () => {
                 if (csrftoken) {
                     setCookie("csrftoken", csrftoken)
                     setCookie("refresh", refresh)
-                    // props.setLoggedIn(true)
-                    // props.setEmail(email)
                     console.log("Successfully logged in")
                     setCookie("username", email)
-                    navigate(ROOT_URL)
+                    navigate(MAIN_URL)
                 }
                 else {
                     console.log("Access token not returned")
@@ -124,7 +105,7 @@ const Login = () => {
     return <div className={"Login"}>
         <div className={"mainContainer"}>
             <div className={"cardContainer"}>
-                <div className={"titleContainer"}>
+                <div className={"titleContainer prevent-select"}>
                     &gt; Login
                 </div>
                 <form>
@@ -140,8 +121,6 @@ const Login = () => {
                         placeholder="Enter your password here"
                         onChange={ev => setPassword(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
-                        passwordType={passwordType}
-                        onShowPasswordClick={() => togglePasswordType()}
                         error={passwordError} />
                 </form>
                 <InputButtonPair

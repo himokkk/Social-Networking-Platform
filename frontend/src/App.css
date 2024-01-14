@@ -1,129 +1,72 @@
-/* App.css */
 :root {
-  min-width: 100%;
-  min-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  color: white;
+  min-width: 100vw;
+}
+
+html {
+  background: url("assets/waves.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   color: white;
 }
 
 .App {
-  text-align: center;
-  background-position: center center;
-  min-width: 400px;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: #8261fb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  height: 100vh;
+  width: 100vw;
 }
 
 .prevent-select {
-  -webkit-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
-.backgroundContainer {
-  text-align: center;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: url("assets/waves.jpg");
-  width: 100%;
-  height: 100%;
-}
-
 .mainContainer {
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  margin-left: auto;
-  margin-right: auto;
+  max-height: 100vh;
+  max-width: 100vw;
 }
 
 .cardContainer {
   text-align: center;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: url("assets/waves.jpg");
   padding: 7%;
   border-radius: 24px;
-  width: 40vw;
-  min-width: 400px;
-  box-shadow: 5px 5px 3px gray;
+  width: 90vw;
+  min-width: 380px;
+  box-shadow: 0px 0px 7px rgba(51, 51, 51, 0.623);
+  position: relative;
+  background: rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  margin-top: 8vh;
 }
 
-.titleContainer {
-  display: flex;
-  flex-direction: column;
-  font-size: xx-large;
-  font-weight: bolder;
-  align-items: center;
-  justify-content: center;
-  padding: 5%;
-  white-space: nowrap;
-  width: 100%;
-  cursor: default;
-}
-
+.titleContainer,
 .subtitleContainer {
   display: flex;
   flex-direction: column;
-  font-size: 24px;
-  font-weight: bolder;
   align-items: center;
   justify-content: center;
   cursor: default;
+}
+
+.titleContainer {
+  font-size: xx-large;
+  font-weight: bolder;
+  padding: 5%;
+}
+
+.subtitleContainer {
+  font-size: 24px;
+  font-weight: bolder;
   padding: 2%;
-}
-
-.resultContainer, .historyItem { 
-  flex-direction: row;
-  display: flex;
-  width: 400px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.historyContainer {
-  flex-direction: column;
-  display: flex;
-  height: 200px;
-  align-items: center;
-  flex-grow: 5;
-  justify-content: flex-start;
 }
 
 .buttonContainer {
@@ -134,191 +77,226 @@
   padding-top: 2%;
 }
 
-.inputContainerText {
+.inputContainerText,
+.inputContainerButtons {
   display: flex;
+  flex-flow: column;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  padding: 3%;
+  justify-content: flex-start; 
   width: 100%;
-}
+  padding: 4%;
+  min-width: 160px;
+  margin-left: -2%;
+  margin-right: -2%;
 
-.inputContainerText:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .inputContainerButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 4%;
+  margin-left: -4%;
 }
 
-.inputButton {
+.inputButton,
+.inputButtonAlternative {
   border: none;
-  background: rgb(82, 22, 150);
-  color: white;
-  padding: 16px 28px;
+  background: rgb(87, 37, 180,0.5);
   font-size: 24px;
   border-radius: 12px;
   cursor: pointer;
   width: 100%;
-  margin-top: 2%;
-}
+  padding: 3%;
+  margin: 2%;
+  color: white;
+  position: relative;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 
-.inputButton:hover, .inputButton:active {
-  background: rgb(87, 37, 180);
+  &:hover {
+    background: rgb(82, 22, 150, 0.2);
+  }
 }
 
 .inputButtonAlternative {
-  border: none;
-  background: rgb(16, 9, 31);
-  color: white;
-  padding: 16px 28px;
-  font-size: 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 2%;
-}
+  position: relative;
+  background: rgba(0, 0, 0, 0.65);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 
-.inputButtonAlternative:hover, .inputButtonAlternative:active {
-  background: rgb(82, 22, 150);
+  &:hover,
+  &:active {
+    background: rgb(82, 22, 150, 0.5);
+  }
 }
 
 .debugButton {
-  border: none;
   background: rgb(9, 3, 24);
-  color: white;
-  padding: 16px 28px;
-  font-size: 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 2%;
-}
 
-.debugButton:hover, .debugButton:active {
-  background: rgb(52, 15, 95);
-}
-
-@media screen and (min-width: 450px) {
-  .inputContainerButtons {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 4%;
-  }
-
-  .inputButton {
-    border: none;
-    background: rgb(82, 22, 150);
-    color: white;
-    padding: 16px 28px;
-    font-size: 24px;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    margin-left: 2%;
-  }
-  
-  .inputButton:hover, .inputButton:active {
-    background: rgb(87, 37, 180);
-  }
-  
-  .inputButtonAlternative {
-    border: none;
-    background: rgb(16, 9, 31);
-    color: white;
-    padding: 16px 28px;
-    font-size: 24px;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    margin-right: 2%;
-  }
-  
-  .inputButtonAlternative:hover, .inputButtonAlternative:active {
-    background: rgb(82, 22, 150);
-  }
-  
-  .debugButton {
-    border: none;
-    background: rgb(9, 3, 24);
-    color: white;
-    padding: 16px 28px;
-    font-size: 24px;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    margin-left: 2%;
-    margin-top: 2%;
-  }
-  
-  .debugButton:hover, .debugButton:active {
+  &:hover,
+  &:active {
     background: rgb(52, 15, 95);
   }
 }
 
-.inputContainerText > .errorLabel {
-  color: white;
-  font-size: small;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  min-height: 20px;
-  padding-top: 1%;
-  padding-right: 0;
+@media screen and (min-width: 750px) {
+  .cardContainer {
+    text-align: center;
+    padding: 7%;
+    border-radius: 24px;
+    width: 40vw;
+    min-width: 380px;
+    box-shadow: 0px 0px 7px rgba(51, 51, 51, 0.623);
+    position: relative;
+    background: rgba(0, 0, 0, 0.35);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    margin-top: 12vh;
+  }
+
+  .inputContainerButtons {
+    margin-left: -3%;
+    margin-right: -3%;
+  }
 }
 
+@media screen and (min-width: 1200px) {
+  .titleContainer {
+    font-size: 2vw;
+  }
+
+  .subtitleContainer {
+    font-size: 1.5vw;
+  }
+
+  .inputContainerButtons {
+    margin-left: -1%;
+    margin-right: -1%;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .titleContainer {
+    font-size: 1.4vw;
+  }
+
+  .subtitleContainer {
+    font-size: 1.1vw;
+  }
+
+  .buttonContainer {
+    max-width: 300px;
+  }
+
+  .inputButton,
+  .inputButtonAlternative {
+    font-size: 28px;
+  }
+}
+
+@media screen and (min-width: 2500px) {
+  .titleContainer {
+    font-size: 1vw;
+  }
+
+  .subtitleContainer {
+    font-size: 0.7vw;
+  }
+}
+.inputContainerText > .errorLabel,
 .errorLabel {
   color: white;
-  font-size: small;
+  font-size: 11px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: right;
+  text-align: left;
   min-height: 20px;
   width: 100%;
   padding-right: 4%;
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
 }
 
 .inputBox {
   height: 48px;
   width: 100%;
-  font-size: large;
+  font-size: 16px;
   border-radius: 10px;
+  border: none;
+  position: relative;
   padding-left: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background-color: #d3d3d3;
+  }
+
+  &:focus {
+    border: none;
+  }
+}
+
+.inputBoxBack {
+  height: 48px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 10px;
   border: none;
-  
+  position: relative;
+  background: none;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
-.inputBox:hover {
-  background-color: #d3d3d3;
-}
-
-.inputBox:focus {
-  border: none;
-}
-
-input:focus, textarea:focus, button:focus, a:focus {
+input:focus,
+textarea:focus,
+button:focus,
+a:focus {
   outline: 2px solid blue;
 }
 
 ::selection {
-  color: rgb(87, 37, 180);
-  background-color: #5555553d;
+  background-color: rgb(87, 37, 180);
+  color: #ffffff;
 }
 
 ::placeholder {
   color: rgba(0, 0, 0, 0.5);
 }
 
-textarea, input {
+textarea,
+input {
   font-family: JetBrains Mono;
+  padding: 1%;
 }
 
 video {
   object-fit: cover;
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  font-weight: bolder;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  text-wrap: wrap;
+}
+
+.passwordToggleIcon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate3d(-210%, -200%, 100px)
+}
+
+.inputIcon {
+  position: absolute;
+  transform: translate(-30px, 14px);
 }

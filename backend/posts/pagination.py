@@ -8,8 +8,8 @@ from rest_framework.request import Request
 
 class ExploreFeedPagination(CursorPagination):
     page_size = 50
-    cursor_query_param = 'c'
-    ordering = ['-likes_last_hour', '-comments_last_hour', '-timestamp']
+    cursor_query_param = "c"
+    ordering = ["-likes_last_hour", "-comments_last_hour", "-timestamp"]
 
     def paginate_queryset(
         self, queryset: QuerySet, request: Request, view: View | None = None
@@ -18,10 +18,10 @@ class ExploreFeedPagination(CursorPagination):
 
         queryset = queryset.annotate(
             likes_last_hour=Count(
-                'postlike', filter=Q(postlike__timestamp__gte=last_hour), distinct=True
+                "postlike", filter=Q(postlike__timestamp__gte=last_hour), distinct=True
             ),
             comments_last_hour=Count(
-                'postcomment',
+                "postcomment",
                 filter=Q(postcomment__timestamp__gte=last_hour),
                 distinct=True,
             ),
@@ -31,5 +31,5 @@ class ExploreFeedPagination(CursorPagination):
 
 class DefaultFeedPagination(CursorPagination):
     page_size = 50
-    cursor_query_param = 'c'
-    ordering = '-timestamp'
+    cursor_query_param = "c"
+    ordering = "-timestamp"
