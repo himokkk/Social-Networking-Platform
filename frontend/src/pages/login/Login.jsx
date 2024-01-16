@@ -70,10 +70,10 @@ const Login = () => {
         if (response) {
             if (response.ok) {
                 const responseResults = await filterResponse(response, ["access", "refresh"]);
-                const csrftoken = responseResults[0];
+                const access = responseResults[0];
                 const refresh = responseResults[1];
-                if (csrftoken) {
-                    setCookie("csrftoken", csrftoken)
+                if (access) {
+                    setCookie("access", access)
                     setCookie("refresh", refresh)
                     console.log("Successfully logged in")
                     setCookie("username", email)
