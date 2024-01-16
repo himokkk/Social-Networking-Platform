@@ -137,3 +137,23 @@ class CommentsView(ListAPIView):
         get_object_or_404(Post, pk=post_id)
         queryset = PostComment.objects.filter(post_id=post_id)
         return queryset
+
+
+class DeleteCommentView(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = PostComment.objects.all()
+    serializer_class = CommentsSerializer
+
+    def destroy(self, request: Request, *args, **kwargs) -> Response:
+        instance = self.get_object()
+        if instance.user == self.request.user:
+            self.perform_destroy(instance)
+            return Response(
+                {"detail": "Comment deleted successfully."},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        else:
+            return Response(
+                {"detail": "You don't have permission to delete this comment."},
+                status=status.HTTP_403_FORBIDDEN,
+            )

@@ -4,6 +4,7 @@ from posts.views import (
     CommentCreateView,
     CommentsView,
     CreatePostView,
+    DeleteCommentView,
     DeletePostView,
     ExploreFeedView,
     FollowingFeedView,
@@ -24,4 +25,5 @@ urlpatterns = [
     path("<int:pk>/unlike", PostUnlikeView.as_view()),
     path("<int:pk>/comment/create", CommentCreateView.as_view()),
     path("<int:pk>/comments", CommentsView.as_view()),
+    path("<int:post_id>/comments/<int:pk>/delete", DeleteCommentView.as_view()),
 ]
