@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../functions/getCookie";
 import { deleteAllCookies } from "../../functions/deleteAllCookies";
 import { refreshAccess } from "../../functions/refreshAccess";
+import { apiCall } from "../../functions/apiCall";
 import clearSelection from "../../functions/clearSelection";
 import InputButton from "../../components/InputButton";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Debug.css';
 import { toggleDarkmode } from "../../functions/toggleDarkmode";
-import { LOGIN_URL, TERMS_URL } from "../../urls";
+import { LOGIN_URL, TERMS_URL, API_BASE_URL } from "../../urls";
 
 const Debug = () => {
     const navigate = useNavigate();
@@ -31,8 +32,8 @@ const Debug = () => {
     }
 
     const onTestButtonClick = async () => {
-        const csrftoken = getCookie("csrftoken");
-        console.log("csrftoken: ", csrftoken);
+        const access = getCookie("access");
+        console.log("access: ", access);
         const refresh = getCookie("refresh");
         console.log("refresh token: ", refresh);
         const darkmode_cookie = getCookie("darkmode");
@@ -42,6 +43,20 @@ const Debug = () => {
     const onRefreshButtonClick = async () => {
         toggleDarkmode()
         await refreshAccess()
+    }
+
+    const createPost = async () => {
+        await apiCall(API_BASE_URL + "/posts/create", "POST", JSON.stringify({
+            content: "string",
+            media: "string",
+            privacy: 1
+        }))
+    }
+
+    const commentPost = async () => {
+        await apiCall(API_BASE_URL + "/posts/0/comment/create", "POST", JSON.stringify({
+            "content": "string",
+          }))
     }
 
     return <div className={"Debug"} onKeyDown={onEnterClick}>
@@ -74,6 +89,14 @@ const Debug = () => {
                     className={"debugButton"}
                     onClick={onRefreshButtonClick}
                     value={"Refresh token"} />
+                <InputButton
+                    className={"debugButton"}
+                    onClick={createPost}
+                    value={"Create post"} />
+                <InputButton
+                    className={"debugButton"}
+                    onClick={commentPost}
+                    value={"Comment post"} />
             </div>
         </div>
     </div>

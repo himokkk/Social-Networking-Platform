@@ -27,10 +27,10 @@ export const refreshAccess = async () => {
         if (response.ok) {
             console.log("Successful refresh")
             const responseResults = await filterResponse(response, ["access"]);
-            const csrftoken = responseResults[0];
+            const access = responseResults[0];
 
-            if (csrftoken) {
-                setCookie("csrftoken", csrftoken)
+            if (access) {
+                setCookie("access", access)
                 loggedIn = true
                 console.log("New access set")
             }

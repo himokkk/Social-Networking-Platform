@@ -1,12 +1,12 @@
 import { getCookie } from "./getCookie";
 
 export const apiCall = async (url, method, data) => {
-    const csrftoken = getCookie("csrftoken");
+    const access = getCookie("access");
     try {
         return await fetch(url, {
             method: method,
             headers: {
-                "X-CSRFToken": csrftoken,
+                "Authorization": `Bearer ${access}`,
                 "Content-Type": "application/json",
             },
             body: data
