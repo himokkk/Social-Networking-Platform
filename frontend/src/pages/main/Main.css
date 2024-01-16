@@ -1,14 +1,18 @@
 body {
     color: rgb(0, 0, 0); 
+    
   }
 
   .content {
-    width: 800px;
+    width: 35%;
     height: 85vh;
-    overflow-y: auto; 
-    border: 1px solid #ccc;
+    overflow-y: hidden; 
+    margin-left: 3%;
     padding: 10px;
     float: left;
+  }
+  .content .ps__rail-y {
+    display: none;
   }
   .upBar
   {
@@ -17,19 +21,21 @@ body {
     height: 120px;
     justify-content: space-between;
     align-items: center;
-    background-image: url("../../assets/waves.jpg");
+    
     background-position: center;
     background-size: cover;
   }
   .leftBar
   {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
     float: left;
     padding: 3%;
-    width: 350px;
-    height: 85vh;
-    background-color: rgb(226, 195, 255);
+    width: 30%;
+    height: 35%;
     display: flex;
     flex-direction: column;
+    margin-left: 3%; 
   }
   input{
     height: 48px;

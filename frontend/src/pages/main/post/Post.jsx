@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import { FaThumbsUp, FaComment, FaArrowLeft } from 'react-icons/fa';
+import { FaThumbsUp, FaComment, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import './Post.css';
 import { getData } from '../../../functions/getData';
+import { apiCall } from '../../../functions/apiCall';
 import Modal from 'react-modal';
-
+import { getCookie } from "../../../functions/getCookie";
 
 
 const Post = ({ data }) => {
@@ -11,7 +12,7 @@ const Post = ({ data }) => {
   const [commentHovered, setCommentHovered] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
-  
+  const [newCommentText, setNewCommentText] = useState('');
 
   const handleLikeClick = () => {
     console.log('Like clicked!');
@@ -29,6 +30,35 @@ const Post = ({ data }) => {
   };
   const closeModal = () => {
     setShowComments(false);
+  };
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+  
+    return `${hours}:${minutes}:${seconds}`;
+  };
+  const handleAddComment = async () => {
+    
+    try {
+      const postId = data.id;
+
+
+     await apiCall(`http://localhost:8000/posts/${postId}/comment/create`, "POST", JSON.stringify({
+        content: newCommentText,
+    }),)
+
+    setComments(prevComments => [...prevComments, {
+      username:  getCookie("username"),  
+      content: newCommentText,
+      timestamp:  getCurrentTime(),  
+    }]);
+
+      setNewCommentText('');
+    } catch (error) {
+      console.error('Błąd podczas dodawania komentarza:', error);
+    }
   };
 
   return (
@@ -94,7 +124,7 @@ const Post = ({ data }) => {
        <hr style={{ margin: '10px 0', border: '0.5px solid #ccc' }} />
      </div>
      <div className="comments-window">
-       {comments && comments.map(comment => (
+       {Array.isArray(comments) && comments.map(comment => (
          <div key={comment.id} className="comment-item">
            <p>{comment.username}:</p>
            <p>{comment.content}</p>
@@ -103,6 +133,18 @@ const Post = ({ data }) => {
          </div>
        ))}
      </div>
+     <div className="comment-input-container">
+    <input
+      type="text"
+      value={newCommentText}
+      onChange={(e) => setNewCommentText(e.target.value)}
+      placeholder="Your comment"
+      onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
+    />
+    
+      <FaArrowRight onClick={handleAddComment}/>
+   
+  </div>
    </Modal>
  )}
 </div>

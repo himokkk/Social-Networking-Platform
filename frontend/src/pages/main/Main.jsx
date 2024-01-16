@@ -4,12 +4,16 @@ import './Main.css';
 import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getData } from "../../functions/getData";
+import { LOGIN_URL } from "../../urls";
+import { refreshAccess } from "../../functions/refreshAccess";
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css'
 
 function Main() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('posts');
   const [postResults, setPostResults] = useState([]);
-
+  
   
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -32,7 +36,6 @@ function Main() {
   const renderPosts = (postResults) => {
     return (
       <>
-        <p>POSTS</p>
         {postResults.map(post => (
           <Post key={post.id} data={post} />
         ))}
@@ -40,6 +43,16 @@ function Main() {
     );
   };
 
+  const checkIfLoggedIn = async () => {
+    let loggedIn = await refreshAccess()
+    if (!loggedIn) {
+        navigate(LOGIN_URL)
+    }
+}
+
+useEffect(() => {
+    checkIfLoggedIn()
+  }, []);
 
   return (
     <>
@@ -75,14 +88,16 @@ function Main() {
           </p>
         </div>
       </div>
-      <div className={'content'}>
+      
+    <div className="content">
+      <PerfectScrollbar>
         {selectedCategory === 'messages' && <p>Wiadomości</p>}
         {selectedCategory === 'notifications' && <p>Powiadomienia</p>}
-        {selectedCategory === 'posts' && renderPosts([])
-        ? renderPosts(postResults)
-        : <p>No posts available.</p>} 
+        {selectedCategory === 'posts' && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
         {selectedCategory === 'friends' && <p>Znajomi</p>}
-      </div>
+      </PerfectScrollbar>
+    </div>
+      
     </>
   );
 }
