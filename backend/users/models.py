@@ -21,6 +21,9 @@ class UserProfile(models.Model):
 
     def get_friends(self):
         return self.friends.all()
+    
+    def is_friend(self, profile):
+        return self.friends.filter(id=profile.id).exists()
 
 
 admin.site.register(UserProfile)

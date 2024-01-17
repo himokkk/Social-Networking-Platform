@@ -1,8 +1,18 @@
 from django.urls import path
-from posts.views import (CommentCreateView, CommentsView, CreatePostView,
-                         DeletePostView, ExploreFeedView, FollowingFeedView,
-                         PostDetailView, PostLikeView, PostUnlikeView,
-                         ProfileFeedView)
+
+from posts.views import (
+    CommentCreateView,
+    CommentsView,
+    CreatePostView,
+    DeleteCommentView,
+    DeletePostView,
+    ExploreFeedView,
+    FollowingFeedView,
+    PostDetailView,
+    PostLikeView,
+    PostUnlikeView,
+    ProfileFeedView,
+)
 
 urlpatterns = [
     path("create", CreatePostView.as_view()),
@@ -15,4 +25,5 @@ urlpatterns = [
     path("<int:pk>/unlike", PostUnlikeView.as_view()),
     path("<int:pk>/comment/create", CommentCreateView.as_view()),
     path("<int:pk>/comments", CommentsView.as_view()),
+    path("<int:post_id>/comments/<int:pk>/delete", DeleteCommentView.as_view()),
 ]
