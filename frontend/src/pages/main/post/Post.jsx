@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { FaThumbsUp, FaComment, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import './Post.css';
 import { getData } from '../../../functions/getData';
@@ -8,8 +8,8 @@ import { apiCall } from '../../../functions/apiCall';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_URL } from "../../../urls";
 import { refreshAccess } from "../../../functions/refreshAccess";
+import { filterResponse } from "../../../functions/filterResponse";
 
-const TEMPORARYUSERID = 1;
 
 const Post = ({ data, onDelete }) => {
   const [likeHovered, setLikeHovered] = useState(false);
@@ -17,14 +17,31 @@ const Post = ({ data, onDelete }) => {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [newCommentText, setNewCommentText] = useState('');
-  
+  const [userId, setUserId] = useState(null);
+
   const checkIfLoggedIn = async () => {
     let loggedIn = await refreshAccess()
     if (!loggedIn) {
         useNavigate(LOGIN_URL)
     }
   }
- 
+  const getUserId = async () => {
+    try {
+      let response = await apiCall(`http://localhost:8000/user/current/`, "GET");
+      const responseResults = await filterResponse(response, ["id"]);
+
+      let userId = responseResults[0];
+
+      setUserId(userId); 
+    } catch (error) {
+      console.error('Error getting user ID:', error);
+    }
+  }; 
+  useEffect(() => {
+    getUserId();
+  }, []);
+
+  
 
   const handleLikeClick = () => {
     console.log('Like clicked!');
@@ -83,9 +100,9 @@ const Post = ({ data, onDelete }) => {
   }
 
   return (
-   
+  
     <div className="post-container">
-          {data.author === TEMPORARYUSERID && <FaTimes onClick={() => onDelete(data.id)} style = {{marginLeft: '95%'}}/>}
+          {data.author === userId && <FaTimes onClick={() => onDelete(data.id)} style = {{marginLeft: '95%'}}/>}
       <p>Author: {data.author_username}</p>
   
       <span style={{ fontSize: '20px', wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>{data.content}</span>

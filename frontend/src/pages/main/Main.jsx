@@ -1,7 +1,7 @@
 import React, { useState ,useEffect } from 'react';
 import Post from './post/Post';
 import './Main.css';
-import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell} from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell, FaPlus, FaArrowLeft} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getData } from "../../functions/getData";
 import { LOGIN_URL } from "../../urls";
@@ -9,12 +9,14 @@ import { refreshAccess } from "../../functions/refreshAccess";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import { apiCall } from '../../functions/apiCall';
+import Modal from 'react-modal';
+
 
 function Main() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('posts');
   const [postResults, setPostResults] = useState([]);
-  
+  const [showCreatePostModal, setShowCreatePostModal] = useState(false);
   
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -106,6 +108,30 @@ useEffect(() => {
         {selectedCategory === 'friends' && <p>Znajomi</p>}
       </PerfectScrollbar>
     </div>
+    <FaPlus onClick={() => setShowCreatePostModal(prevState => !prevState)} />
+    {showCreatePostModal && 
+    <Modal 
+    isOpen={showCreatePostModal}
+    onRequestClose={() => setShowCreatePostModal(false)}
+    style={{
+      content: {
+        width: '500px',
+        margin: 'auto',
+        backgroundColor: '#f0f0f0',
+        borderRadius: '10px',
+        overflow: 'hidden',
+      },
+    }}>
+       <div className="modal-header">
+       <div onClick={() => setShowCreatePostModal(false)}>
+         <FaArrowLeft />
+       </div>
+       <h3>Create Post</h3>
+       <hr style={{ margin: '10px 0', border: '0.5px solid #ccc' }} />
+     </div>
+     <input type="file" accept="image/*" title="Choose file" />
+ 
+      </Modal>}
       
     </>
   );

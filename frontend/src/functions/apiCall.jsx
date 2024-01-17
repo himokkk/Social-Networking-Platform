@@ -8,7 +8,6 @@ export const apiCall = async (url, method, data) => {
             headers: {
                 "Authorization": `Bearer ${access}`,
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
             body: data
         });
