@@ -1,17 +1,16 @@
 import django_filters
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import (CreateAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
+from rest_framework.views import APIView
 from users.filters import UserProfileFilter
 from users.models import UserProfile
-from users.serializers import (
-    UserProfileSerializer,
-    UserProfileUpdateSerializer,
-    UserSerializer, UserProfileLimitedSerializer,
-)
+from users.serializers import (UserProfileLimitedSerializer,
+                               UserProfileSerializer,
+                               UserProfileUpdateSerializer, UserSerializer)
 
 
 class RegisterView(CreateAPIView):
@@ -33,6 +32,18 @@ class RegisterView(CreateAPIView):
 class UserProfileRetrieveView(RetrieveAPIView):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
+
+
+class UserProfileRetrieveByTokenView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+
+    def get(self, request):
+        profile = UserProfile.objects.get(user=request.user)
+        serializer = self.serializer_class(profile)
+        return Response(serializer.data)
 
 
 class UserProfileUpdateView(UpdateAPIView):

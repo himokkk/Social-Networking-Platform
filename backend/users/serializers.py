@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
-
 from users.models import UserProfile
 
 
@@ -10,6 +8,7 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password"]
+
 
 class UserProfileLimitedSerializer(ModelSerializer):
     image_url = SerializerMethodField()
@@ -34,7 +33,7 @@ class UserProfileSerializer(ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ["description", "birth", "image_url", "username"]
+        fields = ["id", "description", "birth", "image_url", "username"]
 
     def get_image_url(self, obj):
         if obj.image:
