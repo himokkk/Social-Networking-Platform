@@ -70,11 +70,10 @@ const Login = () => {
         if (response) {
             if (response.ok) {
                 const responseResults = await filterResponse(response, ["access", "refresh"]);
-                const token = responseResults[0];
-               console.log(responseResults);
+                const access = responseResults[0];
                 const refresh = responseResults[1];
-                if (token) {
-                    setCookie("token", token)
+                if (access) {
+                    setCookie("access", access)
                     setCookie("refresh", refresh)
                     console.log("Successfully logged in")
                     setCookie("username", email)
