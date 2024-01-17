@@ -1,13 +1,14 @@
 import React, { useState ,useEffect } from 'react';
 import Post from './post/Post';
 import './Main.css';
-import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getData } from "../../functions/getData";
 import { LOGIN_URL } from "../../urls";
 import { refreshAccess } from "../../functions/refreshAccess";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css'
+import { apiCall } from '../../functions/apiCall';
 
 function Main() {
   const navigate = useNavigate();
@@ -18,12 +19,17 @@ function Main() {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+  const handleDeletePost  =  async (postId) =>
+  {
+    {checkIfLoggedIn}
+    await apiCall(`http://localhost:8000/posts/${postId}/delete`, "DELETE");
+    setPostResults(prevPostResults => prevPostResults.filter(post => post.id !== postId));
+  }
 
   useEffect(() => {
     if (selectedCategory === 'posts') {
       getData("http://localhost:8000/posts/explore")
         .then((data) => {
-          console.log("Data received:", data);
           renderPosts(data.results);
           setPostResults(data.results); 
         })
@@ -37,7 +43,10 @@ function Main() {
     return (
       <>
         {postResults.map(post => (
-          <Post key={post.id} data={post} />
+          <div key={post.id}>
+            <Post data={post} onDelete={handleDeletePost}/>
+        
+          </div>
         ))}
       </>
     );

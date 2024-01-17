@@ -1,22 +1,35 @@
 import React, {useState} from 'react';
-import { FaThumbsUp, FaComment, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaThumbsUp, FaComment, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import './Post.css';
 import { getData } from '../../../functions/getData';
-import { apiCall } from '../../../functions/apiCall';
 import Modal from 'react-modal';
 import { getCookie } from "../../../functions/getCookie";
+import { apiCall } from '../../../functions/apiCall';
+import { useNavigate } from 'react-router-dom';
+import { LOGIN_URL } from "../../../urls";
+import { refreshAccess } from "../../../functions/refreshAccess";
 
+const TEMPORARYUSERID = 1;
 
-const Post = ({ data }) => {
+const Post = ({ data, onDelete }) => {
   const [likeHovered, setLikeHovered] = useState(false);
   const [commentHovered, setCommentHovered] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [newCommentText, setNewCommentText] = useState('');
+  
+  const checkIfLoggedIn = async () => {
+    let loggedIn = await refreshAccess()
+    if (!loggedIn) {
+        useNavigate(LOGIN_URL)
+    }
+  }
+ 
 
   const handleLikeClick = () => {
     console.log('Like clicked!');
   };
+
 
   const handleCommentClick = async () => {
     try {
@@ -40,7 +53,9 @@ const Post = ({ data }) => {
     return `${hours}:${minutes}:${seconds}`;
   };
   const handleAddComment = async () => {
-    
+
+       {checkIfLoggedIn()}
+
     try {
       const postId = data.id;
 
@@ -60,11 +75,19 @@ const Post = ({ data }) => {
       console.error('Błąd podczas dodawania komentarza:', error);
     }
   };
+  const handleDeleteComment = async(commentId) =>
+  {
+    {checkIfLoggedIn()}
+    
+    await apiCall(`http://localhost:8000/posts/comment/${commentId}/delete`, "DELETE");
+  }
 
   return (
    
     <div className="post-container">
+          {data.author === TEMPORARYUSERID && <FaTimes onClick={() => onDelete(data.id)} style = {{marginLeft: '95%'}}/>}
       <p>Author: {data.author_username}</p>
+  
       <span style={{ fontSize: '20px', wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>{data.content}</span>
       {data.media && (
         <img
@@ -129,6 +152,7 @@ const Post = ({ data }) => {
            <p>{comment.username}:</p>
            <p>{comment.content}</p>
            <p>{comment.timestamp}</p>
+           {comment.username === getCookie("username") && <FaTimes onClick={() => handleDeleteComment(comment.id)} />}
            <hr style={{ margin: '10px 0', border: '0.5px solid #ccc' }} />
          </div>
        ))}
@@ -142,7 +166,7 @@ const Post = ({ data }) => {
       onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
     />
     
-      <FaArrowRight onClick={handleAddComment}/>
+      <FaArrowRight style = {{marginLeft: '15px'}} onClick={handleAddComment}/>
    
   </div>
    </Modal>
@@ -152,4 +176,4 @@ const Post = ({ data }) => {
     </div>
   )
 }
-export default Post
+export default Post;
