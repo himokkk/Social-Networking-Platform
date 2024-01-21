@@ -6,7 +6,6 @@ export const ROOT_URL = "/";
 export const MAIN_URL = "/main";
 export const LOGIN_URL = "/login";
 export const REGISTER_URL = "/register";
-export const RESET_URL = "/reset";
 export const TERMS_URL = "/terms";
 export const DEBUG_URL = "/debug";
 export const CHAT_URL = "/chat";
