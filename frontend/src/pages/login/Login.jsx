@@ -10,7 +10,7 @@ import InputText from "../../components/InputText";
 import InputPassword from "../../components/InputPassword";
 import InputButtonPair from "../../components/InputButtonPair";
 import './Login.css';
-import { API_LOGIN, REGISTER_URL, RESET_URL, MAIN_URL } from "../../urls";
+import { API_LOGIN, REGISTER_URL, MAIN_URL } from "../../urls";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -129,9 +129,6 @@ const Login = () => {
                     value1={"Register"}
                     value2={"Log in"} />
                 <label className="errorLabel">{loginError}</label>
-                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate(RESET_URL)}>
-                    Forgot your password?
-                </div>
             </div>
         </div>
     </div>
