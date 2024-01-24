@@ -4,7 +4,6 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Chat from './pages/chat/Chat';
-import ResetPassword from './pages/reset/ResetPassword';
 import Terms from './pages/terms/Terms';
 import Debug from './pages/debug/Debug';
 import ErrorPage from './pages/error/ErrorPage';
@@ -39,7 +38,6 @@ class App extends React.Component {
           React.createElement(Route, { path: urls.LOGIN_URL, element: React.createElement(Login, {}) }),
           React.createElement(Route, { path: urls.REGISTER_URL, element: React.createElement(Register, {}) }),
           React.createElement(Route, { path: urls.CHAT_URL, element: React.createElement(Chat, {}) }),
-          React.createElement(Route, { path: urls.RESET_URL, element: React.createElement(ResetPassword, {}) }),
           React.createElement(Route, { path: urls.TERMS_URL, element: React.createElement(Terms, {}) }),
           React.createElement(Route, { path: urls.DEBUG_URL, element: React.createElement(Debug, {}) }),
           React.createElement(Route, { path: urls.MAIN_URL, element: React.createElement(Main, {}) }),

@@ -48,13 +48,12 @@ const Debug = () => {
     const createPost = async () => {
         await apiCall(API_BASE_URL + "/posts/create", "POST", JSON.stringify({
             content: "string",
-            media: "string",
             privacy: 1
         }))
     }
 
     const commentPost = async () => {
-        await apiCall(API_BASE_URL + "/posts/0/comment/create", "POST", JSON.stringify({
+        await apiCall(API_BASE_URL + "/posts/1/comment/create", "POST", JSON.stringify({
             "content": "string",
           }))
     }

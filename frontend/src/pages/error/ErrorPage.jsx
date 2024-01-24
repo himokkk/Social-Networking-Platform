@@ -1,7 +1,7 @@
 import React from "react";
 import './ErrorPage.css';
 import { useNavigate } from "react-router-dom";
-import { LOGIN_URL, REGISTER_URL, RESET_URL, ROOT_URL } from "../../urls";
+import { LOGIN_URL, REGISTER_URL, ROOT_URL } from "../../urls";
 import clearSelection from "../../functions/clearSelection";
 import InputButton from "../../components/InputButton"
 
@@ -37,9 +37,6 @@ const ErrorPage = () => {
                         onClick={() => navigate(REGISTER_URL)}
                         onKeyDown={(e) => onEnterClick(e) }
                         value={"Register"} />
-                </div>
-                <div className={"inputContainerReset"} tabIndex="0" onClick={() => navigate(RESET_URL)}>
-                    Forgot your password?
                 </div>
             </div>
         </div>

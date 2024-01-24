@@ -12,6 +12,7 @@ from posts.views import (
     PostLikeView,
     PostUnlikeView,
     ProfileFeedView,
+    PostReportCreateView,
 )
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     path("<int:pk>/comment/create", CommentCreateView.as_view()),
     path("<int:pk>/comments", CommentsView.as_view()),
     path("<int:post_id>/comments/<int:pk>/delete", DeleteCommentView.as_view()),
+    path("<int:pk>/report", PostReportCreateView.as_view()),
 ]

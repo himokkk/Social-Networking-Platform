@@ -14,13 +14,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from posts.models import Post, PostComment
+from posts.models import Post, PostComment, PostReport
 from posts.pagination import DefaultFeedPagination, ExploreFeedPagination
 from posts.serializers import (
     CommentCreateSerializer,
     CommentsSerializer,
     PostCreateSerializer,
     PostSerializer,
+    PostReportSerializer,
 )
 from users.models import UserProfile
 
@@ -163,6 +164,25 @@ class PostUnlikeView(PostObjectMixin, UpdateAPIView):
             {"detail": "Post unliked unsuccessfully. Post was already unliked"},
             status=status.HTTP_200_OK,
         )
+
+
+class PostReportCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = PostReport.objects.all()
+    serializer_class = PostReportSerializer
+
+    def perform_create(self, serializer: PostReportSerializer) -> None:
+        post_id = self.kwargs.get("pk")
+        post = get_object_or_404(Post, pk=post_id)
+        user_profile = self.request.user.profile  # type: ignore
+        if (
+            post.privacy == Post.Privacy.FOLLOWERS
+            and not user_profile.is_friend(post.author)
+        ) or (post.privacy == Post.Privacy.PRIVATE and post.author != user_profile):
+            raise PermissionDenied(
+                {"detail": "You don't have permission to report this post."}
+            )
+        serializer.save(user=user_profile, post=post)
 
 
 class CommentCreateView(PostObjectMixin, CreateAPIView):
