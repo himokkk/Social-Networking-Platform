@@ -44,6 +44,24 @@ class UserProfileSerializer(ModelSerializer):
             return obj.user.username
 
 
+class UserProfileWithFriendsSerializer(ModelSerializer):
+    image_url = SerializerMethodField()
+    username = SerializerMethodField()
+    friends = UserProfileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ["id", "description", "birth", "image_url", "username", "friends"]
+
+    def get_image_url(self, obj):
+        if obj.image:
+            return obj.image.url
+
+    def get_username(self, obj):
+        if obj.user:
+            return obj.user.username
+
+
 class UserProfileUpdateSerializer(ModelSerializer):
     class Meta:
         model = UserProfile

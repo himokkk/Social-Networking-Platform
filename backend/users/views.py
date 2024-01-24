@@ -10,7 +10,7 @@ from users.filters import UserProfileFilter
 from users.models import UserProfile
 from users.serializers import (UserProfileLimitedSerializer,
                                UserProfileSerializer,
-                               UserProfileUpdateSerializer, UserSerializer)
+                               UserProfileUpdateSerializer, UserSerializer, UserProfileWithFriendsSerializer)
 
 
 class RegisterView(CreateAPIView):
@@ -37,7 +37,7 @@ class UserProfileRetrieveView(RetrieveAPIView):
 class UserProfileRetrieveByTokenView(APIView):
     permission_classes = [IsAuthenticated]
 
-    serializer_class = UserProfileSerializer
+    serializer_class = UserProfileWithFriendsSerializer
     queryset = UserProfile.objects.all()
 
     def get(self, request):
