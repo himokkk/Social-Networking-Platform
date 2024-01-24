@@ -1,0 +1,28 @@
+.notification-container {
+    background: rgba(255, 255, 255, 0.55);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+
+    .notification-header p {
+        font-weight: bold;
+    }
+
+.close-icon {
+    cursor: pointer;
+}
+
+.notification-content {
+    margin-top: 10px;
+}

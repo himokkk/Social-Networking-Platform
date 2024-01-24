@@ -1,5 +1,6 @@
 import React, { useState ,useEffect } from 'react';
 import Post from './post/Post';
+import Notification from './notification/Notification';
 import './Main.css';
 import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell, FaPlus, FaArrowLeft} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ function Main() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('posts');
   const [postResults, setPostResults] = useState([]);
+  const [notificationResults, setNotificationResults] = useState([]);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
   
   const handleCategoryClick = (category) => {
@@ -38,8 +40,46 @@ function Main() {
         .catch((error) => {
           console.error("Error getting data:", error);
         });
+      }
+    //else if (selectedCategory === 'notifications') {
+    //  getData("http://localhost:8000/notifications/explore")
+    //    .then((data) => {
+    //      renderNotifications(data.results);
+    //      setNotificationResults(data.results);
+    //    })
+    //    .catch((error) => {
+    //      console.error("Error getting notifications:", error);
+    //    });
+    //}
+    else if (selectedCategory === 'notifications') {
+        getFakeNotifications()
+            .then((data) => {
+                console.log('Fake notifications:', data);
+                renderNotifications(data);
+                setNotificationResults(data);
+            })
+            .catch((error) => {
+                console.error('Error getting fake notifications:', error);
+            });
     }
   }, [selectedCategory]);
+
+    // Placeholder function to get fake notifications for testing
+    const getFakeNotifications = async () => {
+        try {
+            // Your array with test notifications
+            const fakeNotifications = [
+                { id: 1, type: 'like', content: 'Someone liked your post', link: '/posts/123' },
+                { id: 2, type: 'comment', content: 'You have a new comment', link: '/posts/456#comment-789' },
+                // Add other test notifications as needed
+            ];
+
+            return fakeNotifications;
+        } catch (error) {
+            console.error('Error during fetching fake notifications:', error);
+            throw error;
+        }
+    };
 
   const renderPosts = (postResults) => {
     return (
@@ -53,6 +93,18 @@ function Main() {
       </>
     );
   };
+
+    const renderNotifications = (notificationResults) => {
+        return (
+            <>
+                {notificationResults.map((notification) => (
+                    <div key={notification.id} className="notification-item">
+                        <Notification data={notification} />
+                    </div>
+                ))}
+            </>
+        );
+    };
 
   const checkIfLoggedIn = async () => {
     let loggedIn = await refreshAccess()
@@ -103,7 +155,8 @@ useEffect(() => {
     <div className="content">
       <PerfectScrollbar>
         {selectedCategory === 'messages' && <p>Wiadomości</p>}
-        {selectedCategory === 'notifications' && <p>Powiadomienia</p>}
+        {selectedCategory === 'notifications' && (renderNotifications([]) ? renderNotifications(notificationResults) : <p>no notifications available.</p>)}
+        {/*{selectedCategory === 'notifications' && <p>Powiadomienia</p>}*/}
         {selectedCategory === 'posts' && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
         {selectedCategory === 'friends' && <p>Znajomi</p>}
       </PerfectScrollbar>
