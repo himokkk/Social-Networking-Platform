@@ -42,7 +42,6 @@ const Notification = ({ data, onDelete }) => {
     >
       <div className="notification-icon">{getNotificationIcon(data.type)}</div>
            <div className="notification-content">{data.content}
-           {/*There you can add*/}
            </div>
            <div className="notification-close" onClick={handleDeleteClick}>
                <FaTimes />

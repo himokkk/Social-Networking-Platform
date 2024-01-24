@@ -67,11 +67,9 @@ function Main() {
     // Placeholder function to get fake notifications for testing
     const getFakeNotifications = async () => {
         try {
-            // Your array with test notifications
             const fakeNotifications = [
                 { id: 1, type: 'like', content: 'Someone liked your post', link: '/posts/123' },
                 { id: 2, type: 'comment', content: 'You have a new comment', link: '/posts/456#comment-789' },
-                // Add other test notifications as needed
             ];
 
             return fakeNotifications;
@@ -156,7 +154,6 @@ useEffect(() => {
       <PerfectScrollbar>
         {selectedCategory === 'messages' && <p>Wiadomości</p>}
         {selectedCategory === 'notifications' && (renderNotifications([]) ? renderNotifications(notificationResults) : <p>no notifications available.</p>)}
-        {/*{selectedCategory === 'notifications' && <p>Powiadomienia</p>}*/}
         {selectedCategory === 'posts' && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
         {selectedCategory === 'friends' && <p>Znajomi</p>}
       </PerfectScrollbar>
