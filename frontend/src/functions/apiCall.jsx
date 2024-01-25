@@ -1,6 +1,6 @@
 import { getCookie } from "./getCookie";
 
-export const apiCall = async (url, method, data) => {
+export const apiCall = async (url, method, data = null) => {
     const csrftoken = getCookie("X-CSRFToken");
     const access = getCookie("access");
     try {
@@ -10,10 +10,16 @@ export const apiCall = async (url, method, data) => {
         if (access) {
             headers.append("Authorization", `Bearer ${access}`)
         }
+        if (data) {
+            return await fetch(url, {
+                method: method,
+                headers: headers,
+                body: data
+            });
+        }
         return await fetch(url, {
             method: method,
-            headers: headers,
-            body: data
+            headers: headers
         });
     }
     catch (error) {
