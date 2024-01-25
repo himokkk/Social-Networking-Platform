@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../functions/getCookie";
 import { deleteAllCookies } from "../../functions/deleteAllCookies";
 import { refreshAccess } from "../../functions/refreshAccess";
+import { filterResponse } from "../../functions/filterResponse";
 import { apiCall } from "../../functions/apiCall";
 import clearSelection from "../../functions/clearSelection";
 import InputButton from "../../components/InputButton";
@@ -58,6 +59,30 @@ const Debug = () => {
           }))
     }
 
+    const userData = async() => {
+        let response = null;
+        try {
+            response = await apiCall("http://localhost:8000/user/current/", "GET")
+        }
+        catch (error) {
+            console.log("Error awaiting get: ", error);
+        }
+
+        if (response) {
+            if (response.ok) {
+                const responseResults = await filterResponse(response, ["id", "username"]);
+                const id = responseResults[0];
+                const username = responseResults[1];
+                console.log("id: ", id)
+                console.log("username: ", username)
+            }
+        }
+        else {
+            console.log("Server not responding")
+            return
+        }
+    }
+
     return <div className={"Debug"} onKeyDown={onEnterClick}>
         <div className="mainContainer">
             <div className={"titleContainer prevent-select"}>
@@ -96,6 +121,10 @@ const Debug = () => {
                     className={"debugButton"}
                     onClick={commentPost}
                     value={"Comment post"} />
+                <InputButton
+                    className={"debugButton"}
+                    onClick={userData}
+                    value={"Get user data"} />
             </div>
         </div>
     </div>
