@@ -41,7 +41,6 @@ const Register = () => {
         setRegisterError("")
         
         const checkSuccessful = await registerPasswordCheck(email, password, confirmPassword, setEmailError, setPasswordError, setConfirmPasswordError)
-
         if (!checkSuccessful) {
             return
         }
@@ -66,7 +65,7 @@ const Register = () => {
             }
             else {
                 if (checkInResponse(response, "A user with that username already exists.")) {
-                    setRegisterError("An account with that email already exists")
+                    setRegisterError("An account with that username already exists")
                     return
                 }
                 else {
@@ -90,7 +89,7 @@ const Register = () => {
                 <form>
                     <InputText
                         value={email}
-                        placeholder="Enter your email here"
+                        placeholder="Enter your username here"
                         onChange={ev => setEmail(ev.target.value)}
                         onKeyDown={(e) => onEnterClick(e) }
                         error={emailError} />

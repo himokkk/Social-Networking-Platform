@@ -1,3 +1,5 @@
+const skipEmailCheck = true // skips email check: @ sign required and .suffix at the end
+
 export const registerPasswordCheck = async (
     email,
     password,
@@ -12,14 +14,16 @@ export const registerPasswordCheck = async (
     setConfirmPasswordError("")
 
     if ("" === email) {
-        setEmailError("Please enter your email")
-        console.log("Register: No email entered")
+        setEmailError("Please enter your username") //setEmailError("Please enter your email")
+        console.log("Register: No username entered")
         return false
     }
     else if (!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)) {
-        setEmailError("Please enter a valid email")
-        console.log("Register: Invalid email entered")
-        return false
+        if (!skipEmailCheck) {
+            setEmailError("Please enter a valid email")
+            console.log("Register: Invalid email entered")
+            return false
+        }
     }
     else if ("" === password) {
         setPasswordError("Please enter a password")
