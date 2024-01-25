@@ -70,6 +70,7 @@ const Login = () => {
         if (response) {
             if (response.ok) {
                 const responseResults = await filterResponse(response, ["access", "refresh"]);
+                console.log(responseResults);
                 const access = responseResults[0];
                 const refresh = responseResults[1];
                 if (access) {
