@@ -1,16 +1,19 @@
 import django_filters
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
-from rest_framework.generics import (CreateAPIView, RetrieveAPIView,
-                                     UpdateAPIView)
+from rest_framework.generics import (CreateAPIView, ListAPIView,
+                                     RetrieveAPIView, UpdateAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.filters import UserProfileFilter
-from users.models import UserProfile
-from users.serializers import (UserProfileLimitedSerializer,
+from users.models import Notification, UserProfile
+from users.serializers import (NotificationSerializer,
+                               UserProfileLimitedSerializer,
                                UserProfileSerializer,
-                               UserProfileUpdateSerializer, UserSerializer, UserProfileWithFriendsSerializer)
+                               UserProfileUpdateSerializer,
+                               UserProfileWithFriendsSerializer,
+                               UserSerializer)
 
 
 class RegisterView(CreateAPIView):
@@ -81,11 +84,45 @@ class AddFriendView(UpdateAPIView):
                 {"detail": "You cannot add yourself."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        if instance.is_friend(user):
+            return Response(
+                {"detail": "You are already friends."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
-        instance.add_friend(user)
-        instance.save()
+        if Notification.objects.filter(notification_type="friend_request", to_user=instance, from_user=user).exists():
+            return Response(
+                {"detail": "Friend request already sent."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        Notification.objects.create(
+            notification_type="friend_request", to_user=instance, from_user=user
+        )
         return Response(
             {"detail": "Friend added successfully."}, status=status.HTTP_200_OK
+        )
+
+
+class RemoveFriendView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    serializer_class = UserProfileUpdateSerializer
+    queryset = UserProfile.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user.profile
+        if instance == user:
+            return Response(
+                {"detail": "You cannot remove yourself."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        instance.remove_friend(user)
+        instance.save()
+        return Response(
+            {"detail": "Friend removed successfully."}, status=status.HTTP_200_OK
         )
 
 
@@ -94,3 +131,14 @@ class SearchUserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileLimitedSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = UserProfileFilter
+
+
+class NotificationListView(ListAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(to_user=self.request.user.profile).order_by(
+            "-created_at"
+        )[:10]

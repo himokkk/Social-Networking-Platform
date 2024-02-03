@@ -1,12 +1,11 @@
-from rest_framework import serializers
-
 from posts.models import Post, PostComment, PostReport
+from rest_framework import serializers
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ("content", "media", "privacy")
+        fields = ("id", "content", "media", "privacy")
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -45,13 +44,19 @@ class PostSerializer(serializers.ModelSerializer):
 class PostReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostReport
-        fields = ("description",)
+        fields = ("id", "description",)
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
+
     class Meta:
         model = PostComment
-        fields = ("content",)
+        fields = ("id", "content", "timestamp", "username")
+
+    def get_username(self, obj) -> str | None:
+        if obj.user:
+            return str(obj.user)
 
 
 class CommentsSerializer(serializers.ModelSerializer):

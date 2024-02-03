@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
-from users.models import UserProfile
+from users.models import UserProfile, Notification
 
 
 class UserSerializer(ModelSerializer):
@@ -16,7 +16,7 @@ class UserProfileLimitedSerializer(ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ["image_url", "username"]
+        fields = ["id", "image_url", "username"]
 
     def get_image_url(self, obj):
         if obj.image:
@@ -66,3 +66,21 @@ class UserProfileUpdateSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ["description", "birth", "image"]
+
+
+class NotificationSerializer(ModelSerializer):
+    from_user = UserProfileLimitedSerializer(read_only=True)
+    to_user = UserProfileLimitedSerializer(read_only=True)
+
+    class Meta:
+        model = Notification
+        fields = [
+            "id",
+            "from_user",
+            "to_user",
+            "notification_type",
+            "post",
+            "count",
+            "is_read",
+            "created_at",
+        ]
