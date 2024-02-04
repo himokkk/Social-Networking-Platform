@@ -5,6 +5,8 @@ drf-spectacular
 django-filter
 django-cors-headers
 pillow
+channels
+daphne
 
 black
 isort
