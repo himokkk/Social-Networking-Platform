@@ -34,6 +34,9 @@ CORS_ALLOWED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    "channels",
+    "chat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -85,6 +88,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Social_Networking_Platform.wsgi.application"
+
+ASGI_APPLICATION = "Social_Networking_Platform.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 
 # Database
