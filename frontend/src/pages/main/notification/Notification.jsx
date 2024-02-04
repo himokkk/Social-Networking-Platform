@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { FaTimes, FaUserPlus, FaEnvelope, FaThumbsUp, FaComment } from 'react-icons/fa';
 import './Notification.css';
 const Notification = ({ data, onDelete }) => {
-    const [hovered, setHovered] = useState(false);
 
     const handleNotificationClick = () => {
         //click processing(may add following link)
@@ -35,9 +34,7 @@ const Notification = ({ data, onDelete }) => {
 
    return (
     <div
-      className={`notification-container ${hovered ? 'hovered' : ''}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className={`notification-container`}
       onClick={handleNotificationClick}
     >
       <div className="notification-icon">{getNotificationIcon(data.type)}</div>

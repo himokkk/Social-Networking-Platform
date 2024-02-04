@@ -1,12 +1,18 @@
 .notification-container {
     background: rgba(255, 255, 255, 0.55);
     padding: 10px;
+    background-color: #fff;
     border-radius: 10px;
     margin-bottom: 30px;
     width: 70%;
     margin: auto;
     margin-bottom: 20px;
+    transition: background 0.3s;
 }
+
+    .notification-container:hover {
+        background: rgba(255, 255, 255, 0.75);
+    }
 
 .notification-header {
     display: flex;
