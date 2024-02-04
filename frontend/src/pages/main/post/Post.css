@@ -1,39 +1,41 @@
 .post-container {
   background: rgba(255, 255, 255, 0.55);
-
-    padding: 10px; 
-    border-radius: 10px; 
-    margin-bottom: 30px; 
-    width: 70%;
-    margin: auto;
-    margin-bottom: 20px;
-  }
-  .actions {
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 25px;
-  }
-  .like,
-  .comment {
-    display: flex;
-    align-items: center;
-    transition: box-shadow 0.2s;
-    margin: 0 15%; 
-    border-radius: 8px;
-    box-sizing: border-box;
-  }
-  .like:hover,
-.comment:hover {
-    cursor: pointer;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+  padding: 10px; 
+  border-radius: 10px; 
+  margin-bottom: 30px; 
+  width: 70%;
+  margin: auto;
+  margin-bottom: 20px;
 }
-.comments-window{
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+}
+
+.like,
+.comment {
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.2s;
+  margin: 0 15%; 
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.like:hover,
+.comment:hover {
+  cursor: pointer;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+}
+
+.comments-window {
   overflow-y: auto;
   height: 80%;
-
 }
-.comment-input-container{
+
+.comment-input-container {
   width: 400%;
 }
