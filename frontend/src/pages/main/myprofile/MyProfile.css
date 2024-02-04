@@ -1,0 +1,29 @@
+.myprofile-container {
+    background: rgba(255, 255, 255, 0.55);
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.myprofile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+
+    .myprofile-header p {
+        font-weight: bold;
+    }
+
+.close-icon {
+    cursor: pointer;
+}
+
+.myprofile-content {
+    margin-top: 10px;
+}
