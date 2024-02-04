@@ -1,8 +1,9 @@
 import React, { useState ,useEffect } from 'react';
 import Post from './post/Post';
 import Notification from './notification/Notification';
+import MyProfile from './myprofile/MyProfile';
 import './Main.css';
-import { FaUser, FaEnvelope, FaHome, FaUsers, FaBell, FaPlus, FaArrowLeft} from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaHome, FaBell, FaPlus, FaArrowLeft} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getData } from "../../functions/getData";
 import { LOGIN_URL } from "../../urls";
@@ -10,6 +11,7 @@ import { refreshAccess } from "../../functions/refreshAccess";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import { apiCall } from '../../functions/apiCall';
+import { filterResponse } from "../../functions/filterResponse";
 import Modal from 'react-modal';
 
 
@@ -18,6 +20,7 @@ function Main() {
   const [selectedCategory, setSelectedCategory] = useState('posts');
   const [postResults, setPostResults] = useState([]);
   const [notificationResults, setNotificationResults] = useState([]);
+  const [myProfileResults, setMyProfileResults] = useState([]);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
   
   const handleCategoryClick = (category) => {
@@ -61,6 +64,22 @@ function Main() {
             .catch((error) => {
                 console.error('Error getting fake notifications:', error);
             });
+      }
+    else if (selectedCategory === 'myprofile') {
+        const fetchData = async () => {
+            try {
+
+                const response = await apiCall(`http://localhost:8000/user/current/`, "GET");
+                const responseResults = await filterResponse(response, ["id", "description", "birth", "image_url", "username"]);
+                renderMyProfile(responseResults);
+                console.log(responseResults);
+                setMyProfileResults(responseResults);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        fetchData();
     }
   }, [selectedCategory]);
 
@@ -103,6 +122,11 @@ function Main() {
             </>
         );
     };
+    const renderMyProfile = (myProfileResults) => {
+        return (
+            <MyProfile data={myProfileResults} />
+        );
+    };
 
   const checkIfLoggedIn = async () => {
     let loggedIn = await refreshAccess()
@@ -119,11 +143,14 @@ useEffect(() => {
     <>
       <div className={'upBar'}>
         <input type="text" placeholder="Wyszukaj..." />
-        <div className="icon-container" onClick={() => navigate('/profile')}>
-          <FaUser size={48} />
-        </div>
       </div>
       <div className={'leftBar'}>
+        <div onClick={() => handleCategoryClick('myprofile')}
+        className='selectionDiv'>
+          <p style={{ fontSize: '24px' }}>
+            <FaUser size={32} /> My Profile
+          </p>
+        </div>
         <div onClick={() => handleCategoryClick('messages')}
         className='selectionDiv'>
           <p style={{ fontSize: '24px' }}>
@@ -136,12 +163,6 @@ useEffect(() => {
             <FaHome size={32} /> Posts
           </p>
         </div>
-        <div onClick={() => handleCategoryClick('friends')}
-        className='selectionDiv'>
-          <p style={{ fontSize: '24px' }}>
-            <FaUsers size={32} /> Friends
-          </p>
-        </div>
         <div onClick={() => handleCategoryClick('notifications')}
         className='selectionDiv'>
           <p style={{ fontSize: '24px' }}>
@@ -152,10 +173,10 @@ useEffect(() => {
       
     <div className="content">
       <PerfectScrollbar>
+        {selectedCategory === 'myprofile' && (renderMyProfile(myProfileResults))}
         {selectedCategory === 'messages' && <p>Wiadomości</p>}
         {selectedCategory === 'notifications' && (renderNotifications([]) ? renderNotifications(notificationResults) : <p>no notifications available.</p>)}
         {selectedCategory === 'posts' && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
-        {selectedCategory === 'friends' && <p>Znajomi</p>}
       </PerfectScrollbar>
     </div>
     <FaPlus onClick={() => setShowCreatePostModal(prevState => !prevState)} />
