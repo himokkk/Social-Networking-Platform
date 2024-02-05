@@ -1,10 +1,17 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import (AddFriendView, NotificationListView, RegisterView,
-                    RemoveFriendView, SearchUserProfileViewSet,
-                    UserProfileRetrieveByTokenView, UserProfileRetrieveView,
-                    UserProfileUpdateView, AcceptFriendView)
+from .views import (
+    AcceptFriendView,
+    AddFriendView,
+    NotificationListView,
+    RegisterView,
+    RemoveFriendView,
+    SearchUserProfileViewSet,
+    UserProfileRetrieveByTokenView,
+    UserProfileRetrieveView,
+    UserProfileUpdateView,
+)
 
 urlpatterns = [
     path("register/", RegisterView.as_view()),

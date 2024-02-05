@@ -69,7 +69,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             older_messages = await self.load_last_messages(
                 **{"id__lt": last_message_id}
             )
-            data = json.dumps({"messages": older_messages, "sender": self.user.username})
+            data = json.dumps(
+                {"messages": older_messages, "sender": self.user.username}
+            )
             await self.send(text_data=data)
             return None
 

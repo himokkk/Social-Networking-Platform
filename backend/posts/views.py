@@ -1,20 +1,29 @@
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
-from posts.models import Post, PostComment, PostReport
-from posts.pagination import DefaultFeedPagination, ExploreFeedPagination
-from posts.serializers import (CommentCreateSerializer, CommentsSerializer,
-                               PostCreateSerializer, PostReportSerializer,
-                               PostSerializer)
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView,
-                                     UpdateAPIView)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from users.models import UserProfile
+
+from users.models import Notification, UserProfile
+from posts.models import Post, PostComment, PostReport
+from posts.pagination import DefaultFeedPagination, ExploreFeedPagination
+from posts.serializers import (
+    CommentCreateSerializer,
+    CommentsSerializer,
+    PostCreateSerializer,
+    PostReportSerializer,
+    PostSerializer,
+)
 
 
 class PostObjectMixin:
@@ -128,6 +137,18 @@ class PostLikeView(PostObjectMixin, UpdateAPIView):
         if not user_has_liked_post:
             post.likes.add(user_profile)
             post.save()
+
+            Notification.objects.filter(
+                from_user=user_profile, to_user=post.author, post=post
+            ).delete()
+            Notification.objects.create(
+                from_user=user_profile,
+                to_user=post.author,
+                post=post,
+                notification_type="post_like",
+                count=post.likes.count(),
+            )
+
             return Response(
                 {"detail": "Post liked successfully."}, status=status.HTTP_200_OK
             )
@@ -148,6 +169,13 @@ class PostUnlikeView(PostObjectMixin, UpdateAPIView):
         if user_has_liked_post:
             post.likes.remove(user_profile)
             post.save()
+
+            obj = Notification.objects.filter(
+                from_user=user_profile, to_user=post.author, post=post
+            )
+            obj.count = post.likes.count()
+            obj.save()
+
             return Response(
                 {"detail": "Post unliked successfully."}, status=status.HTTP_200_OK
             )
@@ -184,6 +212,18 @@ class CommentCreateView(PostObjectMixin, CreateAPIView):
     def perform_create(self, serializer: CommentCreateSerializer) -> None:
         post = self.get_object()
         serializer.save(user=self.request.user.profile, post=post)  # type: ignore
+        user_profile = self.request.user.profile  # type: ignore
+
+        Notification.objects.filter(
+            from_user=user_profile, to_user=post.author, post=post
+        ).delete()
+        Notification.objects.create(
+            from_user=user_profile,
+            to_user=post.author,
+            post=post,
+            notification_type="post_comment",
+            count=post.comments.count(),
+        )
 
 
 class CommentsView(ListAPIView):
@@ -221,8 +261,16 @@ class DeleteCommentView(DestroyAPIView):
 
     def destroy(self, request: Request, *args, **kwargs) -> Response:
         instance = self.get_object()
-        if instance.user == self.request.user.profile:  # type: ignore
+        user_profile = request.user.profile
+        if instance.user == user_profile:  # type: ignore
             self.perform_destroy(instance)
+
+            obj = Notification.objects.filter(
+                from_user=user_profile, to_user=instance.post.author, post=instance.post
+            )
+            obj.count = instance.post.comments.count()
+            obj.save()
+
             return Response(
                 {"detail": "Comment deleted successfully."},
                 status=status.HTTP_204_NO_CONTENT,
