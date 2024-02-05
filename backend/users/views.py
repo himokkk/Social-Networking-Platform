@@ -72,8 +72,6 @@ class UserProfileUpdateView(UpdateAPIView):
 
 class AddFriendView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
-
-    serializer_class = UserProfileUpdateSerializer
     queryset = UserProfile.objects.all()
 
     def update(self, request, *args, **kwargs):
@@ -100,7 +98,30 @@ class AddFriendView(UpdateAPIView):
             notification_type="friend_request", to_user=instance, from_user=user
         )
         return Response(
-            {"detail": "Friend added successfully."}, status=status.HTTP_200_OK
+            {"detail": "Friend requests sent successfully."}, status=status.HTTP_200_OK
+        )
+
+
+class AcceptFriendView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Notification.objects.all()
+
+    def patch(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.to_user != request.user.profile:
+            return Response(
+                {"detail": "You don't have permission to accept this friend request."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        if instance.notification_type != "friend_request":
+            return Response(
+                {"detail": "This is not a friend request."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        instance.to_user.add_friend(instance.from_user)
+        instance.delete()
+        return Response(
+            {"detail": "Friend request accepted successfully."}, status=status.HTTP_200_OK
         )
 
 
