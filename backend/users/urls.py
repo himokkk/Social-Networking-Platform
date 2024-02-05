@@ -4,7 +4,7 @@ from rest_framework_simplejwt import views as jwt_views
 from .views import (AddFriendView, NotificationListView, RegisterView,
                     RemoveFriendView, SearchUserProfileViewSet,
                     UserProfileRetrieveByTokenView, UserProfileRetrieveView,
-                    UserProfileUpdateView)
+                    UserProfileUpdateView, AcceptFriendView)
 
 urlpatterns = [
     path("register/", RegisterView.as_view()),
@@ -16,5 +16,6 @@ urlpatterns = [
     path("add/<pk>", AddFriendView.as_view()),
     path("remove/<pk>", RemoveFriendView.as_view()),
     path("notification/list", NotificationListView.as_view()),
+    path("notification/<pk>/accept", AcceptFriendView.as_view()),
     path("search/", SearchUserProfileViewSet.as_view({"get": "list"})),
 ]
