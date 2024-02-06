@@ -1,19 +1,18 @@
 import React, { useState ,useEffect } from 'react';
+import Modal from 'react-modal';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import Post from './post/Post';
 import Notification from './notification/Notification';
 import MyProfile from './myprofile/MyProfile';
-import './Main.css';
+import 'react-perfect-scrollbar/dist/css/styles.css'
 import { FaUser, FaEnvelope, FaHome, FaBell, FaPlus, FaArrowLeft} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getData } from "../../functions/getData";
 import { LOGIN_URL } from "../../urls";
 import { refreshAccess } from "../../functions/refreshAccess";
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css'
 import { apiCall } from '../../functions/apiCall';
 import { filterResponse } from "../../functions/filterResponse";
-import Modal from 'react-modal';
-
+import './Main.css';
 
 function Main() {
   const navigate = useNavigate();
@@ -43,7 +42,7 @@ function Main() {
         .catch((error) => {
           console.error("Error getting data:", error);
         });
-      }
+    }
     //else if (selectedCategory === 'notifications') {
     //  getData("http://localhost:8000/notifications/explore")
     //    .then((data) => {
@@ -55,20 +54,19 @@ function Main() {
     //    });
     //}
     else if (selectedCategory === 'notifications') {
-        getFakeNotifications()
-            .then((data) => {
-                console.log('Fake notifications:', data);
-                renderNotifications(data);
-                setNotificationResults(data);
-            })
-            .catch((error) => {
-                console.error('Error getting fake notifications:', error);
-            });
-      }
+      getFakeNotifications()
+        .then((data) => {
+            console.log('Fake notifications:', data);
+            renderNotifications(data);
+            setNotificationResults(data);
+        })
+        .catch((error) => {
+            console.error('Error getting fake notifications:', error);
+        });
+    }
     else if (selectedCategory === 'myprofile') {
         const fetchData = async () => {
             try {
-
                 const response = await apiCall(`http://localhost:8000/user/current/`, "GET");
                 const responseResults = await filterResponse(response, ["id", "description", "birth", "image_url", "username"]);
                 renderMyProfile(responseResults);
@@ -83,20 +81,20 @@ function Main() {
     }
   }, [selectedCategory]);
 
-    // Placeholder function to get fake notifications for testing
-    const getFakeNotifications = async () => {
-        try {
-            const fakeNotifications = [
-                { id: 1, type: 'like', content: 'Someone liked your post', link: '/posts/123' },
-                { id: 2, type: 'comment', content: 'You have a new comment', link: '/posts/456#comment-789' },
-            ];
+  // Placeholder function to get fake notifications for testing
+  const getFakeNotifications = async () => {
+      try {
+          const fakeNotifications = [
+              { id: 1, type: 'like', content: 'Someone liked your post', link: '/posts/123' },
+              { id: 2, type: 'comment', content: 'You have a new comment', link: '/posts/456#comment-789' },
+          ];
 
-            return fakeNotifications;
-        } catch (error) {
-            console.error('Error during fetching fake notifications:', error);
-            throw error;
-        }
-    };
+          return fakeNotifications;
+      } catch (error) {
+          console.error('Error during fetching fake notifications:', error);
+          throw error;
+      }
+  };
 
   const renderPosts = (postResults) => {
     return (
@@ -104,45 +102,44 @@ function Main() {
         {postResults.map(post => (
           <div key={post.id}>
             <Post data={post} onDelete={handleDeletePost}/>
-        
           </div>
         ))}
       </>
     );
   };
 
-    const renderNotifications = (notificationResults) => {
-        return (
-            <>
-                {notificationResults.map((notification) => (
-                    <div key={notification.id} className="notification-item">
-                        <Notification data={notification} />
-                    </div>
-                ))}
-            </>
-        );
-    };
-    const renderMyProfile = (myProfileResults) => {
-        return (
-            <MyProfile data={myProfileResults} />
-        );
-    };
+  const renderNotifications = (notificationResults) => {
+      return (
+          <>
+              {notificationResults.map((notification) => (
+                  <div key={notification.id} className="notification-item">
+                      <Notification data={notification} />
+                  </div>
+              ))}
+          </>
+      );
+  };
+  const renderMyProfile = (myProfileResults) => {
+      return (
+          <MyProfile data={myProfileResults} />
+      );
+  };
 
   const checkIfLoggedIn = async () => {
     let loggedIn = await refreshAccess()
     if (!loggedIn) {
         navigate(LOGIN_URL)
     }
-}
+  }
 
-useEffect(() => {
-    checkIfLoggedIn()
-  }, []);
+  useEffect(() => {
+      checkIfLoggedIn()
+    }, []);
 
   return (
     <>
       <div className={'upBar'}>
-        <input type="text" placeholder="Wyszukaj..." />
+        <input type="text" placeholder="Search..." />
       </div>
       <div className={'leftBar'}>
         <div onClick={() => handleCategoryClick('myprofile')}
@@ -174,7 +171,7 @@ useEffect(() => {
     <div className="content">
       <PerfectScrollbar>
         {selectedCategory === 'myprofile' && (renderMyProfile(myProfileResults))}
-        {selectedCategory === 'messages' && <p>Wiadomości</p>}
+        {selectedCategory === 'messages' && <p>Messages</p>}
         {selectedCategory === 'notifications' && (renderNotifications([]) ? renderNotifications(notificationResults) : <p>no notifications available.</p>)}
         {selectedCategory === 'posts' && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
       </PerfectScrollbar>
@@ -201,9 +198,7 @@ useEffect(() => {
        <hr style={{ margin: '10px 0', border: '0.5px solid #ccc' }} />
      </div>
      <input type="file" accept="image/*" title="Choose file" />
- 
       </Modal>}
-      
     </>
   );
 }
