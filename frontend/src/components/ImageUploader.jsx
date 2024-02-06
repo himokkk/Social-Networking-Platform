@@ -6,17 +6,21 @@ function ImageUploader() {
     const [selectedImage, setSelectedImage] = useState(null);
     const fileInputRef = useRef(null);
 
-    const createPost = async (formData) => {
-        let response = null;
-        try {
-            response = await apiCall(API_BASE_URL + "/posts/create", "POST", JSON.stringify({
-                content: "file",
-                media: formData,
-                privacy: 1
-            }));
-            console.log(response);
-        } catch (error) {
-            console.log("Error awaiting post: ", error);
+    const createPost = async () => {
+        console.log(selectedImage)
+        
+        if (fileInputRef.current) {
+            let response = null;
+            try {
+                response = await apiCall(API_BASE_URL + "/posts/create", "POST", JSON.stringify({
+                    content: "file",
+                    media: selectedImage,
+                    privacy: 1
+                }));
+                console.log(response);
+            } catch (error) {
+                console.log("Error awaiting post: ", error);
+            }
         }
     };
 
@@ -30,13 +34,11 @@ function ImageUploader() {
 
     const handleUpload = () => {
         if (!selectedImage) {
-            alert("Please choose an image first.");
+            console.log("Please choose an image first.");
+            console.log(fileInputRef.current)
             return;
         }
-
-        const formData = new FormData();
-        formData.append("image", selectedImage);
-        createPost(formData);
+        createPost();
     };
 
     return (
