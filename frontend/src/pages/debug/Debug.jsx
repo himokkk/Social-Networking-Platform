@@ -8,7 +8,6 @@ import { apiCall } from "../../functions/apiCall";
 import clearSelection from "../../functions/clearSelection";
 import InputButton from "../../components/InputButton";
 import InputButtonPair from "../../components/InputButtonPair";
-import ImageUploader from "../../components/ImageUploader";
 import './Debug.css';
 import { toggleDarkmode } from "../../functions/toggleDarkmode";
 import { LOGIN_URL, TERMS_URL, API_BASE_URL } from "../../urls";
@@ -126,7 +125,6 @@ const Debug = () => {
                     className={"debugButton"}
                     onClick={userData}
                     value={"Get user data"} />
-                <ImageUploader/>
             </div>
         </div>
     </div>
