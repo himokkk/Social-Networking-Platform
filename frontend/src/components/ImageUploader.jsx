@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { apiCall } from "../functions/apiCall";
-import { API_BASE_URL } from "../urls";
+import { API_CREATE_POST } from "../urls";
 
 function ImageUploader() {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -12,7 +12,7 @@ function ImageUploader() {
         if (fileInputRef.current) {
             let response = null;
             try {
-                response = await apiCall(API_BASE_URL + "/posts/create", "POST", JSON.stringify({
+                response = await apiCall(API_CREATE_POST, "POST", JSON.stringify({
                     content: "file",
                     media: selectedImage,
                     privacy: 1
