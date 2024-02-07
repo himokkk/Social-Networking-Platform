@@ -1,7 +1,6 @@
 .notification-container {
-    background: rgba(255, 255, 255, 0.55);
     padding: 10px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.55);
     border-radius: 10px;
     margin-bottom: 30px;
     width: 70%;
@@ -10,25 +9,22 @@
     transition: background 0.3s;
 }
 
-.notification-container:hover {
-    background: rgba(255, 255, 255, 0.75);
+    .notification-container:hover {
+        background: rgba(255, 255, 255, 0.75);
+    }
+
+.notification-content p {
+    font-size: 16px;
 }
 
-.notification-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 20px;
+.notification-text {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.notification-header p {
-    font-weight: bold;
-}
-
-.close-icon {
-    cursor: pointer;
-}
-
-.notification-content {
-    margin-top: 10px;
+.accept-friend-request-button {
+    outline: none;
+    border-radius: 6px;
 }
