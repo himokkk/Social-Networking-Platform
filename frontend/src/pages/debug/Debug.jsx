@@ -86,7 +86,7 @@ const Debug = () => {
     return <div className={"Debug"} onKeyDown={onEnterClick}>
         <div className="mainContainer">
             <div className={"titleContainer prevent-select"}>
-                <h1>Welcome to ziomki.tk!</h1>
+                <h1>Welcome to ziomki.online!</h1>
             </div>
             <div className={"buttons"}>
                 <InputButtonPair

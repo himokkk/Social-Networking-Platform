@@ -45,8 +45,8 @@ const Login = () => {
         setLoginError("")
 
         if ("" === email) {
-            setEmailError("Please enter your email")
-            console.log("Login: No email entered")
+            setEmailError("Please enter your username")
+            console.log("Login: No username entered")
             return
         }
         else if ("" === password) {
