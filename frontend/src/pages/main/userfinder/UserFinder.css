@@ -1,0 +1,60 @@
+.finder-users-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.finder-users-container .ps__rail-y {
+    display: none;
+}
+
+.finder-search-input-container {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.finder-search-input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+
+.finder-user-item {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.55);
+    transition: background 0.3s;
+}
+    .finder-user-item:hover {
+        background-color: rgba(255, 255, 255, 0.75);
+    }
+.finder-user-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+    border-radius: 10px;
+}
+
+.finder-default-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+}
+
+.finder-username {
+    margin: 0;
+    font-size: 150%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
