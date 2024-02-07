@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
-from users.models import UserProfile, Notification
+
+from users.models import Notification, UserProfile
 
 
 class UserSerializer(ModelSerializer):

@@ -7,6 +7,7 @@ import Chat from './pages/chat/Chat';
 import Terms from './pages/terms/Terms';
 import Debug from './pages/debug/Debug';
 import ErrorPage from './pages/error/ErrorPage';
+import Admin from './pages/admin/Admin';
 import Main from './pages/main/Main';
 import './App.css';
 import "@fontsource/jetbrains-mono";
@@ -41,7 +42,8 @@ class App extends React.Component {
           React.createElement(Route, { path: urls.TERMS_URL, element: React.createElement(Terms, {}) }),
           React.createElement(Route, { path: urls.DEBUG_URL, element: React.createElement(Debug, {}) }),
           React.createElement(Route, { path: urls.MAIN_URL, element: React.createElement(Main, {}) }),
-        React.createElement(Route, { path: '*', element: React.createElement(ErrorPage, {}), })
+          React.createElement(Route, { path: urls.ADMIN_URL, element: React.createElement(Admin, {}) }),
+          React.createElement(Route, { path: '*', element: React.createElement(ErrorPage, {}), })
       )
       )
     ));

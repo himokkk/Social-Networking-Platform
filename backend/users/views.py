@@ -1,19 +1,26 @@
 import django_filters
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
-from rest_framework.generics import (CreateAPIView, ListAPIView,
-                                     RetrieveAPIView, UpdateAPIView)
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from users.filters import UserProfileFilter
 from users.models import Notification, UserProfile
-from users.serializers import (NotificationSerializer,
-                               UserProfileLimitedSerializer,
-                               UserProfileSerializer,
-                               UserProfileUpdateSerializer,
-                               UserProfileWithFriendsSerializer,
-                               UserSerializer)
+from users.serializers import (
+    NotificationSerializer,
+    UserProfileLimitedSerializer,
+    UserProfileSerializer,
+    UserProfileUpdateSerializer,
+    UserProfileWithFriendsSerializer,
+    UserSerializer,
+)
 
 
 class RegisterView(CreateAPIView):
@@ -88,7 +95,9 @@ class AddFriendView(UpdateAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        if Notification.objects.filter(notification_type="friend_request", to_user=instance, from_user=user).exists():
+        if Notification.objects.filter(
+            notification_type="friend_request", to_user=instance, from_user=user
+        ).exists():
             return Response(
                 {"detail": "Friend request already sent."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -121,7 +130,8 @@ class AcceptFriendView(UpdateAPIView):
         instance.to_user.add_friend(instance.from_user)
         instance.delete()
         return Response(
-            {"detail": "Friend request accepted successfully."}, status=status.HTTP_200_OK
+            {"detail": "Friend request accepted successfully."},
+            status=status.HTTP_200_OK,
         )
 
 
