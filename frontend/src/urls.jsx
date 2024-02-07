@@ -1,5 +1,5 @@
-const debug = True
-const API_BASE = "";
+const debug = true
+let API_BASE = "";
 if (debug) {
     API_BASE = "http://localhost:8000"
 } else {
