@@ -119,8 +119,7 @@ function Main() {
         {postResults.map(post => (
             <div key={post.id}>
             <Post data={post} onDelete={handleDeletePost}/>
-        
-            </div>
+          </div>
         ))}
         </>
     );
@@ -164,8 +163,8 @@ function Main() {
     }
 
     useEffect(() => {
-        checkIfLoggedIn()
-      }, []);
+      checkIfLoggedIn()
+    }, []);
 
     return (
         <>
