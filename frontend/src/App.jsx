@@ -7,6 +7,7 @@ import Chat from './pages/chat/Chat';
 import Terms from './pages/terms/Terms';
 import Debug from './pages/debug/Debug';
 import ErrorPage from './pages/error/ErrorPage';
+import Admin from './pages/admin/Admin';
 import './App.css';
 import "@fontsource/jetbrains-mono";
 import "@fontsource/jetbrains-mono/400.css"; 
@@ -39,6 +40,7 @@ class App extends React.Component {
           React.createElement(Route, { path: urls.CHAT_URL, element: React.createElement(Chat, {}) }),
           React.createElement(Route, { path: urls.TERMS_URL, element: React.createElement(Terms, {}) }),
           React.createElement(Route, { path: urls.DEBUG_URL, element: React.createElement(Debug, {}) }),
+          React.createElement(Route, { path: urls.ADMIN_URL, element: React.createElement(Admin, {}) }),
           React.createElement(Route, { path: '*', element: React.createElement(ErrorPage, {}), })
       )
       )
