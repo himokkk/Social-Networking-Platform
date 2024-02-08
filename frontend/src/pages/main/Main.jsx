@@ -25,7 +25,6 @@ function Main() {
     const [profileResults, setProfileResults] = useState([]);
     const [userFinderResults, setUserFinderResults] = useState(null);
     const [showCreatePostModal, setShowCreatePostModal] = useState(false);
-    const [notificationResultsPost, setNotificationResultsPost] = useState(false);
     const [error, setError] = useState(null);
     const productForm = useRef(null);
 
@@ -38,11 +37,6 @@ function Main() {
     const goToProfile = (results) => {
         setUserFinderResults(results);
         setSelectedCategory("profile");
-    };
-
-    const goToPost = (results) => {
-        setNotificationResultsPost(results);
-        setSelectedCategory("one_post");
     };
 
     const createPostForm = async (e) => {
@@ -88,16 +82,6 @@ function Main() {
                     console.log(data);
                     renderPosts(data.results);
                     setPostResults(data.results);
-                })
-                .catch((error) => {
-                    console.error("Error getting data:", error);
-                });
-        }
-        if (selectedCategory === 'one_post') {
-            getData(`http://localhost:8000/posts/${notificationResultsPost}`, true)
-                .then((data) => {
-                    renderPosts(data);
-                    setPostResults(data);
                 })
                 .catch((error) => {
                     console.error("Error getting data:", error);
@@ -171,7 +155,7 @@ function Main() {
             <>
                 {notificationResults.map((notification) => (
                     <div key={notification.id} className="notification-item">
-                        <Notification data={notification} onNotificationResultsPost={goToPost} onNotificationResultsUser={goToProfile} />
+                        <Notification data={notification} onNotificationResultsUser={goToProfile} />
                     </div>
                 ))}
             </>
@@ -259,7 +243,7 @@ function Main() {
                 <PerfectScrollbar>
                     {selectedCategory === 'profile'  && (renderProfile(profileResults))}
                     {selectedCategory === 'notifications' && (renderNotifications([]) ? renderNotifications(notificationResults) : <p>No notifications available.</p>)}
-                    {(selectedCategory === 'posts' || selectedCategory === 'friendsPosts' || selectedCategory === 'one_post') && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
+                    {(selectedCategory === 'posts' || selectedCategory === 'friendsPosts') && (renderPosts([]) ? renderPosts(postResults) : <p>No posts available.</p>)}
                 </PerfectScrollbar>
            </div>
             <div style={{ textAlign: 'left' }}>

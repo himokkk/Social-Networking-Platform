@@ -4,7 +4,8 @@ import './Notification.css';
 import { apiCall } from "../../../functions/apiCall";
 
 const Notification = ({ data, onNotificationResultsUser }) => {
-    const [notificationData, setNotificationData] = useState(data);
+    const notificationData = data;
+    const [accepted, setAccepted] = useState(false);
 
     const handleUserClick = (userId) => {
         onNotificationResultsUser(userId);
@@ -15,7 +16,7 @@ const Notification = ({ data, onNotificationResultsUser }) => {
             case 'friend_request':
                 return (
                     <>
-                        {"User"} 
+                        {"User"}
                         <span className="notification-user-name" onClick={() => handleUserClick(notificationData.from_user.id)}> {notificationData.from_user.username}</span>
                         {" sent you a friend request."}
                     </>
@@ -45,9 +46,7 @@ const Notification = ({ data, onNotificationResultsUser }) => {
     const handleAcceptFriendRequest = async () => {
         try {
             await apiCall(`http://localhost:8000/user/notification/${notificationData.id}/accept`, "PATCH");
-            const response = await apiCall(`http://localhost:8000/user/notification/list`, "GET");
-            const responseResults = await response.json();
-            setNotificationData(responseResults);
+            setAccepted(true);
         }
         catch (error) {
             console.error('Error :', error);
@@ -60,10 +59,13 @@ const Notification = ({ data, onNotificationResultsUser }) => {
                 <div className="notification-icon">{getNotificationIcon()}</div>
                 <div className="notification-content">
                     <p className="notification-text">{getNotificationText()}</p>
-                    {notificationData.notification_type === 'friend_request' && (
+                    {notificationData.notification_type === 'friend_request' && !accepted && (
                         <button className="accept-friend-request-button" onClick={handleAcceptFriendRequest}>
                             Accept
                         </button>
+                    )}
+                    {accepted && (
+                        <span className="accepted-text">Accepted</span>
                     )}
                 </div>
             </div>
