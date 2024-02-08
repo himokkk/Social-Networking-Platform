@@ -24,7 +24,25 @@
     white-space: nowrap;
 }
 
-.accept-friend-request-button {
-    outline: none;
-    border-radius: 6px;
+.notification-user-name {
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
 }
+
+    .notification-user-name:hover {
+        color: #666;
+    }
+
+.accept-friend-request-button {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 8px;
+}
+
+    .accept-friend-request-button:focus {
+        outline: none;
+        border-color: gray;
+    }
