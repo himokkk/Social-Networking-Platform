@@ -15,13 +15,18 @@ body {
 }
 
 .upBar {
-  display: flex;
-  padding: 2%;
-  height: 120px;
-  justify-content: space-between;
-  align-items: center;
-  background-position: center;
-  background-size: cover;
+    display: flex;
+    padding: 2%;
+    height: 120px;
+    justify-content: space-between;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    font-size: 175%;
+}
+
+.main-lable{
+    margin-left:1%;
 }
 
 .leftBar {
