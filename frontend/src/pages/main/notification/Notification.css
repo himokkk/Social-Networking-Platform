@@ -1,0 +1,48 @@
+.notification-container {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.55);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+}
+
+    .notification-container:hover {
+        background: rgba(255, 255, 255, 0.75);
+    }
+
+.notification-content p {
+    font-size: 16px;
+}
+
+.notification-text {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notification-user-name {
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+    .notification-user-name:hover {
+        color: #666;
+    }
+
+.accept-friend-request-button {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 8px;
+}
+
+    .accept-friend-request-button:focus {
+        outline: none;
+        border-color: gray;
+    }

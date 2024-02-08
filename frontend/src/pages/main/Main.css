@@ -1,0 +1,50 @@
+body {
+  color: rgb(0, 0, 0);     
+}
+
+.content {
+  width: 35%;
+  height: 85vh; 
+  margin-left: 3%;
+  padding: 10px;
+  float: left;
+}
+
+.content .ps__rail-y {
+  display: none;
+}
+
+.upBar {
+    display: flex;
+    padding: 2%;
+    height: 120px;
+    justify-content: space-between;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    font-size: 175%;
+}
+
+.main-lable{
+    margin-left:1%;
+}
+
+.leftBar {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  float: left;
+  padding: 3%;
+  width: 30%;
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 3%; 
+}
+
+.icon-container {
+  margin-left: 300px; 
+}
+
+.selectionDiv {
+  cursor: pointer;
+}
