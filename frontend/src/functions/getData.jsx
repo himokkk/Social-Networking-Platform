@@ -1,13 +1,17 @@
 import { getCookie } from "./getCookie";
 
-export const getData = async (url) => {
+export const getData = async (url,is_acces = false) => {
     const csrftoken = getCookie("csrftoken");
+    const access = getCookie("access");
     try {
+        const headers = new Headers()
+        headers.append("X-CSRFToken", csrftoken);
+        if (is_acces && access) {
+            headers.append("Authorization", `Bearer ${access}`)
+        }
         const response = await fetch(url, {
             method: 'GET',
-            headers: {
-                "X-CSRFToken": csrftoken,
-            },
+            headers: headers,
         });
 
         if (!response.ok) {
