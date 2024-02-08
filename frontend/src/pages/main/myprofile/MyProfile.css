@@ -1,29 +1,131 @@
-.myprofile-container {
-    background: rgba(255, 255, 255, 0.55);
-    padding: 10px;
-    background-color: #fff;
+.my-profile-container {
+    background-color: rgba(255, 255, 255, 0.50);
+    padding: 20px;
     border-radius: 10px;
-    margin-bottom: 30px;
-    width: 70%;
-    margin: auto;
     margin-bottom: 20px;
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }
 
-.myprofile-header {
+.my-profile-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 20px;
+    min-width: 200px;
 }
 
-.myprofile-header p {
-    font-weight: bold;
+.my-profile-image {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
 }
 
-.close-icon {
+    .my-profile-image img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+.my-profile-default-avatar {
+    width: 100%;
+    height: 100%;
+}
+
+.my-profile-details {
+    min-width: 0;
+}
+
+    .my-profile-details p {
+        margin: 5px 0;
+    }
+
+.my-profile-username {
+    font-size: 175%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.my-profile-description {
+    font-size: 100%;
+    word-wrap: break-word;
+    max-height: 700px;
+}
+    .my-profile-description .ps__rail-y {
+        display: none;
+    }
+
+.my-profile-buttons-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-profile-button {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.65);
     cursor: pointer;
+    margin-bottom: 8px;
 }
 
-.myprofile-content {
-    margin-top: 10px;
+.my-profile-button-packer {
+    padding-right: 30%;
+}
+
+.my-profile-users-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 700px;
+}
+
+    .my-profile-users-container .ps__rail-y {
+        display: none;
+    }
+
+.my-profile-search-input-container {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.my-profile-search-input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.my-profile-user-item {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.55);
+    transition: background 0.3s;
+}
+
+.my-profile-user-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+    border-radius: 10px;
+}
+
+.my-profile-friend-default-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+}
+
+.my-profile-username {
+    margin: 0;
+    font-size: 150%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
