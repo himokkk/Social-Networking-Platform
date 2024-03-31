@@ -43,7 +43,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "eslint": "^8.54.0",
-    "eslint-plugin-react": "^7.33.2"
+    "eslint": "^8.57.0",
+    "eslint-auto-fix": "^1.0.4",
+    "eslint-plugin-react": "^7.33.2",
+    "react-scripts": "^5.0.1"
   }
 }
