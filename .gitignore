@@ -1,13 +1,21 @@
+# IDEs
 .idea/
-venv/
+.vs
+*.code-workspace
 
+# Virtual Environments
+venv/
+env/
+
+# Python
 __pycache__/
 *.pyc
 
+# Database
 db.sqlite3
+
+# Static files
 media/
 
-*.code-workspace
-
-env/
-.vs
+# Linting
+.pylintrc
