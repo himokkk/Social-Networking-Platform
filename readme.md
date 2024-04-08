@@ -1,5 +1,6 @@
 # Social Networking Platform
 [ziomki.online](https://ziomki.online)
+
 This is a social networking platform built with Django for the backend and React for the frontend. Web app allows users to create account, add new posts, react with likes and comments, make friends.
 
 ### Django First Run
